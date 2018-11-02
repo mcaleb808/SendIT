@@ -1,0 +1,230 @@
+* { padding:0; margin:0; outline:0; }
+body {
+	background:#FFFFFF;
+	font-family: Verdana, sans-serif;
+	padding-left:80px; 
+	font-size:11px;
+	line-height:14px;
+	color:#5e5e5e;
+}
+input, textarea, select { font-family: Verdana, sans-serif; font-size:13px; }
+textarea { overflow:hidden; }
+
+.field { border:solid 1px #d3cfc7; background:#fff; padding:5px; }
+.small-field { border:solid 1px #d3cfc7; background:#fff; padding:3px 1px; font-size:11px; }
+
+.checkbox { width:13px; height:13px; vertical-align:top; position:relative; top:2px; }
+
+.button { background:#eee url(images/button.gif) repeat-x 0 0; border:solid 1px #b1a874; color:#7f7f7f; font-size:11px; padding:2px 6px 2px 6px; cursor:pointer; line-height:14px !important; }
+.button:hover { color:#333; border-color:#857b42; }
+
+
+.field:focus { color:#000; border-color:#857b42;}
+
+a img { border:0; }
+
+a { color:#ba4c32; text-decoration: underline; cursor:pointer; }
+a:hover { color:#8d341f; text-decoration: none;}
+
+.left, .alignleft { float:left; display:inline; }
+.right, .alignright { float:right; display:inline; }
+
+.cl { font-size:0; line-height:0; clear:both; display:block; height:0; }
+
+.al { text-align: left; }
+.ar { text-align: right; }
+.ac { text-align: center !important; }
+
+h1{ font-size:22px; line-height:24px; color:#fff; font-weight: normal;}
+h1 a{ color:#fff; text-decoration: none; }
+h2 { font-size:15px; font-weight: normal; }
+h3 { font-size:12px; line-height:14px; font-weight: normal; }
+h3 a{ text-decoration: none; }
+
+table{
+  width:100%;
+  table-layout: fixed;
+}
+.tbl-header{
+  background-color:#034f84;
+ }
+.tbl-content{
+  overflow-x:auto;
+  margin-top: 0px;
+  height:300px;
+  border: 1px solid #034f84;
+  background-color:#fff;
+}
+th{
+  padding: 10px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 12px;
+  color: white;
+  text-transform: uppercase;
+}
+td{
+  padding: 8px;
+  text-align: left;
+  vertical-align:middle;
+  font-weight: 300;
+  font-size: 12px;
+  color: black;
+  border-bottom: solid 1px #034f84;
+}
+::-webkit-scrollbar {
+    width: 6px;
+} 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+} 
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}
+
+.sub { width:888px; margin:0 auto; }
+
+#header { height:89px;width:910px; background:#001f3f; white-space:nowrap; }
+#header h1{ float:left; display:inline; padding-top:12px; }
+#top-navigation { float:right; white-space:nowrap; color:#fff; padding-top:15px; }
+#top-navigation a{ color:#fff; }
+#top-navigation span{ color:#7FDBFF; }
+#top { height:53px; }
+
+#navigation { height:36px;}
+#navigation ul{ list-style-type: none;}
+#navigation ul li{ float:left; display:inline; margin-right:2px;}
+#navigation ul li a,
+#navigation ul li a span { float:left; height:36px; background:#7FDBFF no-repeat 0 0; padding:0 0 0 15px;}
+#navigation ul li a span { background-position:right 0; padding:0 15px 0 0;}
+#navigation ul li a { line-height:36px; color:#FFFFFF; text-decoration: none; }
+
+#navigation ul li a.active,
+#navigation ul li a:hover { background-position:0 bottom;}
+
+#navigation ul li a.active span,
+#navigation ul li a:hover span{ background-position:right bottom;}
+
+#navigation ul li a.active { font-size:12px; font-weight: bold; color:#001f3f; }
+
+
+.form-style-2{
+    max-width: 800px;
+    padding: 20px 12px 10px 20px;
+    font: 13px Arial, Helvetica, sans-serif;
+}
+.form-style-2-heading{
+    font-weight: bold;
+    font-style: italic;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #034f84;
+    padding-top: 9px;
+    padding-bottom: 3px;
+}
+.form-style-2 label{
+    display: block;
+    margin: 0px 0px 15px 0px;
+}
+.form-style-2 label > span{
+    width: 100px;
+    font-weight: bold;
+    float: left;
+    padding-top: 8px;
+    padding-right: 5px;
+}
+.form-style-2 span.required{
+    color:red;
+}
+.form-style-2 .tel-number-field{
+    width: 40px;
+    text-align: center;
+}
+.form-style-2 input.input-field{
+    width: 48%;
+    
+}
+
+.form-style-2 input.input-field, 
+.form-style-2 .tel-number-field, 
+.form-style-2 .textarea-field, 
+ .form-style-2 .select-field{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border: 1px solid #C2C2C2;
+    box-shadow: 1px 1px 4px #EBEBEB;
+    -moz-box-shadow: 1px 1px 4px #EBEBEB;
+    -webkit-box-shadow: 1px 1px 4px #EBEBEB;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    padding: 7px;
+    outline: none;
+}
+.form-style-2 .input-field:focus, 
+.form-style-2 .tel-number-field:focus, 
+.form-style-2 .textarea-field:focus,  
+.form-style-2 .select-field:focus{
+    border: 1px solid #8ec3eb;
+}
+.form-style-2 .textarea-field{
+    height:100px;
+    width: 55%;
+}
+.form-style-2 input[type=submit],
+.form-style-2 input[type=button],
+.form-style-2 button[type=submit],
+.form-style-2 button[type=button]{
+    border: none;
+    padding: 8px 15px 8px 15px;
+    background: #034f84;
+    color: #fff;
+    box-shadow: 1px 1px 4px #DADADA;
+    -moz-box-shadow: 1px 1px 4px #DADADA;
+    -webkit-box-shadow: 1px 1px 4px #DADADA;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+.form-style-2 input[type=submit]:hover,
+.form-style-2 input[type=button]:hover,{
+    background: #EA7B00;
+    color: #fff;
+}
+.form-style-2 .tab {
+  display: none;
+}
+
+/* Make circles that indicate the steps of the form: */
+.form-style-2 .step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none; 
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+/* Mark the active step: */
+.form-style-2 .step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.form-style-2 .step.finish {
+  background-color: #4CAF50;
+}
+
+input.invalid {
+  background-color: #ffdddd;
+  #customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+
