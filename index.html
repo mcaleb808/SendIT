@@ -1,74 +1,33 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-		<title>Home</title>
-		<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+<html>
+<head>
+	<title>SendIt loader</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.block {
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: #034f84;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
 
-	</head>
-	<body>
+.block:hover {
+    background-color: #ddd;
+    color: black;
+}
+</style>
+</head>
+<body>
 
-		<div id="header">
-			<div class="sub">
-				<div id="top">
-					<h1><a href="UI/index.html">sendIT</a></h1>
-					<div id="top-navigation">
-						Welcome <a href="profile.html"><strong>user[name]</strong></a>
-						<span>|</span>
-						<a href="login.html">Log out</a>
-					</div>
-				</div>
-		
-				<div id="navigation">
-					<ul>
-			    		<li><a href="index.html" class="active"><span>Home</span></a></li>
-			    		<li><a href="delivery.html"><span>delivery order</span></a></li>
-			    		<li><a href="profile.html"><span>Profile</span></a></li>
-			   			 <li><a href="activity.html"><span>Activity</span></a></li>
-			    		<li><a href="login.html"><span>Log Out</span></a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="form-style-2">
-			<div class="form-style-2-heading">Create a parcel delivery order</div>
-				<form action="" name="parcel" id='parcel'>
-					<div class="tab">
-						<label><span>&nbsp;</span><h2>My Parcel Details</h2></label>
-						<label for="field1"><span>Pick Up location<span class="required">*</span></span><input type="text" class="input-field" name="fname" value="" required/></label>
-						<label for="field1"><span>Destination<span class="required">*</span></span><input type="text" class="input-field" name="user" value="" required/></label>
-						<label for="field1"><span>Parcel contents:<span class="required">*</span></span><input type="text" class="input-field" name="fname" value="" required/></label>
-						<label for="field1"><span>Parcel value:<span class="required">*</span></span><input type="text" class="input-field" name="user" value="" required/></label>
-						<label for="field1"><span>Weight:<span class="required">(Kg)*</span></span><input type="text" class="input-field" name="fname" value="" required/></label>
-						<label for="field1"><span>Price:<span class="required">(Rwf)</span></span><input type="text" class="input-field" name="user" value="kgs*500" disabled/></label>
-					</div>
-					<div class="tab">
-						<label><span>&nbsp;</span><h2>Sender information</h2></label>
-						<label for="field1"><span>Fullname<span class="required">*</span></span><input type="text" class="input-field" name="fname" value="" required/></label>
-						<label for="field1"><span>Adrress <span class="required">*</span></span><input type="text" class="input-field" name="user" value="" required/></label>
-						<label for="field1"><span>E-mail <span class="required">*</span></span><input type="email" class="input-field" name="user" value="" required/></label>
-					</div>
-					<div class="tab">
-						<label><span>&nbsp;</span><h2>Receiver information</h2></label>
-						<label for="field1"><span>Fullname<span class="required">*</span></span><input type="text" class="input-field" name="fname" value="" required/></label>
-						<label for="field1"><span>Adrress <span class="required">*</span></span><input type="text" class="input-field" name="user" value="" required/></label>
-						<label for="field1"><span>E-mail <span class="required">*</span></span><input type="email" class="input-field" name="user" value="" required/></label>
-					</div>
-					<div style="overflow:auto;">
-  						<div style="float:center;">
-   			 				<button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-    						<button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-  						</div>
-					</div>
-<!-- Circles which indicates the steps of the form: -->
-					<div style="text-align:center;margin-top:40px;">
-  						<span class="step"></span>
- 			 			<span class="step"></span>
- 			 			<span class="step"></span>
-					</div>
+<h2>ANDELA DEVELOPER CHALLENGE</h2>
+<h3>Website loader</h3>
 
-				</form>
-			<script type="text/javascript" src="js/tab.js"></script>
-		</div>
-	</body>
-</html>		
+<a href="UI/index.html"><button class="block">CLICK HERE TO ENTER</button></a>
+
+</body>
+</html>
