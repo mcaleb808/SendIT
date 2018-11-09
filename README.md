@@ -1,4 +1,4 @@
 # SendIT
 Andela Developer Challenge
 
-https://travis-ci.com/mcaleb808/SendIT.svg?branch=senditApi
+[![Build Status](https://travis-ci.com/mcaleb808/SendIT.svg?branch=master)](https://travis-ci.com/mcaleb808/SendIT)
