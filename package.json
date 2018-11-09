@@ -2,7 +2,7 @@
   "name": "sendit",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "babel-node --presets env,stage-2 spec/run.js",
     "start": "babel-node --presets env,stage-2 server.js"
