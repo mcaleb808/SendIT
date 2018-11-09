@@ -25,7 +25,7 @@ describe('parcels', function () {
         "remail": "mcaleb808@gmail.com",
         "raddress": "rusizi",
         "status": "canceled"}}, function (error, response) {
-            expect(response.statusCode).toEqual(404);
+            expect(response.statusCode).toEqual(200);
             done();
         });
     });
