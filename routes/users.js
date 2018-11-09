@@ -1,10 +1,23 @@
 import Joi from 'joi';
 import express from 'express';
 import User from '../models/users';
+import Order from '../models/parcels';
 const router = express.Router();
 
 const users = [
 	new User( 1,'Mugisha Caleb Didier', 'Caleb','Calebmugisha' ,'mcaleb808@gmail.com') 
+	];
+
+	const orders = [
+	new Order (1, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	new Order (2, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	new Order (3, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	new Order (4, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	new Order (5, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	new Order (6, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	new Order (7, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	new Order (8, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	
 	];
 
 router.get('/', (req, res) => {
@@ -63,8 +76,11 @@ router.delete('/:id', (req, res) => {
 	res.send(user);
 });
 
-
-
+router.get('/:senderId/parcels', (req, res) => {
+	const order = orders.find(c => c.senderId ===parseInt(req.params.senderId));
+	if (!order) return res.status(404).send('The parcels with given sender Id was not found');
+	res.send(order);
+});
 
 const validateUser= (user) => {
 

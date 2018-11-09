@@ -1,18 +1,18 @@
 export default class Order {
-  constructor(id, Pickup, contents, destination, value, weight, sname, saddress, semail, rname, remail, raddress, location, status){
+  constructor(id, Pickup, destination, contents, value, weight, location, senderId, sname, semail, rname, remail, raddress, status){
      this.id = id;
      this.Pickup = Pickup;
      this.destination = destination;
      this.contents = contents ;
      this.value = value;
      this.weight = weight;
+     this.location = location;
+     this.senderId = senderId;
      this.sname = sname;
-     this.saddress = saddress;
      this.semail = semail;
      this.rname = rname;
      this.remail = remail;
      this.raddress = raddress;
-     this.location = location;
      this.status = status;
    }
 

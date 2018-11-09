@@ -3,16 +3,16 @@ import express from 'express';
 import Order from '../models/parcels';
 const router = express.Router();
 
-const orders = [
-	new Order (1, 'Kigali', 'muhanga', 'rusizi', 'modem devices', 50000, 1, 'mugisha caleb didier', 'kigali', 'mcaleb808@gmail.com', 'mugabo felix', 'rusizi', 'mcaleb808@gmail.com','generated'),
-	new Order (2, 'Kigali', 'muhanga', 'rusizi', 'modem devices', 50000, 1, 'mugisha caleb didier', 'kigali', 'mcaleb808@gmail.com', 'mugabo felix', 'rusizi', 'mcaleb808@gmail.com','generated'),
-	new Order (3, 'Kigali', 'muhanga', 'rusizi', 'modem devices', 50000, 1, 'mugisha caleb didier', 'kigali', 'mcaleb808@gmail.com', 'mugabo felix', 'rusizi', 'mcaleb808@gmail.com','generated'),
-	new Order (4, 'Kigali', 'muhanga', 'rusizi', 'modem devices', 50000, 1, 'mugisha caleb didier', 'kigali', 'mcaleb808@gmail.com', 'mugabo felix', 'rusizi', 'mcaleb808@gmail.com','generated'),
-	new Order (5, 'Kigali', 'muhanga', 'rusizi', 'modem devices', 50000, 1, 'mugisha caleb didier', 'kigali', 'mcaleb808@gmail.com', 'mugabo felix', 'rusizi', 'mcaleb808@gmail.com','generated'),
-	new Order (6, 'Kigali', 'muhanga', 'rusizi', 'modem devices', 50000, 1, 'mugisha caleb didier', 'kigali', 'mcaleb808@gmail.com', 'mugabo felix', 'rusizi', 'mcaleb808@gmail.com','generated'),
-	new Order (7, 'Kigali', 'muhanga', 'rusizi', 'modem devices', 50000, 1, 'mugisha caleb didier', 'kigali', 'mcaleb808@gmail.com', 'mugabo felix', 'rusizi', 'mcaleb808@gmail.com','generated'),
-	new Order (8, 'Kigali', 'muhanga', 'rusizi', 'modem devices', 50000, 1, 'mugisha caleb didier', 'kigali', 'mcaleb808@gmail.com', 'mugabo felix', 'rusizi', 'mcaleb808@gmail.com','generated'),
-
+export const orders = [
+	new Order (1, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	new Order (2, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	new Order (3, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	new Order (4, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	new Order (5, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	new Order (6, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	new Order (7, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	new Order (8, 'Kigali',  'rusizi', 'modem devices', 50000, 2, 'kigali', 1, 'Mugisha Caleb Didier', 'mcaleb808@gmail.com', 'mugabo felix', 'mcaleb808@gmail.com', 'rusizi', 'generated'),
+	
 	];
 
 router.get('/', (req, res) => {
@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
 		value: req.body.value,
 		weight: req.body.weight,
 		sname: req.body.sname,
-		saddress: req.body.saddress,
+		senderId: req.body.senderId,
 		semail: req.body.semail,
 		rname: req.body.rname,
 		location: req.body.location,
@@ -64,7 +64,7 @@ router.put('/:id', (req, res)=> {
 	order.value= req.body.value;
 	order.weight= req.body.weight;
 	order.sname= req.body.sname;
-	order.saddress= req.body.saddress;
+	order.senderId= req.body.senderId;
 	order.semail= req.body.semail;
 	order.remail= req.body.remail;
 	order.rname= req.body.rname;
@@ -104,6 +104,12 @@ router.delete('/:id', (req, res) => {
 });
 
 
+router.get('/:senderId/parcels', (req, res) => {
+	const order = orders.find(c => c.senderId ===parseInt(req.params.senderId));
+	if (!order) return res.status(404).send('The parcels with given sender Id was not found');
+	res.send(order);
+});
+
 
 const validateOrder= (order) => {
 
@@ -116,7 +122,7 @@ const validateOrder= (order) => {
 	location: Joi.string().min(3).required(),
 	sname: Joi.string().min(3).required(),
 	semail: Joi.string().email({ minDomainAtoms: 2 }).required(),
-	saddress: Joi.string().min(3).required(),
+	senderId: Joi.number().required(),
 	rname: Joi.string().min(3).required(),
 	remail: Joi.string().email({ minDomainAtoms: 2 }).required(),
 	raddress: Joi.string().min(3).required(),

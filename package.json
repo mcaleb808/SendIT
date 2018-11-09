@@ -2,7 +2,7 @@
   "name": "sendit",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "nodemon --exec babel-node --presets env,stage-2 spec/run.js",
     "start": "nodemon --exec babel-node --presets env,stage-2 server.js"
@@ -12,6 +12,7 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",
+    "cleanup-dependencies": "0.0.6",
     "express": "^4.16.4",
     "jasmine": "^3.3.0",
     "joi": "^14.0.4",
