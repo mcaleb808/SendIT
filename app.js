@@ -28,6 +28,10 @@ app.use((req, res, next) => {
   next(error);
 });
 
+app.get('/', (req, res) => {
+  res.send('Welcome to SendIt API, developed by MUGISHA CALEB DIDIER  !!');
+});
+
 app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
