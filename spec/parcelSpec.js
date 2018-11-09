@@ -12,19 +12,19 @@ describe('parcels', function () {
     });
 
     it('should return 200 response code on POST', function (done) {
-        request.post(endpoint, {json: true, body: {"Pickup": "bugiggf",
-        "location": "muhanga",
+        request.post(endpoint, {json: true, body: {"Pickup": "Kigali",
         "destination": "rusizi",
         "contents": "modem devices",
         "value": 50000,
-        "weight": 1,
-        "sname": "mugisha caleb didier",
-        "saddress": "kigali",
+        "weight": 2,
+        "location": "kigali",
+        "senderId": 1,
+        "sname": "Mugisha Caleb Didier",
         "semail": "mcaleb808@gmail.com",
         "rname": "mugabo felix",
-        "raddress": "rusizi",
         "remail": "mcaleb808@gmail.com",
-        "status": "generated"}}, function (error, response) {
+        "raddress": "rusizi",
+        "status": "canceled"}}, function (error, response) {
             expect(response.statusCode).toEqual(200);
             done();
         });
