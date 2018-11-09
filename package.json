@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "nodemon --exec babel-node --presets env,stage-2 spec/run.js",
-    "start": "nodemon --exec babel-node --presets env,stage-2 server.js"
+    "test": "babel-node --presets env,stage-2 spec/run.js",
+    "start": "babel-node --presets env,stage-2 server.js"
   },
   "author": "caleb",
   "license": "ISC",
