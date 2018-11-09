@@ -6,7 +6,7 @@ import userRoutes from './routes/users';
 
 app.use(express.json());
 
-app.use((req, res, next) => {
+app.use((req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -16,7 +16,6 @@ app.use((req, res, next) => {
       res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
       return res.status(200).json({});
   }
-  next();
 });
 app.get('/', (req, res) => {
   res.send('Welcome to SendIt API, developed by MUGISHA CALEB DIDIER  !!, routes => 1.parcels, 2,users');
