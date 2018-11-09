@@ -18,19 +18,19 @@ app.use((req, res, next) => {
   }
   next();
 });
+app.get('/', (req, res) => {
+  res.send('Welcome to SendIt API, developed by MUGISHA CALEB DIDIER  !!, routes => 1.parcels, 2,users');
 
+});
 app.use("/parcels", parcelRoutes);
 app.use("/users", userRoutes);
 
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
   let error = new Error("Not found");
   error.status = 404;
   next(error);
 });
 
-app.get('/', (req, res) => {
-  res.send('Welcome to SendIt API, developed by MUGISHA CALEB DIDIER  !!');
-});
 
 app.use((error, req, res, next) => {
   res.status(error.status || 500);
@@ -39,7 +39,7 @@ app.use((error, req, res, next) => {
       message: error.message
     }
   });
-});
+});*/
 
 module.exports = app;
 
