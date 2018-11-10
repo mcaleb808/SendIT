@@ -6,7 +6,7 @@ import userRoutes from './routes/users';
 
 app.use(express.json());
 
-app.use((req, res) => {
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -16,20 +16,17 @@ app.use((req, res) => {
       res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
       return res.status(200).json({});
   }
+  next();
 });
-app.get('/', (req, res) => {
-  res.send('Welcome to SendIt API, developed by MUGISHA CALEB DIDIER  !!, routes => 1.parcels, 2,users');
 
-});
 app.use("/parcels", parcelRoutes);
 app.use("/users", userRoutes);
 
-/*app.use((req, res, next) => {
+app.use((req, res, next) => {
   let error = new Error("Not found");
   error.status = 404;
   next(error);
 });
-
 
 app.use((error, req, res, next) => {
   res.status(error.status || 500);
@@ -38,7 +35,7 @@ app.use((error, req, res, next) => {
       message: error.message
     }
   });
-});*/
+});
 
 module.exports = app;
 
