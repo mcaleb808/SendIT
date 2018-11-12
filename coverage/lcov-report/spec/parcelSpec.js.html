@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">16.67% </span>
+        <span class="strong">20% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>2/12</span>
+        <span class='fraction'>2/10</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>0/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">16.67% </span>
+        <span class="strong">20% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>2/12</span>
+        <span class='fraction'>2/10</span>
       </div>
     </div>
   </div>
@@ -83,26 +83,26 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const request = require('request');
@@ -111,15 +111,15 @@ const server = require('../server');
 <span class="cstat-no" title="statement not covered" >const endpoint = 'http://localhost:3000/parcels';</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >describe('parcels', <span class="fstat-no" title="function not covered" >function () {</span></span>
-<span class="cstat-no" title="statement not covered" >    it('should return 200 response code on GET', <span class="fstat-no" title="function not covered" >function (done) {</span></span>
-<span class="cstat-no" title="statement not covered" >        request.get(endpoint, <span class="fstat-no" title="function not covered" >function (error, response) {</span></span>
-<span class="cstat-no" title="statement not covered" >            expect(response.statusCode).toEqual(200);</span>
-<span class="cstat-no" title="statement not covered" >            done();</span>
+    it(<span class="cstat-no" title="statement not covered" >'should return 200 response code on GET', <span class="fstat-no" title="function not covered" >function (done) {</span></span>
+        request.<span class="cstat-no" title="statement not covered" >get(endpoint, <span class="fstat-no" title="function not covered" >function (error, response) {</span></span>
+            expect(<span class="cstat-no" title="statement not covered" >response.statusCode).toEqual(200);</span>
+            done();
         });
     });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    it('should return 200 response code on POST', <span class="fstat-no" title="function not covered" >function (done) {</span></span>
-<span class="cstat-no" title="statement not covered" >        request.post(endpoint, {json: true, body: {"Pickup": "Kigali",</span>
+    it(<span class="cstat-no" title="statement not covered" >'should return 200 response code on POST', <span class="fstat-no" title="function not covered" >function (done) {</span></span>
+        request.<span class="cstat-no" title="statement not covered" >post(endpoint, {json: true, body: {"Pickup": "Kigali",</span>
         "destination": "rusizi",
         "contents": "modem devices",
         "value": 50000,
@@ -132,8 +132,8 @@ const server = require('../server');
         "remail": "mcaleb808@gmail.com",
         "raddress": "rusizi",
         "status": "canceled"}}, <span class="fstat-no" title="function not covered" >function (error, response) {</span>
-<span class="cstat-no" title="statement not covered" >            expect(response.statusCode).toEqual(200);</span>
-<span class="cstat-no" title="statement not covered" >            done();</span>
+            expect(<span class="cstat-no" title="statement not covered" >response.statusCode).toEqual(200);</span>
+            done();
         });
     });
 });</pre></td></tr>
@@ -142,7 +142,7 @@ const server = require('../server');
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Nov 12 2018 10:27:30 GMT+0200 (Egypt Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Nov 12 2018 10:47:03 GMT+0200 (Egypt Standard Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

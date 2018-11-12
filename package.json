@@ -5,11 +5,14 @@
   "main": "server.js",
   "scripts": {
     "test": "babel-node --presets env,stage-2 spec/run.js",
-    "start": "babel-node --presets env,stage-2 server.js"
+	"coverage": "babel-node --presets env,stage-2 node_modules/jasmine/bin/jasmine.js",
+    "start": "babel-node --presets env,stage-2 server.js",
+	"report-coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "author": "caleb",
   "license": "ISC",
   "dependencies": {
+    "babel-istanbul": "^0.12.2",
     "express": "^4.16.4",
     "http": "0.0.0",
     "jasmine": "^3.3.0",
