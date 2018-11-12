@@ -23,7 +23,7 @@ app.use("/parcels", parcelRoutes);
 app.use("/users", userRoutes);
 
 app.use((req, res, next) => {
-  let error = new Error("Not found");
+  let error = new Error("Not gfgfound");
   error.status = 404;
   next(error);
 });

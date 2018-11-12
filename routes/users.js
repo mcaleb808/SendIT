@@ -76,12 +76,6 @@ router.delete('/:id', (req, res) => {
 	res.send(user);
 });
 
-router.get('/:senderId/parcels', (req, res) => {
-	const order = orders.find(c => c.senderId ===parseInt(req.params.senderId));
-	if (!order) return res.status(404).send('The parcels with given sender Id was not found');
-	res.send(order);
-});
-
 const validateUser= (user) => {
 
 	const schema = {
