@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "istanbul cover node_modules/jasmine/bin/jasmine.js",
+    "test": "babel-node --presets env,stage-2 spec/run.js",
     "start": "babel-node --presets env,stage-2 server.js"
   },
   "author": "caleb",
