@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "babel-node --presets env,stage-2 spec/run.js",
+    "test": "babel-node --presets env,stage-2 node_modules/jasmine/bin/jasmine.js",
     "coverage": "babel-node --presets env,stage-2 node_modules/jasmine/bin/jasmine.js",
     "start": "babel-node --presets env,stage-2 server.js",
     "report-coverage": "cat ./coverage/lcov.info | coveralls"
