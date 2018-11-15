@@ -1,8 +1,6 @@
-'use strict';
-
-var Jasmine = require('jasmine');
-var JasmineConsoleReporter = require('jasmine-console-reporter');
-var jasmine = new Jasmine();
+const Jasmine = require('jasmine');
+const JasmineConsoleReporter = require('jasmine-console-reporter');
+const jasmine = new Jasmine();
 var reporter = new JasmineConsoleReporter({
         colors: 1,
         cleanStack: 3,
