@@ -4,4 +4,4 @@ node_js:
 after_success:
   - npm install istanbul
   - npm install coveralls
-  - npm run coveralls 
+  - npm run test-cover

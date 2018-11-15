@@ -8,12 +8,12 @@
     "testbuild": "babel test/ -d spec && babel --presets es2015 test/ -d spec",
     "build": "babel src/ -d dist && babel --presets es2015 src/ -d dist",
     "start": "npm run build && npm run testbuild && node dist/server.js",
-    "coveralls": "istanbul cover node_modules/jasmine/bin/jasmine.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "coveralls": "istanbul cover node_modules/jasmine/bin/jasmine.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "test-cover": "istanbul cover node_modules/jasmine/bin/jasmine.js && istanbul check-coverage"  
   },
   "dependencies": {
     "express": "^4.16.4",
     "joi": "^13.1.0",
-    "jasmine": "^3.3.0",
     "nodemon": "^1.18.6",
     "pg": "^7.6.1",
     "babel-cli": "^6.26.0",
@@ -27,8 +27,11 @@
     "babel-watch": "^2.0.7",
     "coveralls": "^3.0.2",
     "istanbul": "^0.4.5",
+    "jasmine": "^3.3.0",
+    "jasmine-console-reporter": "^3.1.0",
     "jasmine-node": "^1.16.2",
-    "supertest": "^3.1.0"
+    "jasmine-supertest": "^1.0.0",
+    "supertest": "^3.3.0"
   },
   "author": "caleb",
   "license": "ISC"
