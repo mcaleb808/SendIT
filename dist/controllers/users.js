@@ -86,11 +86,19 @@ var UserControllers = function () {
     value: function getOneUser(req, res) {
       var id = req.params.id;
 
-      var user = _users2.default.find(function (a) {
-        return a.id === parseInt(id);
+      var user = _users2.default.find(function (oneUser) {
+        return oneUser.id == id;
       });
-      if (!user) return res.status(404).json({ message: 'The user with given ID was not found' });
-      res.status(200).json(user);
+      if (user) {
+        return res.status(200).json({
+          message: "user found",
+          oneUser: user
+        });
+      } else {
+        res.status(400).json({
+          error: "no user found with that id"
+        });
+      }
     }
   }, {
     key: 'deleteUser',

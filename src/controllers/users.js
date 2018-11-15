@@ -49,11 +49,18 @@ class UserControllers {
 
   static getOneUser(req, res) {
     const { id } = req.params;
-    const user = users.find(a => a.id === parseInt(id));
-    if (!user) return res.status(404).json({ message: 'The user with given ID was not found' });
-    res.status(200).json(user);
+    const user = users.find(oneUser => oneUser.id == id);
+    if (user) {
+      return res.status(200).json({
+        message: "user found",
+        oneUser: user
+      });
+    } else {
+      res.status(400).json({
+        error: "no user found with that id"
+      });
+    }
   }
-
   static deleteUser(req, res) {
     const { id } = req.params;
     const user = users.find(c => c.id === parseInt(req.params.id));
