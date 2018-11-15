@@ -1,5 +1,5 @@
 {
-  "name": "newapi",
+  "name": "sendItApi",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -27,7 +27,6 @@
     "babel-watch": "^2.0.7",
     "coveralls": "^3.0.2",
     "istanbul": "^0.4.5",
-    "jasmine-node": "^1.16.2",
     "supertest": "^3.1.0"
   },
   "author": "caleb",
