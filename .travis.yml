@@ -5,3 +5,4 @@ after_success:
   - npm install istanbul
   - npm install coveralls
   - npm run test-cover
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
