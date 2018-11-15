@@ -4,13 +4,9 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _parcels = require('./routes/parcels');
+var _routes = require('./routes/routes');
 
-var _parcels2 = _interopRequireDefault(_parcels);
-
-var _users = require('./routes/users');
-
-var _users2 = _interopRequireDefault(_users);
+var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32,8 +28,7 @@ app.get('/', function (req, res) {
   res.sendfile('src/index.html');
 });
 
-app.use("/api/v1/parcels", _parcels2.default);
-app.use("/api/v1/users", _users2.default);
+app.use(_routes2.default);
 
 app.use(function (req, res, next) {
   var error = new Error("Not found");

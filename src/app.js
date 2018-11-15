@@ -1,9 +1,6 @@
 import express from 'express';
 const app = express();
-
-import parcelRoutes from './routes/parcels';
-import userRoutes from './routes/users';
-
+import router from './routes/routes';
 app.use(express.json());
 
 app.use((req, res, next) => {
@@ -20,8 +17,7 @@ app.get('/', (req, res) => {
   res.sendfile('src/index.html');
 });
 
-app.use("/api/v1/parcels", parcelRoutes);
-app.use("/api/v1/users", userRoutes);
+app.use(router);
 
 app.use((req, res, next) => {
   let error = new Error("Not found");

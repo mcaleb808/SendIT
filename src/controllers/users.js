@@ -28,7 +28,7 @@ class UserControllers {
   static editUser(req, res) {
   const { id } = req.params;
   const user = users.find(c => c.id === parseInt(req.params.id));
-  if (!user) return res.status(404).send('The user with given ID was not found');
+  if (!user) return res.status(400).send('The user with given ID was not found');
 
   const result = validateUpdate(req.body);
   const { error } = validateUpdate(req.body);
@@ -64,7 +64,7 @@ class UserControllers {
   static deleteUser(req, res) {
     const { id } = req.params;
     const user = users.find(c => c.id === parseInt(req.params.id));
-  if (!user) return res.status(404).send('The user with given ID was not found');
+  if (!user) return res.status(400).send('The user with given ID was not found');
 
   const index = users.indexOf(user);
   users.splice(index, 1);
@@ -78,7 +78,7 @@ class UserControllers {
     const parcelPerUser = [];
     let results = {};
     if (!order) {
-      results = res.status(404).send('The parcels with given sender Id was not found');
+      results = res.status(400).send('The parcels with given sender Id was not found');
     } else {
       parcels.forEach(item => {
         if (item.senderId === order.senderId) parcelPerUser.push(item);
