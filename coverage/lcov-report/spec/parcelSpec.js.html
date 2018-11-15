@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">95.24% </span>
+        <span class="strong">96.19% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>100/105</span>
+        <span class='fraction'>101/105</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">75% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>3/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">94.52% </span>
+        <span class="strong">95.89% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>69/73</span>
+        <span class='fraction'>70/73</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">95.19% </span>
+        <span class="strong">96.15% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>99/104</span>
+        <span class='fraction'>100/104</span>
       </div>
     </div>
   </div>
@@ -274,30 +274,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -306,7 +282,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -479,8 +479,8 @@ describe('get all users', function () {
   });
 &nbsp;
   it('should respond with a 404(not found)', function (done) {
-    (0, _supertest2.default)(_app2.default).get('/api/v1/users/45').expect(404).expect(function (res) {
-      expect(response.statusCode).toEqual(404);
+    (0, _supertest2.default)(_app2.default).get('/api/v1/users/45').expect(404).expect(<span class="fstat-no" title="function not covered" >function (res) {</span>
+<span class="cstat-no" title="statement not covered" >      expect(response.statusCode).toEqual(404);</span>
     }).end(function () {
       done();
     });
@@ -503,16 +503,16 @@ describe('get all users', function () {
   });
 &nbsp;
   it('should respond with 400(bad rq)', function (done) {
-    (0, _supertest2.default)(_app2.default).get('/api/v1/users/gjdj').expect(400).expect(<span class="fstat-no" title="function not covered" >function (res) {</span>
-<span class="cstat-no" title="statement not covered" >      expect(response.statusCode).toEqual(400);</span>
+    (0, _supertest2.default)(_app2.default).get('/api/v1/users/gjdj').expect(400).expect(function (res) {
+      expect(response.statusCode).toEqual(400);
     }).end(function () {
       done();
     });
   });
 &nbsp;
   it('should respond with a 200 success', function (done) {
-    (0, _supertest2.default)(_app2.default).get('/api/v1/users/1').expect(200).expect(<span class="fstat-no" title="function not covered" >function (res) {</span>
-<span class="cstat-no" title="statement not covered" >      expect(response.statusCode).toEqual(200);</span>
+    (0, _supertest2.default)(_app2.default).get('/api/v1/users/1').expect(200).expect(function (res) {
+      expect(response.statusCode).toEqual(200);
     }).end(function () {
       done();
     });
@@ -667,7 +667,7 @@ describe('fetch-specific-delivery-order endpoint', function () {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Nov 15 2018 11:22:26 GMT+0200 (Egypt Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Nov 15 2018 14:35:04 GMT+0200 (Egypt Standard Time)
 </div>
 </div>
 <script src="../prettify.js"></script>
