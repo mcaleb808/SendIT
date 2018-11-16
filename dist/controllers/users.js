@@ -59,7 +59,7 @@ var UserControllers = function () {
       var user = _users2.default.find(function (c) {
         return c.id === parseInt(req.params.id);
       });
-      if (!user) return res.status(400).send('The user with given ID was not found');
+      if (!user) return res.status(404).send('The user with given ID was not found');
 
       var result = validateUpdate(req.body);
 
@@ -86,19 +86,11 @@ var UserControllers = function () {
     value: function getOneUser(req, res) {
       var id = req.params.id;
 
-      var user = _users2.default.find(function (oneUser) {
-        return oneUser.id == id;
+      var user = _users2.default.find(function (a) {
+        return a.id === parseInt(id);
       });
-      if (user) {
-        return res.status(200).json({
-          message: "user found",
-          oneUser: user
-        });
-      } else {
-        res.status(400).json({
-          error: "no user found with that id"
-        });
-      }
+      if (!user) return res.status(404).json({ message: 'The user with given ID was not found' });
+      res.status(200).json(user);
     }
   }, {
     key: 'deleteUser',
@@ -108,7 +100,7 @@ var UserControllers = function () {
       var user = _users2.default.find(function (c) {
         return c.id === parseInt(req.params.id);
       });
-      if (!user) return res.status(400).send('The user with given ID was not found');
+      if (!user) return res.status(404).send('The user with given ID was not found');
 
       var index = _users2.default.indexOf(user);
       _users2.default.splice(index, 1);
@@ -125,7 +117,7 @@ var UserControllers = function () {
       var parcelPerUser = [];
       var results = {};
       if (!order) {
-        results = res.status(400).send('The parcels with given sender Id was not found');
+        results = res.status(404).send('The parcels with given sender Id was not found');
       } else {
         _parcels2.default.forEach(function (item) {
           if (item.senderId === order.senderId) parcelPerUser.push(item);
