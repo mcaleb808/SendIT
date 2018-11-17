@@ -31,7 +31,7 @@ class ParcelControllers {
   static editOrder(req, res) {
     const { id } = req.params;
     const order = parcels.find(a => a.id === parseInt(id));
-    if (!order) return res.status(404).json({ message: 'The parcel with given ID was not found' });
+    if (!order) return res.status(400).json({ message: 'The parcel with given ID was not found' });
     const result = validateOrder(req.body);
     const { error } = validateOrder(req.body);
     if (error) {
@@ -61,14 +61,14 @@ class ParcelControllers {
   static getOneOrder(req, res) {
     const { id } = req.params;
     const order = parcels.find(a => a.id === parseInt(id));
-    if (!order) return res.status(404).json({ message: 'The parcel with given ID was not found' });
+    if (!order) return res.status(400).json({ message: 'The parcel with given ID was not found' });
     res.status(200).json(order);
   }
 
     static deleteOrder(req, res) {
     const { id } = req.params;
     const order = parcels.find(a => a.id === parseInt(id));
-    if (!order) return res.status(404).json({ message: 'The parcel with given ID was not found' });
+    if (!order) return res.status(400).json({ message: 'The parcel with given ID was not found' });
     const index = parcels.indexOf(order);
     parcels.splice(index, 1);
     res.send(order);
@@ -78,7 +78,7 @@ class ParcelControllers {
   static cancelOrder(req, res) {
       const { id } = req.params;
       const order = parcels.find(a => a.id === parseInt(id));
-      if (!order) return res.status(404).json({ message: 'The parcel with given ID was not found' });
+      if (!order) return res.status(400).json({ message: 'The parcel with given ID was not found' });
 
     const result = validateCancel(req.body);
     const { error } = validateCancel(req.body);

@@ -62,7 +62,7 @@ var ParcelControllers = function () {
       var order = _parcels2.default.find(function (a) {
         return a.id === parseInt(id);
       });
-      if (!order) return res.status(404).json({ message: 'The parcel with given ID was not found' });
+      if (!order) return res.status(400).json({ message: 'The parcel with given ID was not found' });
       var result = validateOrder(req.body);
 
       var _validateOrder2 = validateOrder(req.body),
@@ -100,7 +100,7 @@ var ParcelControllers = function () {
       var order = _parcels2.default.find(function (a) {
         return a.id === parseInt(id);
       });
-      if (!order) return res.status(404).json({ message: 'The parcel with given ID was not found' });
+      if (!order) return res.status(400).json({ message: 'The parcel with given ID was not found' });
       res.status(200).json(order);
     }
   }, {
@@ -111,7 +111,7 @@ var ParcelControllers = function () {
       var order = _parcels2.default.find(function (a) {
         return a.id === parseInt(id);
       });
-      if (!order) return res.status(404).json({ message: 'The parcel with given ID was not found' });
+      if (!order) return res.status(400).json({ message: 'The parcel with given ID was not found' });
       var index = _parcels2.default.indexOf(order);
       _parcels2.default.splice(index, 1);
       res.send(order);
@@ -124,7 +124,7 @@ var ParcelControllers = function () {
       var order = _parcels2.default.find(function (a) {
         return a.id === parseInt(id);
       });
-      if (!order) return res.status(404).json({ message: 'The parcel with given ID was not found' });
+      if (!order) return res.status(400).json({ message: 'The parcel with given ID was not found' });
 
       var result = validateCancel(req.body);
 
