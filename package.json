@@ -32,9 +32,10 @@
     "eslint-plugin-import": "^2.14.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
-    "supertest": "^3.3.0",
+    "supertest": "^3.3.0"
     
   },
-  "author": "caleb",
-  "license": "ISC"
+"author": "caleb",
+"license": "ISC"
 }
+
