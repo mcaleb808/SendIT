@@ -1,0 +1,41 @@
+{
+  "name": "newapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm run build && npm run testbuild && nyc  mocha spec/specs.js --exit",
+    "testbuild": "babel test/ -d spec && babel --presets es2015 test/ -d spec",
+    "build": "babel src/ -d dist && babel --presets es2015 src/ -d dist",
+    "start": "node dist/server.js",
+    "api": "npm run build && npm run testbuild && node dist/server.js",
+	  "coveralls": "nyc report --reporter=text-lcov | coveralls"  
+	},
+  "dependencies": {
+    "express": "^4.16.4",
+    "joi": "^13.1.0",
+    "nodemon": "^1.18.6",
+    "pg": "^7.6.1",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "babel-watch": "^2.0.7",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "supertest": "^3.3.0"
+    
+  },
+"author": "caleb",
+"license": "ISC"
+}
+
