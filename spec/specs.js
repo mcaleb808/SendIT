@@ -313,4 +313,22 @@ describe('USERS', function () {
       });
     });
   });
+  describe('Delete a user', function () {
+    it('Delete a user with id 1', function (done) {
+      var id = 1;
+      _chai2.default.request(_app2.default).delete('/api/v1/users/' + id).end(function (err, res) {
+        _chai2.default.expect(res.statusCode).to.be.equal(200);
+
+        done();
+      });
+    });
+    it('should fail to delete a user with id 10', function (done) {
+      var id = 10;
+      _chai2.default.request(_app2.default).delete('/api/v1/users/' + id).end(function (err, res) {
+        _chai2.default.expect(res.statusCode).to.be.equal(400);
+
+        done();
+      });
+    });
+  });
 });
