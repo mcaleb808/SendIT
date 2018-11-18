@@ -395,4 +395,28 @@ describe('USERS', () => {
         });
     });
   });
+  describe('Delete a user', () => {
+    it('Delete a user with id 1', (done) => {
+      const id = 1;
+      chai
+        .request(app)
+        .delete(`/api/v1/users/${id}`)
+        .end((err, res) => {
+          chai.expect(res.statusCode).to.be.equal(200);
+
+          done();
+        });
+    });
+    it('should fail to delete a user with id 10', (done) => {
+      const id = 10;
+      chai
+        .request(app)
+        .delete(`/api/v1/users/${id}`)
+        .end((err, res) => {
+          chai.expect(res.statusCode).to.be.equal(400);
+
+          done();
+        });
+    });
+  });
 });
