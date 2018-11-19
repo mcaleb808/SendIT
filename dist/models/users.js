@@ -1,37 +1,19 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var User = function () {
-  function User(id, name, username, password, email) {
-    _classCallCheck(this, User);
-
-    this.id = id;
-    this.name = name;
-    this.username = username;
-    this.password = password;
-    this.email = email;
-  }
-
-  _createClass(User, [{
-    key: "getUsername",
-    value: function getUsername() {
-      return this.username;
-    }
-  }, {
-    key: "getName",
-    value: function getName() {
-      return this.name;
-    }
-  }]);
-
-  return User;
-}();
-
-exports.default = User;
+/* eslint linebreak-style: ["error", "windows"] */
+exports.default = [{
+  id: 1,
+  names: 'Mugisha Caleb Didier',
+  username: 'caleb123',
+  email: 'mcaleb@gmail.com',
+  password: 'caleb123'
+}, {
+  id: 2,
+  names: 'Muvunyi edmond',
+  username: 'edmond123',
+  email: 'edmond@gmail.com',
+  password: 'edmond123'
+}];
