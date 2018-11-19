@@ -296,6 +296,7 @@ describe('USERS', function () {
   });
 
   describe('list all user parcels', function () {
+    //this taste has issue
     it('should list all user parcels', function (done) {
       var senderId = 1;
       _chai2.default.request(_app2.default).get('/api/v1/users/1/parcels').end(function (err, res) {
