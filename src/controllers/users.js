@@ -1,6 +1,6 @@
 import Joi from 'joi';
-import users from '../models/users';
-import parcels from '../models/parcels';
+import users from '../data/users';
+import parcels from '../data/parcels';
 
 
 class UserControllers {

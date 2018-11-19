@@ -146,7 +146,7 @@ describe('PARCELS', function () {
         done();
       });
     });
-    it('invalid email', function (done) {
+    it('should fail to update parcel', function (done) {
       var parcel = {
         contents: "modem devices",
         value: 50000,
@@ -168,7 +168,7 @@ describe('PARCELS', function () {
   });
 
   describe('adding invalid parcel', function () {
-    it('missing parameters', function (done) {
+    it('should fail to add new parcel', function (done) {
       var parcel = {
         Pickup: "rwamagana",
         location: "muhanga",
@@ -179,44 +179,6 @@ describe('PARCELS', function () {
         sname: "mugisha caleb didier",
         senderId: "2",
         semail: "mcaleb808@gmail.com"
-      };
-      _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(400);
-
-        done();
-      });
-    });
-    it('invalid email', function (done) {
-      var parcel = {
-        contents: "modem devices",
-        value: 50000,
-        weight: 1,
-        sname: "mugisha caleb didier",
-        senderId: "2",
-        semail: "mcaleb80com",
-        rname: "mugabo felix",
-        raddress: "rusizi",
-        remail: "mcaleb808@gmail.com",
-        status: "delivered"
-      };
-      _chai2.default.request(_app2.default).put('/api/v1/parcels/1').send(parcel).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(400);
-
-        done();
-      });
-    });
-    it('Receiver name must be 3 characters or more', function (done) {
-      var parcel = {
-        contents: "modem devices",
-        value: 50000,
-        weight: 1,
-        sname: "mugisha caleb didier",
-        senderId: 2,
-        semail: "mcaleb808@gmail.com",
-        rname: "m",
-        raddress: "rusizi",
-        remail: "mcaleb808@gmail.com",
-        status: "delivered"
       };
       _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).end(function (err, res) {
         _chai2.default.expect(res.statusCode).to.be.equal(400);
@@ -300,20 +262,7 @@ describe('USERS', function () {
         done();
       });
     });
-  });
-  describe('should fail to register a new user', function () {
-    it('name must be a string', function (done) {
-      _chai2.default.request(_app2.default).post('/api/v1/users').set('content-type', 'application/json').send({
-        names: 1,
-        username: 'caleb123',
-        email: 'mcaleb@gmail.com',
-        password: 'caleb123'
-      }).end(function (err, res) {
-        _chai2.default.expect(res.status).to.equal(400);
-        done();
-      });
-    });
-    it('invalid email ', function (done) {
+    it('should fail to register a new user', function (done) {
       _chai2.default.request(_app2.default).post('/api/v1/users').set('content-type', 'application/json').send({
         names: 'Mugisha Caleb Didier',
         username: 'caleb123',
@@ -324,7 +273,7 @@ describe('USERS', function () {
         done();
       });
     });
-    it('missing parameters', function (done) {
+    it('should fail to register a new user', function (done) {
       _chai2.default.request(_app2.default).post('/api/v1/users').set('content-type', 'application/json').send({
         names: 'Mugisha Caleb Didier'
       }).end(function (err, res) {
@@ -333,6 +282,7 @@ describe('USERS', function () {
       });
     });
   });
+
   describe('update a user', function () {
     it('should update user id:1', function (done) {
       _chai2.default.request(_app2.default).put('/api/v1/users/1').set('content-type', 'application/json').send({

@@ -167,7 +167,7 @@ describe('PARCELS', () => {
           done();
         });
     });
-    it('invalid email', (done) => {
+    it('should fail to update parcel', (done) => {
       const parcel = {
         contents: "modem devices",
         value: 50000,
@@ -193,7 +193,7 @@ describe('PARCELS', () => {
   });
   
   describe('adding invalid parcel', () => {
-    it('missing parameters', (done) => {
+    it('should fail to add new parcel', (done) => {
       const parcel = {
         Pickup: "rwamagana",
         location: "muhanga",
@@ -204,52 +204,6 @@ describe('PARCELS', () => {
         sname: "mugisha caleb didier",
         senderId: "2",
         semail: "mcaleb808@gmail.com"
-      };
-      chai
-        .request(app)
-        .post('/api/v1/parcels')
-        .send(parcel)
-        .end((err, res) => {
-          chai.expect(res.statusCode).to.be.equal(400);
-
-          done();
-        });
-    });
-    it('invalid email', (done) => {
-      const parcel = {
-        contents: "modem devices",
-        value: 50000,
-        weight: 1,
-        sname: "mugisha caleb didier",
-        senderId: "2",
-        semail: "mcaleb80com",
-        rname: "mugabo felix",
-        raddress: "rusizi",
-        remail: "mcaleb808@gmail.com",
-        status: "delivered"
-      };
-      chai
-        .request(app)
-        .put('/api/v1/parcels/1')
-        .send(parcel)
-        .end((err, res) => {
-          chai.expect(res.statusCode).to.be.equal(400);
-
-          done();
-        });
-    });
-    it('Receiver name must be 3 characters or more', (done) => {
-      const parcel = {
-        contents: "modem devices",
-        value: 50000,
-        weight: 1,
-        sname: "mugisha caleb didier",
-        senderId: 2,
-        semail: "mcaleb808@gmail.com",
-        rname: "m",
-        raddress: "rusizi",
-        remail: "mcaleb808@gmail.com",
-        status: "delivered"
       };
       chai
         .request(app)
@@ -369,25 +323,7 @@ describe('USERS', () => {
           done();
         });
     });
-  });
-  describe('should fail to register a new user', () => {
-    it('name must be a string', (done) => {
-      chai
-        .request(app)
-        .post('/api/v1/users')
-        .set('content-type', 'application/json')
-        .send({
-            names: 1,
-            username: 'caleb123',
-            email: 'mcaleb@gmail.com',
-            password: 'caleb123'
-        })
-        .end((err, res) => {
-          chai.expect(res.status).to.equal(400);
-          done();
-        });
-    });
-    it('invalid email ', (done) => {
+    it('should fail to register a new user', (done) => {
       chai
         .request(app)
         .post('/api/v1/users')
@@ -403,7 +339,7 @@ describe('USERS', () => {
           done();
         });
     });
-    it('missing parameters', (done) => {
+    it('should fail to register a new user', (done) => {
       chai
         .request(app)
         .post('/api/v1/users')
@@ -417,6 +353,7 @@ describe('USERS', () => {
         });
     });
   });
+
   describe('update a user', () => {
     it('should update user id:1', (done) => {
       chai
