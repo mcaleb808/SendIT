@@ -102,6 +102,7 @@ describe('PARCELS', function () {
       };
       _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).end(function (err, res) {
         _chai2.default.expect(res.statusCode).to.be.equal(400);
+        _chai2.default.expect(res.body).to.be.a('object');
 
         done();
       });

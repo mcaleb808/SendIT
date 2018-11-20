@@ -17,7 +17,7 @@ describe('root request', () => {
         });
     });
   });
-  
+
   describe('bad request', () => {
     it('should return 404(Not found) staus', (done) => {
       chai
@@ -115,6 +115,7 @@ describe('PARCELS', () => {
         .send(parcel)
         .end((err, res) => {
           chai.expect(res.statusCode).to.be.equal(400);
+          chai.expect(res.body).to.be.a('object');
 
           done();
         });
