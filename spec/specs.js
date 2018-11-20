@@ -18,13 +18,14 @@ _chai2.default.use(_chaiHttp2.default);
 
 describe('root request', function () {
   describe('Get api documentation', function () {
-    it('should return 200(success) staus', function (done) {
+    it('should return 200(success) status', function (done) {
       _chai2.default.request(_app2.default).get('/').end(function (err, res) {
         _chai2.default.expect(res.statusCode).to.be.equal(200);
         done();
       });
     });
   });
+
   describe('bad request', function () {
     it('should return 404(Not found) staus', function (done) {
       _chai2.default.request(_app2.default).get('/bc').end(function (err, res) {
@@ -101,6 +102,7 @@ describe('PARCELS', function () {
       };
       _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).end(function (err, res) {
         _chai2.default.expect(res.statusCode).to.be.equal(400);
+        _chai2.default.expect(res.body).to.be.a('object');
 
         done();
       });
