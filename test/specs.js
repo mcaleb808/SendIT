@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 
 describe('root request', () => {
   describe('Get api documentation', () => {
-    it('should return 200(success) staus', (done) => {
+    it('should return 200(success) status', (done) => {
       chai
         .request(app)
         .get('/')
@@ -17,6 +17,7 @@ describe('root request', () => {
         });
     });
   });
+  
   describe('bad request', () => {
     it('should return 404(Not found) staus', (done) => {
       chai
