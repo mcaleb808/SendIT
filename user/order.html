@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" >
+    <meta name="SendIt" content="parcels derivery">
+    <title>SendIt | Welcome</title>
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <header id="myHeader">
+      <div class="container">
+        <div id="branding">
+          <a href="parcels.html"><h1><span class="highlight">SEND</span>IT</h1></a>
+        </div>
+        <nav>
+              <li class="current">
+              <a href="profile.html">Profile</a>
+            </li>
+            <li><a href="../index.html">
+              <button>LOG OUT</button>
+            </a></li>
+        </nav>
+      </div>
+    </header>
+
+    <div class="form-style-2">
+      <div class="form-style-2-heading">Create a parcel delivery order</div>
+        <form action="" name="parcel" id='parcel'>
+          <div class="tab">
+            <label><span>&nbsp;</span><h2>My Parcel Details</h2></label>
+            <label for="field1"><span>Pick Up location<span class="required">*</span></span><input type="text" class="input-field" name="fname" value="" required/></label>
+            <label for="field1"><span>Destination<span class="required">*</span></span><input type="text" class="input-field" name="user" value="" required/></label>
+            <label for="field1"><span>Parcel contents:<span class="required">*</span></span><input type="text" class="input-field" name="fname" value="" required/></label>
+            <label for="field1"><span>Parcel value:<span class="required">*</span></span><input type="text" class="input-field" name="user" value="" required/></label>
+            <label for="field1"><span>Weight:<span class="required">(Kg)*</span></span><input type="text" class="input-field" name="fname" value="" required/></label>
+            <label for="field1"><span>Price:<span class="required">(Rwf)</span></span><input type="text" class="input-field" name="user" value="kgs*500" disabled/></label>
+          </div>
+          <div class="tab">
+            <label><span>&nbsp;</span><h2>Sender information</h2></label>
+            <label for="field1"><span>Fullname<span class="required">*</span></span><input type="text" class="input-field" name="fname" value="" required/></label>
+            <label for="field1"><span>Adrress <span class="required">*</span></span><input type="text" class="input-field" name="user" value="" required/></label>
+            <label for="field1"><span>E-mail <span class="required">*</span></span><input type="email" class="input-field" name="user" value="" required/></label>
+          </div>
+          <div class="tab">
+            <label><span>&nbsp;</span><h2>Receiver information</h2></label>
+            <label for="field1"><span>Fullname<span class="required">*</span></span><input type="text" class="input-field" name="fname" value="" required/></label>
+            <label for="field1"><span>Adrress <span class="required">*</span></span><input type="text" class="input-field" name="user" value="" required/></label>
+            <label for="field1"><span>E-mail <span class="required">*</span></span><input type="email" class="input-field" name="user" value="" required/></label>
+          </div>
+          <div style="overflow:auto;">
+              <div style="float:center;">
+                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+              </div>
+          </div>
+<!-- Circles which indicates the steps of the form: -->
+          <div style="text-align:center;margin-top:40px;">
+              <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+          </div>
+
+        </form>
+      <script type="text/javascript" src="../js/tab.js"></script>
+    </div>
+    <script type="text/javascript" src="/./js/index.js"></script>
+
+
+  </body>
+  <footer>Caleb SendIt APP  Copyright &copy; 2018</footer>
+</html>
