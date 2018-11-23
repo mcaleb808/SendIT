@@ -1,6 +1,6 @@
 import Joi from 'joi';
-import users from '../data/users';
-import parcels from '../data/parcels';
+import users from '../models/users';
+import parcels from '../models/parcels';
 
 
 class UserControllers {
@@ -26,7 +26,6 @@ class UserControllers {
 
 
   static editUser(req, res) {
-  const { id } = req.params;
   const user = users.find(c => c.id === parseInt(req.params.id));
   if (!user) return res.status(404).send('The user with given ID was not found');
 
@@ -73,7 +72,6 @@ class UserControllers {
 
 
   static getUserParcels(req, res) {
-      const { id } = req.params;
     const order = parcels.find(c => c.senderId === parseInt(req.params.senderId));
     const parcelPerUser = [];
     let results = {};

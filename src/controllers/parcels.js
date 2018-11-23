@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import parcels from '../data/parcels';
+import parcels from '../models/parcels';
 
 class ParcelControllers {
   static createOrder(req, res) {

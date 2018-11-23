@@ -10,11 +10,11 @@ var _joi = require('joi');
 
 var _joi2 = _interopRequireDefault(_joi);
 
-var _users = require('../data/users');
+var _users = require('../models/users');
 
 var _users2 = _interopRequireDefault(_users);
 
-var _parcels = require('../data/parcels');
+var _parcels = require('../models/parcels');
 
 var _parcels2 = _interopRequireDefault(_parcels);
 
@@ -54,8 +54,6 @@ var UserControllers = function () {
   }, {
     key: 'editUser',
     value: function editUser(req, res) {
-      var id = req.params.id;
-
       var user = _users2.default.find(function (c) {
         return c.id === parseInt(req.params.id);
       });
