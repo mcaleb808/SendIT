@@ -1,22 +1,24 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-   value: true
+  value: true
 });
-/* eslint linebreak-style: ["error", "windows"] */
-exports.default = [{
-   id: 1,
-   pickup: 'Kigali',
-   destination: 'Musanze',
-   contents: 'modem',
-   value: '6000',
-   weight: '0,5',
-   location: 'Gakenke',
-   senderId: 1,
-   sname: 'Mugisha Caleb Didier',
-   semail: 'mcalb808@gmail.com',
-   rname: 'Kwizera Claude',
-   remail: 'kwizera@yahoo.fr',
-   raddress: 'musanze',
-   status: 'pending'
-}];
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Parcel = function Parcel(id, location, destination, pLocation, weight, senderId, receiver, status, createdDate, modifiedDate) {
+  _classCallCheck(this, Parcel);
+
+  this.id = id;
+  this.location = location;
+  this.destination = destination;
+  this.pLocation = pLocation;
+  this.weight = weight;
+  this.senderId = senderId;
+  this.receiver = receiver;
+  this.status = status;
+  this.createdDate = createdDate;
+  this.modifiedDate = modifiedDate;
+};
+
+exports.default = Parcel;

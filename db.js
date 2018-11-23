@@ -1,29 +1,49 @@
+// db.js
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
 
 dotenv.config();
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
+  connectionString: process.env.DATABASE_URL,
 });
 
 pool.on('connect', () => {
   console.log('connected to the db');
 });
+   
+const createParcel = () => {
+  const queryText = `CREATE TABLE IF NOT EXISTS
+      parcels(
+        id SERIAL PRIMARY KEY,
+        location VARCHAR(128) NOT NULL,
+        destination VARCHAR(128) NOT NULL,
+        pLocation VARCHAR(128) NOT NULL,
+        weight INTEGER NOT NULL,
+        senderId INTEGER NOT NULL,
+        receiver VARCHAR(128) NOT NULL,
+        status VARCHAR(128) NOT NULL
+      )`;
+  pool.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+};
 
-/**
- * Create Tables
- */
-const createTables = () => {
-  const queryText =
-    `CREATE TABLE IF NOT EXISTS
-      reflections(
-        id UUID PRIMARY KEY,
-        success VARCHAR(128) NOT NULL,
-        low_point VARCHAR(128) NOT NULL,
-        take_away VARCHAR(128) NOT NULL,
-        created_date TIMESTAMP,
-        modified_date TIMESTAMP
+
+const createUser = () => {
+  const queryText = `CREATE TABLE IF NOT EXISTS
+      users(
+        id SERIAL PRIMARY KEY,
+        email VARCHAR(128) UNIQUE NOT NULL,
+        username VARCHAR(128) UNIQUE NOT NULL,
+        fullname VARCHAR(128) NOT NULL,
+        password VARCHAR(128) NOT NULL
       )`;
 
   pool.query(queryText)
@@ -35,13 +55,11 @@ const createTables = () => {
       console.log(err);
       pool.end();
     });
-}
+};
 
-/**
- * Drop Tables
- */
-const dropTables = () => {
-  const queryText = 'DROP TABLE IF EXISTS reflections';
+
+const dropParcel = () => {
+  const queryText = 'DROP TABLE IF EXISTS parcels returning *';
   pool.query(queryText)
     .then((res) => {
       console.log(res);
@@ -51,7 +69,23 @@ const dropTables = () => {
       console.log(err);
       pool.end();
     });
-}
+};
+
+/**
+ * Drop User Table
+ */
+const dropUser = () => {
+  const queryText = 'DROP TABLE IF EXISTS users returning *';
+  pool.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+};
 
 pool.on('remove', () => {
   console.log('client removed');
@@ -59,8 +93,10 @@ pool.on('remove', () => {
 });
 
 module.exports = {
-  createTables,
-  dropTables
+  createUser,
+  createParcel,
+  dropParcel,
+  dropUser,
 };
 
 require('make-runnable');
