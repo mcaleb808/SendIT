@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 
 describe('root request', () => {
   describe('Get api documentation', () => {
-    it('should return 200(success) staus', (done) => {
+    it('should return 200(success) status', (done) => {
       chai
         .request(app)
         .get('/')
@@ -17,6 +17,7 @@ describe('root request', () => {
         });
     });
   });
+
   describe('bad request', () => {
     it('should return 404(Not found) staus', (done) => {
       chai
@@ -114,6 +115,7 @@ describe('PARCELS', () => {
         .send(parcel)
         .end((err, res) => {
           chai.expect(res.statusCode).to.be.equal(400);
+          chai.expect(res.body).to.be.a('object');
 
           done();
         });
@@ -167,7 +169,7 @@ describe('PARCELS', () => {
           done();
         });
     });
-    it('should fail to update parcel', (done) => {
+    it('invalid email', (done) => {
       const parcel = {
         contents: "modem devices",
         value: 50000,
@@ -193,7 +195,7 @@ describe('PARCELS', () => {
   });
   
   describe('adding invalid parcel', () => {
-    it('should fail to add new parcel', (done) => {
+    it('missing parameters', (done) => {
       const parcel = {
         Pickup: "rwamagana",
         location: "muhanga",
@@ -204,6 +206,52 @@ describe('PARCELS', () => {
         sname: "mugisha caleb didier",
         senderId: "2",
         semail: "mcaleb808@gmail.com"
+      };
+      chai
+        .request(app)
+        .post('/api/v1/parcels')
+        .send(parcel)
+        .end((err, res) => {
+          chai.expect(res.statusCode).to.be.equal(400);
+
+          done();
+        });
+    });
+    it('invalid email', (done) => {
+      const parcel = {
+        contents: "modem devices",
+        value: 50000,
+        weight: 1,
+        sname: "mugisha caleb didier",
+        senderId: "2",
+        semail: "mcaleb80com",
+        rname: "mugabo felix",
+        raddress: "rusizi",
+        remail: "mcaleb808@gmail.com",
+        status: "delivered"
+      };
+      chai
+        .request(app)
+        .put('/api/v1/parcels/1')
+        .send(parcel)
+        .end((err, res) => {
+          chai.expect(res.statusCode).to.be.equal(400);
+
+          done();
+        });
+    });
+    it('Receiver name must be 3 characters or more', (done) => {
+      const parcel = {
+        contents: "modem devices",
+        value: 50000,
+        weight: 1,
+        sname: "mugisha caleb didier",
+        senderId: 2,
+        semail: "mcaleb808@gmail.com",
+        rname: "m",
+        raddress: "rusizi",
+        remail: "mcaleb808@gmail.com",
+        status: "delivered"
       };
       chai
         .request(app)
@@ -323,7 +371,25 @@ describe('USERS', () => {
           done();
         });
     });
-    it('should fail to register a new user', (done) => {
+  });
+  describe('should fail to register a new user', () => {
+    it('name must be a string', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/users')
+        .set('content-type', 'application/json')
+        .send({
+            names: 1,
+            username: 'caleb123',
+            email: 'mcaleb@gmail.com',
+            password: 'caleb123'
+        })
+        .end((err, res) => {
+          chai.expect(res.status).to.equal(400);
+          done();
+        });
+    });
+    it('invalid email ', (done) => {
       chai
         .request(app)
         .post('/api/v1/users')
@@ -339,7 +405,7 @@ describe('USERS', () => {
           done();
         });
     });
-    it('should fail to register a new user', (done) => {
+    it('missing parameters', (done) => {
       chai
         .request(app)
         .post('/api/v1/users')
@@ -353,7 +419,6 @@ describe('USERS', () => {
         });
     });
   });
-
   describe('update a user', () => {
     it('should update user id:1', (done) => {
       chai
@@ -391,6 +456,30 @@ describe('USERS', () => {
         .get(`/api/v1/users/${senderId}/parcels`)
         .end((err, res) => {
           chai.expect(res.status).to.equal(400);
+          done();
+        });
+    });
+  });
+  describe('Delete a user', () => {
+    it('Delete a user with id 1', (done) => {
+      const id = 1;
+      chai
+        .request(app)
+        .delete(`/api/v1/users/${id}`)
+        .end((err, res) => {
+          chai.expect(res.statusCode).to.be.equal(200);
+
+          done();
+        });
+    });
+    it('should fail to delete a user with id 10', (done) => {
+      const id = 10;
+      chai
+        .request(app)
+        .delete(`/api/v1/users/${id}`)
+        .end((err, res) => {
+          chai.expect(res.statusCode).to.be.equal(400);
+
           done();
         });
     });

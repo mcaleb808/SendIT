@@ -18,13 +18,14 @@ _chai2.default.use(_chaiHttp2.default);
 
 describe('root request', function () {
   describe('Get api documentation', function () {
-    it('should return 200(success) staus', function (done) {
+    it('should return 200(success) status', function (done) {
       _chai2.default.request(_app2.default).get('/').end(function (err, res) {
         _chai2.default.expect(res.statusCode).to.be.equal(200);
         done();
       });
     });
   });
+
   describe('bad request', function () {
     it('should return 404(Not found) staus', function (done) {
       _chai2.default.request(_app2.default).get('/bc').end(function (err, res) {
@@ -101,6 +102,7 @@ describe('PARCELS', function () {
       };
       _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).end(function (err, res) {
         _chai2.default.expect(res.statusCode).to.be.equal(400);
+        _chai2.default.expect(res.body).to.be.a('object');
 
         done();
       });
@@ -146,7 +148,7 @@ describe('PARCELS', function () {
         done();
       });
     });
-    it('should fail to update parcel', function (done) {
+    it('invalid email', function (done) {
       var parcel = {
         contents: "modem devices",
         value: 50000,
@@ -168,7 +170,7 @@ describe('PARCELS', function () {
   });
 
   describe('adding invalid parcel', function () {
-    it('should fail to add new parcel', function (done) {
+    it('missing parameters', function (done) {
       var parcel = {
         Pickup: "rwamagana",
         location: "muhanga",
@@ -179,6 +181,44 @@ describe('PARCELS', function () {
         sname: "mugisha caleb didier",
         senderId: "2",
         semail: "mcaleb808@gmail.com"
+      };
+      _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).end(function (err, res) {
+        _chai2.default.expect(res.statusCode).to.be.equal(400);
+
+        done();
+      });
+    });
+    it('invalid email', function (done) {
+      var parcel = {
+        contents: "modem devices",
+        value: 50000,
+        weight: 1,
+        sname: "mugisha caleb didier",
+        senderId: "2",
+        semail: "mcaleb80com",
+        rname: "mugabo felix",
+        raddress: "rusizi",
+        remail: "mcaleb808@gmail.com",
+        status: "delivered"
+      };
+      _chai2.default.request(_app2.default).put('/api/v1/parcels/1').send(parcel).end(function (err, res) {
+        _chai2.default.expect(res.statusCode).to.be.equal(400);
+
+        done();
+      });
+    });
+    it('Receiver name must be 3 characters or more', function (done) {
+      var parcel = {
+        contents: "modem devices",
+        value: 50000,
+        weight: 1,
+        sname: "mugisha caleb didier",
+        senderId: 2,
+        semail: "mcaleb808@gmail.com",
+        rname: "m",
+        raddress: "rusizi",
+        remail: "mcaleb808@gmail.com",
+        status: "delivered"
       };
       _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).end(function (err, res) {
         _chai2.default.expect(res.statusCode).to.be.equal(400);
@@ -262,7 +302,20 @@ describe('USERS', function () {
         done();
       });
     });
-    it('should fail to register a new user', function (done) {
+  });
+  describe('should fail to register a new user', function () {
+    it('name must be a string', function (done) {
+      _chai2.default.request(_app2.default).post('/api/v1/users').set('content-type', 'application/json').send({
+        names: 1,
+        username: 'caleb123',
+        email: 'mcaleb@gmail.com',
+        password: 'caleb123'
+      }).end(function (err, res) {
+        _chai2.default.expect(res.status).to.equal(400);
+        done();
+      });
+    });
+    it('invalid email ', function (done) {
       _chai2.default.request(_app2.default).post('/api/v1/users').set('content-type', 'application/json').send({
         names: 'Mugisha Caleb Didier',
         username: 'caleb123',
@@ -273,7 +326,7 @@ describe('USERS', function () {
         done();
       });
     });
-    it('should fail to register a new user', function (done) {
+    it('missing parameters', function (done) {
       _chai2.default.request(_app2.default).post('/api/v1/users').set('content-type', 'application/json').send({
         names: 'Mugisha Caleb Didier'
       }).end(function (err, res) {
@@ -282,7 +335,6 @@ describe('USERS', function () {
       });
     });
   });
-
   describe('update a user', function () {
     it('should update user id:1', function (done) {
       _chai2.default.request(_app2.default).put('/api/v1/users/1').set('content-type', 'application/json').send({
@@ -309,6 +361,24 @@ describe('USERS', function () {
       var senderId = 10;
       _chai2.default.request(_app2.default).get('/api/v1/users/' + senderId + '/parcels').end(function (err, res) {
         _chai2.default.expect(res.status).to.equal(400);
+        done();
+      });
+    });
+  });
+  describe('Delete a user', function () {
+    it('Delete a user with id 1', function (done) {
+      var id = 1;
+      _chai2.default.request(_app2.default).delete('/api/v1/users/' + id).end(function (err, res) {
+        _chai2.default.expect(res.statusCode).to.be.equal(200);
+
+        done();
+      });
+    });
+    it('should fail to delete a user with id 10', function (done) {
+      var id = 10;
+      _chai2.default.request(_app2.default).delete('/api/v1/users/' + id).end(function (err, res) {
+        _chai2.default.expect(res.statusCode).to.be.equal(400);
+
         done();
       });
     });
