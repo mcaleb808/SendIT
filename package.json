@@ -4,10 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "testbuild": "babel test/ -d spec && babel --presets es2015 test/ -d spec",
-    "build": "babel src/ -d dist && babel --presets es2015 src/ -d dist",
+    "testbuild": "babel --presets es2015 test/ -d spec",
+    "build": "babel --presets es2015 src/ -d dist",
     "start": "node dist/server.js",
-    "api": "npm run build && npm run testbuild && node dist/server.js"
+    "api": "npm run build && node dist/server.js"
   },
   "dependencies": {
     "express": "^4.16.4",
