@@ -4,12 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "npm run build && npm run testbuild && nyc  mocha spec/specs.js --exit",
     "testbuild": "babel test/ -d spec && babel --presets es2015 test/ -d spec",
     "build": "babel src/ -d dist && babel --presets es2015 src/ -d dist",
     "start": "node dist/server.js",
-    "api": "npm run build && npm run testbuild && node dist/server.js",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "api": "npm run build && npm run testbuild && node dist/server.js"
   },
   "dependencies": {
     "express": "^4.16.4",
