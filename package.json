@@ -5,15 +5,18 @@
   "main": "app.js",
   "scripts": {
     "test": "npm run build && npm run testbuild && nyc  mocha spec/specs.js --exit",
-    "testbuild": "babel test/ -d spec && babel --presets es2015 test/ -d spec",
-    "build": "babel src/ -d dist && babel --presets es2015 src/ -d dist",
+    "testbuild": "babel --presets es2015 test/ -d spec",
+    "build": "babel --presets es2015 src/ -d dist",
     "start": "node dist/server.js",
-    "api": "npm run build && npm run testbuild && node dist/server.js",
+    "api": "npm run build && node dist/server.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
+    "dotenv": "^6.1.0",
     "express": "^4.16.4",
     "joi": "^13.1.0",
+    "jsonwebtoken": "^8.4.0",
+    "make-runnable": "^1.3.6",
     "nodemon": "^1.18.6",
     "pg": "^7.6.1",
     "request": "^2.88.0"
