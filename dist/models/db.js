@@ -16,7 +16,7 @@ pool.on('connect', function () {
 });
 
 var createUser = function createUser() {
-  var queryText = 'CREATE TABLE IF NOT EXISTS\n      users(\n        id SERIAL PRIMARY KEY,\n        email VARCHAR(128)  NOT NULL,\n        username VARCHAR(128) NOT NULL,\n        fullname VARCHAR(128) NOT NULL,\n        usertype VARCHAR(128) NOT NULL,\n        password VARCHAR(128) NOT NULL\n      )';
+  var queryText = 'CREATE TABLE IF NOT EXISTS\n      users(\n        id SERIAL PRIMARY KEY,\n        email VARCHAR(128) UNIQUE NOT NULL,\n        username VARCHAR(128) NOT NULL,\n        fullname VARCHAR(128) NOT NULL,\n        usertype VARCHAR(128) NOT NULL,\n        password VARCHAR(128) NOT NULL\n      )';
 
   pool.query(queryText).then(function (res) {
     console.log(res);
