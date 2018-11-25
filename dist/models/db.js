@@ -27,8 +27,31 @@ var createUser = function createUser() {
   });
 };
 
+var createParcel = function createParcel() {
+  var queryText = 'CREATE TABLE IF NOT EXISTS\n      parcels(\n        id serial PRIMARY KEY,\n        pickup TEXT NOT NULL,\n        destination TEXT NOT NULL,\n        location TEXT NOT NULL,\n        weight NUMERIC NOT NULL,\n        receiver_name VARCHAR(128) NOT NULL,\n        receiver_address VARCHAR(128) NOT NULL,\n        receiver_email VARCHAR(128) NOT NULL,\n        status TEXT NOT NULL,\n        sender_id INTEGER NOT NULL,\n        FOREIGN KEY (sender_id) REFERENCES users (id) ON DELETE CASCADE\n      )';
+
+  pool.query(queryText).then(function (res) {
+    console.log(res);
+    pool.end();
+  }).catch(function (err) {
+    console.log(err);
+    pool.end();
+  });
+};
+
 var dropUser = function dropUser() {
   var queryText = 'DROP TABLE IF EXISTS users returning *';
+  pool.query(queryText).then(function (res) {
+    console.log(res);
+    pool.end();
+  }).catch(function (err) {
+    console.log(err);
+    pool.end();
+  });
+};
+
+var dropParcel = function dropParcel() {
+  var queryText = 'DROP TABLE IF EXISTS parcels returning *';
   pool.query(queryText).then(function (res) {
     console.log(res);
     pool.end();
@@ -45,7 +68,9 @@ pool.on('remove', function () {
 
 module.exports = {
   createUser: createUser,
-  dropUser: dropUser
+  createParcel: createParcel,
+  dropUser: dropUser,
+  dropParcel: dropParcel
 };
 
 require('make-runnable');
