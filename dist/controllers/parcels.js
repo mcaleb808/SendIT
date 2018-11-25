@@ -50,6 +50,20 @@ var ParcelControllers = {
     } catch (error) {
       return res.status(400).send(error);
     }
+  },
+  getParcel: async function getParcel(req, res) {
+    var text = 'SELECT * FROM parcels WHERE id = $1 AND sender_id = $2';
+    try {
+      var _ref3 = await _db2.default.query(text, [req.params.id, req.user.id]),
+          rows = _ref3.rows;
+
+      if (!rows[0]) {
+        return res.status(404).send({ 'message': 'parcel not found' });
+      }
+      return res.status(200).send(rows[0]);
+    } catch (error) {
+      return res.status(400).send(error);
+    }
   }
 };
 var validateOrder = function validateOrder(order) {
