@@ -30,7 +30,7 @@ const ParcelControllers = {
         const { rows } = await db.query(createQuery, data);
         return res.status(201).send(rows[0]);
         } catch(error) {
-            console.log(error.stack)
+            console.log(error.stack);
         return res.status(400).send(error);
         }
     },
@@ -54,7 +54,26 @@ const ParcelControllers = {
         } catch(error) {
           return res.status(400).send(error)
         }
-      },    
+      }, 
+      async cancelParcel(req, res) {
+        const findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
+        const cancel =`UPDATE parcels
+          SET status=$1 returning *`;
+        try {
+          const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
+          if(!rows[0]) {
+            return res.status(404).send({'message': 'Parcel not found'});
+          }
+          const values = [
+            'canceled'
+          ];
+          const response = await db.query(cancel, values);
+          return res.status(200).send(response.rows[0]);
+        } catch(err) {
+          console.log(err.stack);
+          return res.status(400).send(err);
+        }
+      }
 }
 const validateOrder = order => {
 
