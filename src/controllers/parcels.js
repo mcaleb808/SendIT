@@ -34,6 +34,15 @@ const ParcelControllers = {
         return res.status(400).send(error);
         }
     },
+    async getAllParcels(req, res) {
+        const findUserParcels = 'SELECT * FROM parcels where sender_id = $1';
+        try {
+          const { rows, rowCount } = await db.query(findUserParcels, [req.user.id]);
+          return res.status(200).send({ rows, rowCount });
+        } catch(error) {
+          return res.status(400).send(error);
+        }
+    }
 }
 const validateOrder = order => {
 
