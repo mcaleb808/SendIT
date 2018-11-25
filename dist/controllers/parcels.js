@@ -64,6 +64,24 @@ var ParcelControllers = {
     } catch (error) {
       return res.status(400).send(error);
     }
+  },
+  cancelParcel: async function cancelParcel(req, res) {
+    var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
+    var cancel = 'UPDATE parcels\n          SET status=$1 returning *';
+    try {
+      var _ref4 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
+          rows = _ref4.rows;
+
+      if (!rows[0]) {
+        return res.status(404).send({ 'message': 'Parcel not found' });
+      }
+      var values = ['canceled'];
+      var response = await _db2.default.query(cancel, values);
+      return res.status(200).send(response.rows[0]);
+    } catch (err) {
+      console.log(err.stack);
+      return res.status(400).send(err);
+    }
   }
 };
 var validateOrder = function validateOrder(order) {
