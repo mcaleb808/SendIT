@@ -8,6 +8,7 @@ router.use(urlencoded({ extended: false }));
 //user endpoints
 
 router.post('/api/v1/auth/signup', UserControllers.signUp);
+router.get('/api/v1/auth/login', UserControllers.signIn);
 
 
 
