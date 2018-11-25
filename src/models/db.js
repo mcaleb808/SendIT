@@ -33,8 +33,49 @@ const createUser = () => {
     });
 };
 
+const createParcel = () => {
+  const queryText =
+    `CREATE TABLE IF NOT EXISTS
+      parcels(
+        id serial PRIMARY KEY,
+        pickup TEXT NOT NULL,
+        destination TEXT NOT NULL,
+        location TEXT NOT NULL,
+        weight NUMERIC NOT NULL,
+        receiver_name VARCHAR(128) NOT NULL,
+        receiver_address VARCHAR(128) NOT NULL,
+        receiver_email VARCHAR(128) NOT NULL,
+        status TEXT NOT NULL,
+        sender_id INTEGER NOT NULL,
+        FOREIGN KEY (sender_id) REFERENCES users (id) ON DELETE CASCADE
+      )`;
+
+  pool.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+}
+
 const dropUser = () => {
   const queryText = 'DROP TABLE IF EXISTS users returning *';
+  pool.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+};
+
+const dropParcel = () => {
+  const queryText = 'DROP TABLE IF EXISTS parcels returning *';
   pool.query(queryText)
     .then((res) => {
       console.log(res);
@@ -53,7 +94,9 @@ pool.on('remove', () => {
 
 module.exports = {
   createUser,
-  dropUser
+  createParcel,
+  dropUser,
+  dropParcel
 };
 
 require('make-runnable');
