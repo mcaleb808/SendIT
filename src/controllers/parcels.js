@@ -73,6 +73,32 @@ const ParcelControllers = {
           console.log(err.stack);
           return res.status(400).send(err);
         }
+      },
+      async changeDestination(req, res) {
+        const result = validateUpdate(req.body);
+        const { error } = validateUpdate(req.body);
+        if (error) {
+        res.status(400).send(error.details[0].message);
+    
+        return;
+        }
+        const findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
+        const destination =`UPDATE parcels
+          SET destination=$1 returning *`;
+        try {
+          const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
+          if(!rows[0]) {
+            return res.status(404).send({'message': 'Parcel not found'});
+          }
+          const values = [
+            req.body.destination
+          ];
+          const response = await db.query(destination, values);
+          return res.status(200).send(response.rows[0]);
+        } catch(err) {
+          console.log(err.stack);
+          return res.status(400).send(err);
+        }
       }
 }
 const validateOrder = order => {
@@ -84,6 +110,14 @@ const validateOrder = order => {
       receiver_name: Joi.string().min(3).required(),
       receiver_email: Joi.string().email({ minDomainAtoms: 2 }).required(),
       receiver_address: Joi.string().min(3).required()
+    };
+  
+    return Joi.validate(order, schema);
+  };
+  const validateUpdate = order => {
+
+    const schema = {
+      destination: Joi.string().min(3).required()
     };
   
     return Joi.validate(order, schema);

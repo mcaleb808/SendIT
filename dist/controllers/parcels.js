@@ -82,6 +82,34 @@ var ParcelControllers = {
       console.log(err.stack);
       return res.status(400).send(err);
     }
+  },
+  changeDestination: async function changeDestination(req, res) {
+    var result = validateUpdate(req.body);
+
+    var _validateUpdate = validateUpdate(req.body),
+        error = _validateUpdate.error;
+
+    if (error) {
+      res.status(400).send(error.details[0].message);
+
+      return;
+    }
+    var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
+    var destination = 'UPDATE parcels\n          SET destination=$1 returning *';
+    try {
+      var _ref5 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
+          rows = _ref5.rows;
+
+      if (!rows[0]) {
+        return res.status(404).send({ 'message': 'Parcel not found' });
+      }
+      var values = [req.body.destination];
+      var response = await _db2.default.query(destination, values);
+      return res.status(200).send(response.rows[0]);
+    } catch (err) {
+      console.log(err.stack);
+      return res.status(400).send(err);
+    }
   }
 };
 var validateOrder = function validateOrder(order) {
@@ -93,6 +121,14 @@ var validateOrder = function validateOrder(order) {
     receiver_name: _joi2.default.string().min(3).required(),
     receiver_email: _joi2.default.string().email({ minDomainAtoms: 2 }).required(),
     receiver_address: _joi2.default.string().min(3).required()
+  };
+
+  return _joi2.default.validate(order, schema);
+};
+var validateUpdate = function validateUpdate(order) {
+
+  var schema = {
+    destination: _joi2.default.string().min(3).required()
   };
 
   return _joi2.default.validate(order, schema);
