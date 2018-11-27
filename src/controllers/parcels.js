@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import db from '../db';
+import Helper from './Helper';
 
 const ParcelControllers = {
   async createParcel(req, res) {
