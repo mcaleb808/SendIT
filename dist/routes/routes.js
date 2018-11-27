@@ -29,6 +29,7 @@ router.use((0, _express.urlencoded)({ extended: false }));
 
 router.post('/api/v1/auth/signup', _users2.default.signUp);
 router.get('/api/v1/auth/login', _users2.default.signIn);
+
 router.post('/api/v1/parcels', _Auth2.default.verifyToken, _parcels2.default.createParcel);
 router.get('/api/v1/parcels', _Auth2.default.verifyToken, _parcels2.default.getAllParcels);
 router.get('/api/v1/parcels/:id', _Auth2.default.verifyToken, _parcels2.default.getParcel);
