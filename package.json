@@ -6,6 +6,7 @@
   "scripts": {
     "test": "npm run build && npm run testbuild && nyc  mocha spec/specs.js --exit",
     "testbuild": "babel --presets es2015 test/ -d spec",
+    "createTable":"node dist/db/createTable.js --exit",
     "build": "babel --presets es2015 src/ -d dist",
     "start": "node dist/server.js",
     "api": "npm run build && node dist/server.js"

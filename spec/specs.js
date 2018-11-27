@@ -15,6 +15,10 @@ var _app2 = _interopRequireDefault(_app);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _chai2.default.use(_chaiHttp2.default);
+var token = '';
+var key = 'x-access-token';
+var fakeToken = '==eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY';
+var parcelId = '';
 
 describe('root request', function () {
   describe('Get api documentation', function () {
@@ -64,9 +68,9 @@ describe('POST /api/v1/auth/signup', function () {
       done();
     });
   });
-  it.skip('should return 201 - User created', function (done) {
+  it('should return 201 - User created', function (done) {
     var newUser = {
-      email: "mcalebcc1808@gmail.com",
+      email: "test1238@gmail.com",
       username: "mcalb",
       fullName: "kmamanzi rebecaa",
       userType: "admin",
@@ -74,6 +78,8 @@ describe('POST /api/v1/auth/signup', function () {
     };
     _chai2.default.request(_app2.default).post('/api/v1/auth/signup').send(newUser).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(201);
+      token = res.body.token;
+      console.log(token);
       done();
     });
   });
@@ -81,19 +87,19 @@ describe('POST /api/v1/auth/signup', function () {
 
 describe('GET /api/v1/auth/login', function () {
   it('should return 400 - The credentials you provided is incorrect', function (done) {
-    _chai2.default.request(_app2.default).get('/api/v1/auth/login').send({ email: '', password: '' }).end(function (err, res) {
+    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: '', password: 'yyyyy' }).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
   });
   it('should return 400 - User not found', function (done) {
-    _chai2.default.request(_app2.default).get('/api/v1/auth/login').send({ email: 'mugisha', password: '222' }).end(function (err, res) {
+    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'mugisha', password: '222' }).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
   });
   it('should return 200 - Success', function (done) {
-    _chai2.default.request(_app2.default).get('/api/v1/auth/login').send({ email: 'mcalebxc808@gmail.com', password: 'mcaleb' }).end(function (err, res) {
+    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'test1238@gmail.com', password: 'mcaleb' }).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(200);
       done();
     });
@@ -113,7 +119,7 @@ describe('POST /api/v1/parcels', function () {
       receiver_email: "mcl@gnf.com"
 
     };
-    _chai2.default.request(_app2.default).post('/api/v1/parcels').send(newParcel).set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).post('/api/v1/parcels').send(newParcel).set(key, token).end(function (err, res) {
 
       _chai2.default.expect(res.statusCode).to.be.equal(201);
       done();
@@ -129,7 +135,7 @@ describe('POST /api/v1/parcels', function () {
       receiver_email: "mclgnf.com"
 
     };
-    _chai2.default.request(_app2.default).post('/api/v1/parcels').send(newParcel).set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).post('/api/v1/parcels').send(newParcel).set(key, token).end(function (err, res) {
 
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
@@ -144,7 +150,7 @@ describe('POST /api/v1/parcels', function () {
       receiver_email: "mcl@gnf.com"
 
     };
-    _chai2.default.request(_app2.default).post('/api/v1/parcels').send(newParcel).set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).post('/api/v1/parcels').send(newParcel).set(key, token).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
@@ -159,7 +165,7 @@ describe('POST /api/v1/parcels', function () {
       receiver_email: "mcl@gnf.com"
 
     };
-    _chai2.default.request(_app2.default).post('/api/v1/parcels').send(newParcel).set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c1232VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).post('/api/v1/parcels').send(newParcel).set(key, fakeToken).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
@@ -167,13 +173,14 @@ describe('POST /api/v1/parcels', function () {
 });
 describe('GET /api/v1/parcels', function () {
   it('should return 200 - Fetch all parcel delivery orders', function (done) {
-    _chai2.default.request(_app2.default).get('/api/v1/parcels').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).get('/api/v1/parcels').set(key, token).end(function (err, res) {
+      parcelId = res.body.rows[0].id;
       _chai2.default.expect(res.statusCode).to.be.equal(200);
       done();
     });
   });
   it('should return 400 - Fetch all parcel delivery orders', function (done) {
-    _chai2.default.request(_app2.default).get('/api/v1/parcels').set('x-access-token', '==eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).get('/api/v1/parcels').set(key, fakeToken).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
@@ -181,19 +188,19 @@ describe('GET /api/v1/parcels', function () {
 });
 describe('GET /api/v1/parcels/id', function () {
   it('should return 200 - Fetch a particular order', function (done) {
-    _chai2.default.request(_app2.default).get('/api/v1/parcels/2').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).get('/api/v1/parcels/' + parcelId).set(key, token).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(200);
       done();
     });
   });
   it('should return 400 - invalid token', function (done) {
-    _chai2.default.request(_app2.default).get('/api/v1/parcels/2').set('x-access-token', '==eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).get('/api/v1/parcels/2').set(key, fakeToken).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
   });
   it('should return 400 - no parcels', function (done) {
-    _chai2.default.request(_app2.default).get('/api/v1/parcels/1234').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).get('/api/v1/parcels/1234').set(key, token).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
@@ -202,19 +209,19 @@ describe('GET /api/v1/parcels/id', function () {
 
 describe('GET /api/v1/parcels/id/cancel', function () {
   it('should return 200 - cancel a parcel', function (done) {
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/2/cancel').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/cancel').set(key, token).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(200);
       done();
     });
   });
   it('should return 400 - invalid token', function (done) {
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/2/cancel').set('x-access-token', '==eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/cancel').set(key, fakeToken).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
   });
   it('should return 400 - no parcels', function (done) {
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/cancel').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/cancel').set(key, token).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
@@ -223,32 +230,49 @@ describe('GET /api/v1/parcels/id/cancel', function () {
 
 describe('GET /api/v1/parcels/id/destination', function () {
   it('should return 200 - change destination of a parcel', function (done) {
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/2/cancel').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/cancel').set(key, token).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(200);
       done();
     });
   });
   it('should return 400 - invalid token', function (done) {
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/2/cancel').set('x-access-token', '==eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/cancel').set(key, fakeToken).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
   });
   it('should return 400 - no parcels', function (done) {
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/cancel').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/cancel').set(key, token).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
   });
 });
 describe('POST /api/v1/parcels', function () {
-  it('should return 200 - parcel created', function (done) {
+  it('should return 200 - destination changed', function (done) {
     var newParcel = {
       destination: "butare"
     };
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/2/destination').send(newParcel).set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/destination').send(newParcel).set(key, token).end(function (err, res) {
 
       _chai2.default.expect(res.statusCode).to.be.equal(200);
+      done();
+    });
+  });
+});
+
+//delete user created in test
+
+describe('DELETE /api/v1/users/:userId', function () {
+  it('should return 404 - User not found', function (done) {
+    _chai2.default.request(_app2.default).delete('/api/v1/users/12344').set(key, token).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(404);
+      done();
+    });
+  });
+  it('should return 204 - User found', function (done) {
+    _chai2.default.request(_app2.default).delete('/api/v1/users').set(key, token).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(204);
       done();
     });
   });

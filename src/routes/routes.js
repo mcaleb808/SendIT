@@ -9,15 +9,15 @@ router.use(json());
 router.use(urlencoded({ extended: false }));
 
 router.post('/api/v1/auth/signup',UserControllers.signUp);
-router.get('/api/v1/auth/login', UserControllers.signIn);
+router.post('/api/v1/auth/login', UserControllers.signIn);
 
 router.post('/api/v1/parcels', Auth.verifyToken, ParcelControllers.createParcel);
 router.get('/api/v1/parcels', Auth.verifyToken, ParcelControllers.getAllParcels);
 router.get('/api/v1/parcels/:id', Auth.verifyToken, ParcelControllers.getParcel);
 router.put('/api/v1/parcels/:id/cancel', Auth.verifyToken, ParcelControllers.cancelParcel);
 router.put('/api/v1/parcels/:id/destination', Auth.verifyToken, ParcelControllers.changeDestination);
-// admin
-router.get('/api/v1/admin/parcels', Auth.adminToken, ParcelControllers.getAllParcelsAdmin);
+router.delete('/api/v1/users', Auth.verifyToken, UserControllers.deleteUser);
+
 
 
 
