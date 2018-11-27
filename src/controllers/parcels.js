@@ -1,6 +1,5 @@
 import Joi from 'joi';
 import db from '../db';
-import Helper from './Helper';
 
 const ParcelControllers = {
   async createParcel(req, res) {
@@ -57,7 +56,7 @@ const ParcelControllers = {
         try {
           const { rows } = await db.query(text, [req.params.id, req.user.id]);
           if (!rows[0]) {
-            return res.status(404).send({'message': 'parcel not found'});
+            return res.status(400).send({'message': 'parcel not found'});
           }
           return res.status(200).send(rows[0]);
         } catch(error) {
@@ -71,7 +70,7 @@ const ParcelControllers = {
         try {
           const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
           if(!rows[0]) {
-            return res.status(404).send({'message': 'Parcel not found'});
+            return res.status(400).send({'message': 'Parcel not found'});
           }
           const values = [
             'canceled'
@@ -97,7 +96,7 @@ const ParcelControllers = {
         try {
           const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
           if(!rows[0]) {
-            return res.status(404).send({'message': 'Parcel not found'});
+            return res.status(400).send({'message': 'Parcel not found'});
           }
           const values = [
             req.body.destination

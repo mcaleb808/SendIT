@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import db from '../db';
-import Helper from './Helper.js';
+import Helper from './Helper';
 
 const UserControllers = {
   async signUp(req, res) {

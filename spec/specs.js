@@ -193,7 +193,7 @@ describe('GET /api/v1/parcels/id', function () {
     });
   });
   it('should return 400 - no parcels', function (done) {
-    _chai2.default.request(_app2.default).get('/api/v1/parcels/xxx').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).get('/api/v1/parcels/1234').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
@@ -214,7 +214,7 @@ describe('GET /api/v1/parcels/id/cancel', function () {
     });
   });
   it('should return 400 - no parcels', function (done) {
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/xxx/cancel').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/cancel').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
@@ -235,7 +235,7 @@ describe('GET /api/v1/parcels/id/destination', function () {
     });
   });
   it('should return 400 - no parcels', function (done) {
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/xxx/cancel').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/cancel').set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY').end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });

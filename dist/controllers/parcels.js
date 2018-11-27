@@ -12,10 +12,6 @@ var _db = require('../db');
 
 var _db2 = _interopRequireDefault(_db);
 
-var _Helper = require('./Helper');
-
-var _Helper2 = _interopRequireDefault(_Helper);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ParcelControllers = {
@@ -73,7 +69,7 @@ var ParcelControllers = {
           rows = _ref4.rows;
 
       if (!rows[0]) {
-        return res.status(404).send({ 'message': 'parcel not found' });
+        return res.status(400).send({ 'message': 'parcel not found' });
       }
       return res.status(200).send(rows[0]);
     } catch (error) {
@@ -88,7 +84,7 @@ var ParcelControllers = {
           rows = _ref5.rows;
 
       if (!rows[0]) {
-        return res.status(404).send({ 'message': 'Parcel not found' });
+        return res.status(400).send({ 'message': 'Parcel not found' });
       }
       var values = ['canceled'];
       var response = await _db2.default.query(cancel, values);
@@ -116,7 +112,7 @@ var ParcelControllers = {
           rows = _ref6.rows;
 
       if (!rows[0]) {
-        return res.status(404).send({ 'message': 'Parcel not found' });
+        return res.status(400).send({ 'message': 'Parcel not found' });
       }
       var values = [req.body.destination];
       var response = await _db2.default.query(destination, values);
