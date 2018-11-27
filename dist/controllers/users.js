@@ -44,7 +44,6 @@ var UserControllers = {
       if (error.routine === '_bt_check_unique') {
         return res.status(400).send({ 'message': 'User with that EMAIL already exist' });
       }
-      console.log(error.stack);
       return res.status(400).send(error);
     }
   },

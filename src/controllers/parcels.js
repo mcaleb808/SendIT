@@ -25,12 +25,10 @@ const ParcelControllers = {
         "generated",
         req.user.id
         ];
-
         try {
         const { rows } = await db.query(createQuery, data);
         return res.status(201).send(rows[0]);
         } catch(error) {
-            console.log(error.stack);
         return res.status(400).send(error);
         }
     },
@@ -43,6 +41,16 @@ const ParcelControllers = {
           return res.status(400).send(error);
         }
     },
+    async getAllParcelsAdmin(req, res) {
+        const findAllParcels = 'SELECT * FROM parcels';
+        try {
+          const { rows, rowCount } = await db.query(findAllParcels);
+          return res.status(200).send({ rows, rowCount });
+        } catch(error) {
+          console.log(error.stack);
+          return res.status(400).send(error);
+        }
+      },
     async getParcel(req, res) {
         const text = 'SELECT * FROM parcels WHERE id = $1 AND sender_id = $2';
         try {
@@ -96,10 +104,10 @@ const ParcelControllers = {
           const response = await db.query(destination, values);
           return res.status(200).send(response.rows[0]);
         } catch(err) {
-          console.log(err.stack);
           return res.status(400).send(err);
         }
       }
+
 }
 const validateOrder = order => {
 

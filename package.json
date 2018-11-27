@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "test": "npm run build && npm run testbuild && nyc  mocha spec/specs.js --exit",
     "testbuild": "babel --presets es2015 test/ -d spec",
     "build": "babel --presets es2015 src/ -d dist",
     "start": "node dist/server.js",

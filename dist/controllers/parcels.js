@@ -28,14 +28,12 @@ var ParcelControllers = {
     }
     var createQuery = 'INSERT INTO\n        parcels(pickup, destination, location, weight, \n            receiver_name, receiver_address,receiver_email, status, sender_id )\n        VALUES($1, $2, $1, $3, $4, $5, $6, $7, $8)\n        returning *';
     var data = [req.body.pickup, req.body.destination, req.body.weight, req.body.receiver_name, req.body.receiver_address, req.body.receiver_email, "generated", req.user.id];
-
     try {
       var _ref = await _db2.default.query(createQuery, data),
           rows = _ref.rows;
 
       return res.status(201).send(rows[0]);
     } catch (error) {
-      console.log(error.stack);
       return res.status(400).send(error);
     }
   },
@@ -51,11 +49,24 @@ var ParcelControllers = {
       return res.status(400).send(error);
     }
   },
+  getAllParcelsAdmin: async function getAllParcelsAdmin(req, res) {
+    var findAllParcels = 'SELECT * FROM parcels';
+    try {
+      var _ref3 = await _db2.default.query(findAllParcels),
+          rows = _ref3.rows,
+          rowCount = _ref3.rowCount;
+
+      return res.status(200).send({ rows: rows, rowCount: rowCount });
+    } catch (error) {
+      console.log(error.stack);
+      return res.status(400).send(error);
+    }
+  },
   getParcel: async function getParcel(req, res) {
     var text = 'SELECT * FROM parcels WHERE id = $1 AND sender_id = $2';
     try {
-      var _ref3 = await _db2.default.query(text, [req.params.id, req.user.id]),
-          rows = _ref3.rows;
+      var _ref4 = await _db2.default.query(text, [req.params.id, req.user.id]),
+          rows = _ref4.rows;
 
       if (!rows[0]) {
         return res.status(404).send({ 'message': 'parcel not found' });
@@ -69,8 +80,8 @@ var ParcelControllers = {
     var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
     var cancel = 'UPDATE parcels\n          SET status=$1 returning *';
     try {
-      var _ref4 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
-          rows = _ref4.rows;
+      var _ref5 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
+          rows = _ref5.rows;
 
       if (!rows[0]) {
         return res.status(404).send({ 'message': 'Parcel not found' });
@@ -97,8 +108,8 @@ var ParcelControllers = {
     var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
     var destination = 'UPDATE parcels\n          SET destination=$1 returning *';
     try {
-      var _ref5 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
-          rows = _ref5.rows;
+      var _ref6 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
+          rows = _ref6.rows;
 
       if (!rows[0]) {
         return res.status(404).send({ 'message': 'Parcel not found' });
@@ -107,7 +118,6 @@ var ParcelControllers = {
       var response = await _db2.default.query(destination, values);
       return res.status(200).send(response.rows[0]);
     } catch (err) {
-      console.log(err.stack);
       return res.status(400).send(err);
     }
   }

@@ -34,5 +34,7 @@ router.get('/api/v1/parcels', _Auth2.default.verifyToken, _parcels2.default.getA
 router.get('/api/v1/parcels/:id', _Auth2.default.verifyToken, _parcels2.default.getParcel);
 router.put('/api/v1/parcels/:id/cancel', _Auth2.default.verifyToken, _parcels2.default.cancelParcel);
 router.put('/api/v1/parcels/:id/destination', _Auth2.default.verifyToken, _parcels2.default.changeDestination);
+// admin
+router.get('/api/v1/admin/parcels', _Auth2.default.adminToken, _parcels2.default.getAllParcelsAdmin);
 
 exports.default = router;
