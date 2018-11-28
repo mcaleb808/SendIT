@@ -3,7 +3,6 @@ import db from '../db';
 
 const ParcelControllers = {
   async createParcel(req, res) {
-        //const result = validateOrder(req.body);
         const { error } = validateOrder(req.body);
         if (error) {
         res.status(400).send(error.details[0].message);

@@ -16,7 +16,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var ParcelControllers = {
   createParcel: async function createParcel(req, res) {
-    //const result = validateOrder(req.body);
     var _validateOrder = validateOrder(req.body),
         error = _validateOrder.error;
 
