@@ -17,6 +17,9 @@ router.get('/api/v1/parcels/:id', Auth.verifyToken, ParcelControllers.getParcel)
 router.put('/api/v1/parcels/:id/cancel', Auth.verifyToken, ParcelControllers.cancelParcel);
 router.put('/api/v1/parcels/:id/destination', Auth.verifyToken, ParcelControllers.changeDestination);
 router.delete('/api/v1/users', Auth.verifyToken, UserControllers.deleteUser);
+router.put('/api/v1/parcels/:id/edit', Auth.verifyToken, ParcelControllers.adminEdit);
+router.get('/api/v1/parcels/admin', Auth.verifyToken, ParcelControllers.getAll);
+
 
 
 

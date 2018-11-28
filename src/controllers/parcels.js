@@ -41,15 +41,14 @@ const ParcelControllers = {
           return res.status(400).send(error);
         }
     },
-    async getAllParcelsAdmin(req, res) {
-        const findAllParcels = 'SELECT * FROM parcels';
-        try {
-          const { rows, rowCount } = await db.query(findAllParcels);
-          return res.status(200).send({ rows, rowCount });
-        } catch(error) {
-          console.log(error.stack);
-          return res.status(400).send(error);
-        }
+    async getAll(req, res) {
+      const findAllParcels = 'SELECT * FROM parcels';
+      try {
+        const { rows, rowCount } = await db.query(findAllParcels);
+        return res.status(200).send({ rows, rowCount });
+      } catch(error) {
+        return res.status(400).send(error);
+      }
       },
     async getParcel(req, res) {
         const text = 'SELECT * FROM parcels WHERE id = $1 AND sender_id = $2';
@@ -106,6 +105,32 @@ const ParcelControllers = {
         } catch(err) {
           return res.status(400).send(err);
         }
+      },
+      async adminEdit(req, res) {
+        const result = validateAdmin(req.body);
+        const { error } = validateAdmin(req.body);
+        if (error) {
+        res.status(400).send(error.details[0].message);
+    
+        return;
+        }
+        const findParcel = 'SELECT * FROM parcels WHERE id=$1';
+        const changes =`UPDATE parcels
+          SET location=$1, status = $2 returning *`;
+        try {
+          const { rows } = await db.query(findParcel, [req.params.id]);
+          if(!rows[0]) {
+            return res.status(400).send({'message': 'Parcel not found'});
+          }
+          const values = [
+            req.body.location,
+            req.body.status
+          ];
+          const response = await db.query(changes, values);
+          return res.status(200).send(response.rows[0]);
+        } catch(err) {
+          return res.status(400).send(err);
+        }
       }
 
 }
@@ -118,6 +143,15 @@ const validateOrder = order => {
       receiver_name: Joi.string().min(3).required(),
       receiver_email: Joi.string().email({ minDomainAtoms: 2 }).required(),
       receiver_address: Joi.string().min(3).required()
+    };
+  
+    return Joi.validate(order, schema);
+  };
+  const validateAdmin = order => {
+
+    const schema = {
+      location: Joi.string().min(3).required(),
+      status: Joi.string().min(3).required()
     };
   
     return Joi.validate(order, schema);

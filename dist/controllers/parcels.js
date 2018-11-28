@@ -49,7 +49,7 @@ var ParcelControllers = {
       return res.status(400).send(error);
     }
   },
-  getAllParcelsAdmin: async function getAllParcelsAdmin(req, res) {
+  getAll: async function getAll(req, res) {
     var findAllParcels = 'SELECT * FROM parcels';
     try {
       var _ref3 = await _db2.default.query(findAllParcels),
@@ -58,7 +58,6 @@ var ParcelControllers = {
 
       return res.status(200).send({ rows: rows, rowCount: rowCount });
     } catch (error) {
-      console.log(error.stack);
       return res.status(400).send(error);
     }
   },
@@ -120,6 +119,33 @@ var ParcelControllers = {
     } catch (err) {
       return res.status(400).send(err);
     }
+  },
+  adminEdit: async function adminEdit(req, res) {
+    var result = validateAdmin(req.body);
+
+    var _validateAdmin = validateAdmin(req.body),
+        error = _validateAdmin.error;
+
+    if (error) {
+      res.status(400).send(error.details[0].message);
+
+      return;
+    }
+    var findParcel = 'SELECT * FROM parcels WHERE id=$1';
+    var changes = 'UPDATE parcels\n          SET location=$1, status = $2 returning *';
+    try {
+      var _ref7 = await _db2.default.query(findParcel, [req.params.id]),
+          rows = _ref7.rows;
+
+      if (!rows[0]) {
+        return res.status(400).send({ 'message': 'Parcel not found' });
+      }
+      var values = [req.body.location, req.body.status];
+      var response = await _db2.default.query(changes, values);
+      return res.status(200).send(response.rows[0]);
+    } catch (err) {
+      return res.status(400).send(err);
+    }
   }
 };
 var validateOrder = function validateOrder(order) {
@@ -131,6 +157,15 @@ var validateOrder = function validateOrder(order) {
     receiver_name: _joi2.default.string().min(3).required(),
     receiver_email: _joi2.default.string().email({ minDomainAtoms: 2 }).required(),
     receiver_address: _joi2.default.string().min(3).required()
+  };
+
+  return _joi2.default.validate(order, schema);
+};
+var validateAdmin = function validateAdmin(order) {
+
+  var schema = {
+    location: _joi2.default.string().min(3).required(),
+    status: _joi2.default.string().min(3).required()
   };
 
   return _joi2.default.validate(order, schema);
