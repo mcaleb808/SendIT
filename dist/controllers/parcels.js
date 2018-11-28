@@ -16,8 +16,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var ParcelControllers = {
   createParcel: async function createParcel(req, res) {
-    var result = validateOrder(req.body);
-
+    //const result = validateOrder(req.body);
     var _validateOrder = validateOrder(req.body),
         error = _validateOrder.error;
 
@@ -50,9 +49,9 @@ var ParcelControllers = {
     }
   },
   getAll: async function getAll(req, res) {
-    var findAllParcels = 'SELECT * FROM parcels';
+    var findUserParcels = 'SELECT * FROM parcels';
     try {
-      var _ref3 = await _db2.default.query(findAllParcels),
+      var _ref3 = await _db2.default.query(findUserParcels),
           rows = _ref3.rows,
           rowCount = _ref3.rowCount;
 
@@ -94,8 +93,6 @@ var ParcelControllers = {
     }
   },
   changeDestination: async function changeDestination(req, res) {
-    var result = validateUpdate(req.body);
-
     var _validateUpdate = validateUpdate(req.body),
         error = _validateUpdate.error;
 
@@ -121,8 +118,6 @@ var ParcelControllers = {
     }
   },
   adminEdit: async function adminEdit(req, res) {
-    var result = validateAdmin(req.body);
-
     var _validateAdmin = validateAdmin(req.body),
         error = _validateAdmin.error;
 

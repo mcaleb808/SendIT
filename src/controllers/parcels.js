@@ -3,7 +3,7 @@ import db from '../db';
 
 const ParcelControllers = {
   async createParcel(req, res) {
-        const result = validateOrder(req.body);
+        //const result = validateOrder(req.body);
         const { error } = validateOrder(req.body);
         if (error) {
         res.status(400).send(error.details[0].message);
@@ -42,14 +42,14 @@ const ParcelControllers = {
         }
     },
     async getAll(req, res) {
-      const findAllParcels = 'SELECT * FROM parcels';
+      const findUserParcels = 'SELECT * FROM parcels';
       try {
-        const { rows, rowCount } = await db.query(findAllParcels);
+        const { rows, rowCount } = await db.query(findUserParcels);
         return res.status(200).send({ rows, rowCount });
       } catch(error) {
         return res.status(400).send(error);
       }
-      },
+  },
     async getParcel(req, res) {
         const text = 'SELECT * FROM parcels WHERE id = $1 AND sender_id = $2';
         try {
@@ -82,7 +82,6 @@ const ParcelControllers = {
         }
       },
       async changeDestination(req, res) {
-        const result = validateUpdate(req.body);
         const { error } = validateUpdate(req.body);
         if (error) {
         res.status(400).send(error.details[0].message);
@@ -107,7 +106,6 @@ const ParcelControllers = {
         }
       },
       async adminEdit(req, res) {
-        const result = validateAdmin(req.body);
         const { error } = validateAdmin(req.body);
         if (error) {
         res.status(400).send(error.details[0].message);
