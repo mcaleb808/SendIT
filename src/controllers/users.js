@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import db from '../db';
-import Helper from './Helper';
+import Helper from './helper';
 
 const UserControllers = {
   async signUp(req, res) {
@@ -32,7 +32,6 @@ const UserControllers = {
       if (error.routine === '_bt_check_unique') {
         return res.status(400).send({ 'message': 'User with that EMAIL already exist' })
       }
-      console.log(error.stack);
       return res.status(400).send(error);
     }
   },
@@ -53,11 +52,24 @@ const UserControllers = {
         return res.status(400).send({ 'message': 'The credentials you provided is incorrect' });
       }
       const token = Helper.generateToken(rows[0].id);
-      return res.status(200).send({ token });
+      return res.status(200).send({ token, data: rows[0] });
     } catch(error) {
       return res.status(400).send(error)
     }
-  }
+  },
+  async deleteUser(req, res) {
+    const deleteUser = 'DELETE FROM users WHERE id=$1 returning *';
+    try {
+      const { rows } = await db.query(deleteUser, [req.user.id]);
+      if (!rows[0]) {
+        return res.status(404).send({ message: 'user not found', status: 404 });
+      }
+      return res.status(204).send({ message: 'deleted', status: 204 });
+    } catch (error) {
+      console.log(error.stack);
+      return res.status(400).send({ message: error, status: 400 });
+    }
+  },
 };
 
 const validateUser = user => {

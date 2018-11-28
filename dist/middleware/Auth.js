@@ -35,6 +35,27 @@ var Auth = {
     } catch (error) {
       return res.status(400).send(error);
     }
+  },
+  adminToken: async function adminToken(req, res, next) {
+    var token = req.headers['admin-access-token'];
+    if (!token) {
+      return res.status(400).send({ 'message': 'Admin Token is not provided' });
+    }
+    try {
+      var decoded = await _jsonwebtoken2.default.verify(token, process.env.SECRET);
+      var text = 'SELECT * FROM users WHERE id = $1 && userType = "admin"';
+
+      var _ref2 = await _db2.default.query(text, [decoded.userId]),
+          rows = _ref2.rows;
+
+      if (!rows[0]) {
+        return res.status(400).send({ 'message': 'The token you provided is invalid' });
+      }
+      req.admin = { id: decoded.userId };
+      next();
+    } catch (error) {
+      return res.status(400).send(error);
+    }
   }
 };
 

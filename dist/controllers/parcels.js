@@ -28,14 +28,12 @@ var ParcelControllers = {
     }
     var createQuery = 'INSERT INTO\n        parcels(pickup, destination, location, weight, \n            receiver_name, receiver_address,receiver_email, status, sender_id )\n        VALUES($1, $2, $1, $3, $4, $5, $6, $7, $8)\n        returning *';
     var data = [req.body.pickup, req.body.destination, req.body.weight, req.body.receiver_name, req.body.receiver_address, req.body.receiver_email, "generated", req.user.id];
-
     try {
       var _ref = await _db2.default.query(createQuery, data),
           rows = _ref.rows;
 
       return res.status(201).send(rows[0]);
     } catch (error) {
-      console.log(error.stack);
       return res.status(400).send(error);
     }
   },
@@ -51,14 +49,26 @@ var ParcelControllers = {
       return res.status(400).send(error);
     }
   },
+  getAll: async function getAll(req, res) {
+    var findAllParcels = 'SELECT * FROM parcels';
+    try {
+      var _ref3 = await _db2.default.query(findAllParcels),
+          rows = _ref3.rows,
+          rowCount = _ref3.rowCount;
+
+      return res.status(200).send({ rows: rows, rowCount: rowCount });
+    } catch (error) {
+      return res.status(400).send(error);
+    }
+  },
   getParcel: async function getParcel(req, res) {
     var text = 'SELECT * FROM parcels WHERE id = $1 AND sender_id = $2';
     try {
-      var _ref3 = await _db2.default.query(text, [req.params.id, req.user.id]),
-          rows = _ref3.rows;
+      var _ref4 = await _db2.default.query(text, [req.params.id, req.user.id]),
+          rows = _ref4.rows;
 
       if (!rows[0]) {
-        return res.status(404).send({ 'message': 'parcel not found' });
+        return res.status(400).send({ 'message': 'parcel not found' });
       }
       return res.status(200).send(rows[0]);
     } catch (error) {
@@ -69,11 +79,11 @@ var ParcelControllers = {
     var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
     var cancel = 'UPDATE parcels\n          SET status=$1 returning *';
     try {
-      var _ref4 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
-          rows = _ref4.rows;
+      var _ref5 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
+          rows = _ref5.rows;
 
       if (!rows[0]) {
-        return res.status(404).send({ 'message': 'Parcel not found' });
+        return res.status(400).send({ 'message': 'Parcel not found' });
       }
       var values = ['canceled'];
       var response = await _db2.default.query(cancel, values);
@@ -97,17 +107,43 @@ var ParcelControllers = {
     var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
     var destination = 'UPDATE parcels\n          SET destination=$1 returning *';
     try {
-      var _ref5 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
-          rows = _ref5.rows;
+      var _ref6 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
+          rows = _ref6.rows;
 
       if (!rows[0]) {
-        return res.status(404).send({ 'message': 'Parcel not found' });
+        return res.status(400).send({ 'message': 'Parcel not found' });
       }
       var values = [req.body.destination];
       var response = await _db2.default.query(destination, values);
       return res.status(200).send(response.rows[0]);
     } catch (err) {
-      console.log(err.stack);
+      return res.status(400).send(err);
+    }
+  },
+  adminEdit: async function adminEdit(req, res) {
+    var result = validateAdmin(req.body);
+
+    var _validateAdmin = validateAdmin(req.body),
+        error = _validateAdmin.error;
+
+    if (error) {
+      res.status(400).send(error.details[0].message);
+
+      return;
+    }
+    var findParcel = 'SELECT * FROM parcels WHERE id=$1';
+    var changes = 'UPDATE parcels\n          SET location=$1, status = $2 returning *';
+    try {
+      var _ref7 = await _db2.default.query(findParcel, [req.params.id]),
+          rows = _ref7.rows;
+
+      if (!rows[0]) {
+        return res.status(400).send({ 'message': 'Parcel not found' });
+      }
+      var values = [req.body.location, req.body.status];
+      var response = await _db2.default.query(changes, values);
+      return res.status(200).send(response.rows[0]);
+    } catch (err) {
       return res.status(400).send(err);
     }
   }
@@ -121,6 +157,15 @@ var validateOrder = function validateOrder(order) {
     receiver_name: _joi2.default.string().min(3).required(),
     receiver_email: _joi2.default.string().email({ minDomainAtoms: 2 }).required(),
     receiver_address: _joi2.default.string().min(3).required()
+  };
+
+  return _joi2.default.validate(order, schema);
+};
+var validateAdmin = function validateAdmin(order) {
+
+  var schema = {
+    location: _joi2.default.string().min(3).required(),
+    status: _joi2.default.string().min(3).required()
   };
 
   return _joi2.default.validate(order, schema);

@@ -15,6 +15,10 @@ var _app2 = _interopRequireDefault(_app);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _chai2.default.use(_chaiHttp2.default);
+var token = '';
+var key = 'x-access-token';
+var fakeToken = '==eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU0MzE0NjU0OCwiZXhwIjoxNTQzNzUxMzQ4fQ.mQP9EKrFicqQUrFNfviMuj0HRBaVs0gx3g_e_aWRZUY';
+var parcelId = '';
 
 describe('root request', function () {
   describe('Get api documentation', function () {
@@ -36,351 +40,240 @@ describe('root request', function () {
   });
 });
 
-describe('PARCELS', function () {
-  describe('Get all parcels', function () {
-    it('should return an object of all parcels', function (done) {
-      _chai2.default.request(_app2.default).get('/api/v1/parcels').end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(200);
-        done();
-      });
+//login and sign up tests
+describe('POST /api/v1/auth/signup', function () {
+  it('should return 400 - invalid email address', function (done) {
+    var values = {
+      email: 'mclebgmail.com',
+      username: 'mcaleb808',
+      fullName: 'mugisha caleb',
+      userType: 'user',
+      hashPassword: 'password'
+    };
+    _chai2.default.request(_app2.default).post('/api/v1/auth/signup').send(values).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      done();
     });
   });
-  describe('Get one parcel with id 1', function () {
-    it('should return one parcel object', function (done) {
-      var id = 1;
-      _chai2.default.request(_app2.default).get('/api/v1/parcels/' + id).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(200);
-        done();
-      });
+  it('should return 400 - Email and Password', function (done) {
+    var values = {
+      email: 'mclebgmail.com',
+      username: 'mcaleb808',
+      fullName: 'mugisha caleb',
+      userType: 'user',
+      hashPassword: '222'
+    };
+    _chai2.default.request(_app2.default).post('/api/v1/auth/signup').send(values).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      done();
     });
   });
-  describe('Get one parcel with id 10', function () {
-    it('should return 400 status', function (done) {
-      var id = 10;
-      _chai2.default.request(_app2.default).get('/api/v1/parcels/' + id).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(400);
-        _chai2.default.expect(res.body.message).to.equal('The parcel with given ID was not found');
-        done();
-      });
-    });
-  });
-  describe('adding a parcel', function () {
-    it('should add new parcel', function (done) {
-      var parcel = {
-        Pickup: "rwamagana",
-        location: "muhanga",
-        destination: "rusizi",
-        contents: "modem devices",
-        value: 50000,
-        weight: 1,
-        sname: "mugisha caleb didier",
-        senderId: "2",
-        semail: "mcaleb808@gmail.com",
-        rname: "mugabo felix",
-        raddress: "rusizi",
-        remail: "mcaleb808@gmail.com",
-        status: "delivered"
-      };
-      _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(200);
-
-        done();
-      });
-    });
-    it('should fail to add parcel', function (done) {
-      var parcel = {
-        Pickup: "rwamagana",
-        location: "muhanga",
-        destination: "rusizi",
-        contents: "modem devices",
-        value: "5000",
-        weight: 1,
-        sname: "mugisha caleb didier",
-        senderId: "2",
-        semail: "mcaleb808com",
-        rname: "mugabo felix"
-      };
-      _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(400);
-        _chai2.default.expect(res.body).to.be.a('object');
-
-        done();
-      });
-    });
-    it('should update parcel 1', function (done) {
-      var parcel = {
-        Pickup: "rwamagana",
-        location: "muhanga",
-        destination: "rusizi",
-        contents: "modem devices",
-        value: 50000,
-        weight: 1,
-        sname: "mugisha caleb didier",
-        senderId: "2",
-        semail: "mcaleb808@gmail.com",
-        rname: "mugabo felix",
-        raddress: "rusizi",
-        remail: "mcaleb808@gmail.com",
-        status: "delivered"
-      };
-      _chai2.default.request(_app2.default).put('/api/v1/parcels/1').send(parcel).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(200);
-
-        done();
-      });
-    });
-    it('should fail to update parcel 10', function (done) {
-      var parcel = {
-        contents: "modem devices",
-        value: 50000,
-        weight: 1,
-        sname: "mugisha caleb didier",
-        senderId: "2",
-        semail: "mcaleb808@gmail.com",
-        rname: "mugabo felix",
-        raddress: "rusizi",
-        remail: "mcaleb808@gmail.com",
-        status: "delivered"
-      };
-      _chai2.default.request(_app2.default).put('/api/v1/parcels/10').send(parcel).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(400);
-
-        done();
-      });
-    });
-    it('invalid email', function (done) {
-      var parcel = {
-        contents: "modem devices",
-        value: 50000,
-        weight: 1,
-        sname: "mugisha caleb didier",
-        senderId: "2",
-        semail: "mcaleb80com",
-        rname: "mugabo felix",
-        raddress: "rusizi",
-        remail: "mcaleb808@gmail.com",
-        status: "delivered"
-      };
-      _chai2.default.request(_app2.default).put('/api/v1/parcels/1').send(parcel).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(400);
-
-        done();
-      });
-    });
-  });
-
-  describe('adding invalid parcel', function () {
-    it('missing parameters', function (done) {
-      var parcel = {
-        Pickup: "rwamagana",
-        location: "muhanga",
-        homeadrress: "rusizi",
-        contents: "modem devices",
-        value: 50000,
-        weight: 1,
-        sname: "mugisha caleb didier",
-        senderId: "2",
-        semail: "mcaleb808@gmail.com"
-      };
-      _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(400);
-
-        done();
-      });
-    });
-    it('invalid email', function (done) {
-      var parcel = {
-        contents: "modem devices",
-        value: 50000,
-        weight: 1,
-        sname: "mugisha caleb didier",
-        senderId: "2",
-        semail: "mcaleb80com",
-        rname: "mugabo felix",
-        raddress: "rusizi",
-        remail: "mcaleb808@gmail.com",
-        status: "delivered"
-      };
-      _chai2.default.request(_app2.default).put('/api/v1/parcels/1').send(parcel).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(400);
-
-        done();
-      });
-    });
-    it('Receiver name must be 3 characters or more', function (done) {
-      var parcel = {
-        contents: "modem devices",
-        value: 50000,
-        weight: 1,
-        sname: "mugisha caleb didier",
-        senderId: 2,
-        semail: "mcaleb808@gmail.com",
-        rname: "m",
-        raddress: "rusizi",
-        remail: "mcaleb808@gmail.com",
-        status: "delivered"
-      };
-      _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(400);
-
-        done();
-      });
-    });
-  });
-  describe('cancel a parcel with id 1', function () {
-    it('should cancel an order', function (done) {
-      var id = 1;
-      _chai2.default.request(_app2.default).put('/api/v1/parcels/' + id + '/cancel').set('content-type', 'application/json').send({
-        status: 'canceled'
-      }).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(200);
-        done();
-      });
-    });
-    it('should cancel an order', function (done) {
-      var id = 1;
-      _chai2.default.request(_app2.default).put('/api/v1/parcels/' + id + '/cancel').set('content-type', 'application/json').send({
-        status: 1
-      }).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(400);
-        done();
-      });
-    });
-  });
-  describe('cancel a parcel with id 10', function () {
-    it('should fail to cancel an order', function (done) {
-      var id = 10;
-      _chai2.default.request(_app2.default).put('/api/v1/parcels/' + id + '/cancel').set('content-type', 'application/json').send({
-        status: 'canceled'
-      }).end(function (err, res) {
-        _chai2.default.expect(res.status).to.equal(400);
-        _chai2.default.expect(res.body.message).to.equal('The parcel with given ID was not found');
-        done();
-      });
-    });
-  });
-  describe('Delete a parcel with id 1', function () {
-    it('should return one parcel object', function (done) {
-      var id = 1;
-      _chai2.default.request(_app2.default).delete('/api/v1/parcels/' + id).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(200);
-
-        done();
-      });
-    });
-  });
-  describe('Delete a parcel that does not exist', function () {
-    it('should fail to delete a parcel', function (done) {
-      var id = 10;
-      _chai2.default.request(_app2.default).delete('/api/v1/parcels/' + id).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(400);
-        _chai2.default.expect(res.body.message).to.equal('The parcel with given ID was not found');
-        done();
-      });
+  it('should return 201 - User created', function (done) {
+    var newUser = {
+      email: "test1238@gmail.com",
+      username: "mcalb",
+      fullName: "kmamanzi rebecaa",
+      userType: "admin",
+      password: "mcaleb"
+    };
+    _chai2.default.request(_app2.default).post('/api/v1/auth/signup').send(newUser).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(201);
+      token = res.body.token;
+      console.log(token);
+      done();
     });
   });
 });
 
-describe('USERS', function () {
-  describe('list all users', function () {
-    it('should list all users', function (done) {
-      _chai2.default.request(_app2.default).get('/api/v1/users').end(function (err, res) {
-        _chai2.default.expect(res.status).to.equal(200);
-        done();
-      });
+describe('GET /api/v1/auth/login', function () {
+  it('should return 400 - The credentials you provided is incorrect', function (done) {
+    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: '', password: 'yyyyy' }).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      done();
     });
   });
-  describe('register new user', function () {
-    it('should register a new user', function (done) {
-      _chai2.default.request(_app2.default).post('/api/v1/users').set('content-type', 'application/json').send({
-        names: 'Mugisha Caleb Didier',
-        username: 'caleb123',
-        email: 'mcaleb@gmail.com',
-        password: 'caleb123'
-      }).end(function (err, res) {
-        _chai2.default.expect(res.status).to.equal(200);
-        done();
-      });
+  it('should return 400 - User not found', function (done) {
+    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'mugisha', password: '222' }).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      done();
     });
   });
-  describe('should fail to register a new user', function () {
-    it('name must be a string', function (done) {
-      _chai2.default.request(_app2.default).post('/api/v1/users').set('content-type', 'application/json').send({
-        names: 1,
-        username: 'caleb123',
-        email: 'mcaleb@gmail.com',
-        password: 'caleb123'
-      }).end(function (err, res) {
-        _chai2.default.expect(res.status).to.equal(400);
-        done();
-      });
-    });
-    it('invalid email ', function (done) {
-      _chai2.default.request(_app2.default).post('/api/v1/users').set('content-type', 'application/json').send({
-        names: 'Mugisha Caleb Didier',
-        username: 'caleb123',
-        email: 'mcalebcom',
-        password: 'caleb123'
-      }).end(function (err, res) {
-        _chai2.default.expect(res.status).to.equal(400);
-        done();
-      });
-    });
-    it('missing parameters', function (done) {
-      _chai2.default.request(_app2.default).post('/api/v1/users').set('content-type', 'application/json').send({
-        names: 'Mugisha Caleb Didier'
-      }).end(function (err, res) {
-        _chai2.default.expect(res.status).to.equal(400);
-        done();
-      });
+  it('should return 200 - Success', function (done) {
+    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'test1238@gmail.com', password: 'mcaleb' }).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(200);
+      done();
     });
   });
-  describe('update a user', function () {
-    it('should update user id:1', function (done) {
-      _chai2.default.request(_app2.default).put('/api/v1/users/1').set('content-type', 'application/json').send({
-        names: 'Mugisha Caleb Didier',
-        email: 'mcaleb@gmail.com'
-      }).end(function (err, res) {
-        _chai2.default.expect(res.status).to.equal(200);
-        done();
-      });
-    });
-  });
+});
 
-  describe('list all user parcels', function () {
-    it('should list all user parcels', function (done) {
-      var senderId = 1;
-      _chai2.default.request(_app2.default).get('/api/v1/users/1/parcels').end(function (err, res) {
-        _chai2.default.expect(res.status).to.equal(400);
-        done();
-      });
+//parcels
+
+describe('POST /api/v1/parcels', function () {
+  it('should return 201 - parcel created', function (done) {
+    var newParcel = {
+      pickup: "kigali",
+      destination: "butare",
+      weight: 2,
+      receiver_name: "mvmvm",
+      receiver_address: "dsdsds",
+      receiver_email: "mcl@gnf.com"
+
+    };
+    _chai2.default.request(_app2.default).post('/api/v1/parcels').send(newParcel).set(key, token).end(function (err, res) {
+
+      _chai2.default.expect(res.statusCode).to.be.equal(201);
+      done();
     });
   });
-  describe('list all userid:10 parcels', function () {
-    it('should fail to list all user parcels', function (done) {
-      var senderId = 10;
-      _chai2.default.request(_app2.default).get('/api/v1/users/' + senderId + '/parcels').end(function (err, res) {
-        _chai2.default.expect(res.status).to.equal(400);
-        done();
-      });
+  it('should return 400 - invalid parcel', function (done) {
+    var newParcel = {
+      pickup: "kigali",
+      destination: "butare",
+      weight: 2,
+      receiver_name: "mvmvm",
+      receiver_address: "dsdsds",
+      receiver_email: "mclgnf.com"
+
+    };
+    _chai2.default.request(_app2.default).post('/api/v1/parcels').send(newParcel).set(key, token).end(function (err, res) {
+
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      done();
     });
   });
-  describe('Delete a user', function () {
-    it('Delete a user with id 1', function (done) {
-      var id = 1;
-      _chai2.default.request(_app2.default).delete('/api/v1/users/' + id).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(200);
+  it('should return 400 - incomplete parameters', function (done) {
+    var newParcel = {
+      destination: "b",
+      weight: 2,
+      receiver_name: "mvmvm",
+      receiver_address: "dsdsds",
+      receiver_email: "mcl@gnf.com"
 
-        done();
-      });
+    };
+    _chai2.default.request(_app2.default).post('/api/v1/parcels').send(newParcel).set(key, token).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      done();
     });
-    it('should fail to delete a user with id 10', function (done) {
-      var id = 10;
-      _chai2.default.request(_app2.default).delete('/api/v1/users/' + id).end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(400);
+  });
+  it('should return 400 - invalid token', function (done) {
+    var newParcel = {
+      pickup: "kigali",
+      destination: "butare",
+      weight: 2,
+      receiver_name: "mvmvm",
+      receiver_address: "dsdsds",
+      receiver_email: "mcl@gnf.com"
 
-        done();
-      });
+    };
+    _chai2.default.request(_app2.default).post('/api/v1/parcels').send(newParcel).set(key, fakeToken).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      done();
+    });
+  });
+});
+describe('GET /api/v1/parcels', function () {
+  it('should return 200 - Fetch all parcel delivery orders', function (done) {
+    _chai2.default.request(_app2.default).get('/api/v1/parcels').set(key, token).end(function (err, res) {
+      parcelId = res.body.rows[0].id;
+      _chai2.default.expect(res.statusCode).to.be.equal(200);
+      done();
+    });
+  });
+  it('should return 400 - Fetch all parcel delivery orders', function (done) {
+    _chai2.default.request(_app2.default).get('/api/v1/parcels').set(key, fakeToken).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      done();
+    });
+  });
+});
+describe('GET /api/v1/parcels/id', function () {
+  it('should return 200 - Fetch a particular order', function (done) {
+    _chai2.default.request(_app2.default).get('/api/v1/parcels/' + parcelId).set(key, token).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(200);
+      done();
+    });
+  });
+  it('should return 400 - invalid token', function (done) {
+    _chai2.default.request(_app2.default).get('/api/v1/parcels/2').set(key, fakeToken).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      done();
+    });
+  });
+  it('should return 400 - no parcels', function (done) {
+    _chai2.default.request(_app2.default).get('/api/v1/parcels/1234').set(key, token).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      done();
+    });
+  });
+});
+
+describe('GET /api/v1/parcels/id/cancel', function () {
+  it('should return 200 - cancel a parcel', function (done) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/cancel').set(key, token).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(200);
+      done();
+    });
+  });
+  it('should return 400 - invalid token', function (done) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/cancel').set(key, fakeToken).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      done();
+    });
+  });
+  it('should return 400 - no parcels', function (done) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/cancel').set(key, token).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      done();
+    });
+  });
+});
+
+describe('GET /api/v1/parcels/id/destination', function () {
+  it('should return 200 - change destination of a parcel', function (done) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/cancel').set(key, token).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(200);
+      done();
+    });
+  });
+  it('should return 400 - invalid token', function (done) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/cancel').set(key, fakeToken).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      done();
+    });
+  });
+  it('should return 400 - no parcels', function (done) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/cancel').set(key, token).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      done();
+    });
+  });
+});
+describe('POST /api/v1/parcels', function () {
+  it('should return 200 - destination changed', function (done) {
+    var newParcel = {
+      destination: "butare"
+    };
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/destination').send(newParcel).set(key, token).end(function (err, res) {
+
+      _chai2.default.expect(res.statusCode).to.be.equal(200);
+      done();
+    });
+  });
+});
+
+//delete user created in test
+
+describe('DELETE /api/v1/users/:userId', function () {
+  it('should return 404 - User not found', function (done) {
+    _chai2.default.request(_app2.default).delete('/api/v1/users/12344').set(key, token).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(404);
+      done();
+    });
+  });
+  it('should return 204 - User found', function (done) {
+    _chai2.default.request(_app2.default).delete('/api/v1/users').set(key, token).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(204);
+      done();
     });
   });
 });

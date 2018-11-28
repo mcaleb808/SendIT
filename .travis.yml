@@ -1,6 +1,12 @@
 language: node_js
 node_js:
   - "8.12.0"
+services:
+ - postgresql  
+before_script:
+  - psql -c 'create database sendit;' -U postgres
+before_install:
+ - npm i -g npm@6.4.1
 after_success:
   - npm install istanbul
   - npm install coveralls

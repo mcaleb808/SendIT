@@ -25,12 +25,10 @@ const ParcelControllers = {
         "generated",
         req.user.id
         ];
-
         try {
         const { rows } = await db.query(createQuery, data);
         return res.status(201).send(rows[0]);
         } catch(error) {
-            console.log(error.stack);
         return res.status(400).send(error);
         }
     },
@@ -43,12 +41,21 @@ const ParcelControllers = {
           return res.status(400).send(error);
         }
     },
+    async getAll(req, res) {
+      const findAllParcels = 'SELECT * FROM parcels';
+      try {
+        const { rows, rowCount } = await db.query(findAllParcels);
+        return res.status(200).send({ rows, rowCount });
+      } catch(error) {
+        return res.status(400).send(error);
+      }
+      },
     async getParcel(req, res) {
         const text = 'SELECT * FROM parcels WHERE id = $1 AND sender_id = $2';
         try {
           const { rows } = await db.query(text, [req.params.id, req.user.id]);
           if (!rows[0]) {
-            return res.status(404).send({'message': 'parcel not found'});
+            return res.status(400).send({'message': 'parcel not found'});
           }
           return res.status(200).send(rows[0]);
         } catch(error) {
@@ -62,7 +69,7 @@ const ParcelControllers = {
         try {
           const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
           if(!rows[0]) {
-            return res.status(404).send({'message': 'Parcel not found'});
+            return res.status(400).send({'message': 'Parcel not found'});
           }
           const values = [
             'canceled'
@@ -88,7 +95,7 @@ const ParcelControllers = {
         try {
           const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
           if(!rows[0]) {
-            return res.status(404).send({'message': 'Parcel not found'});
+            return res.status(400).send({'message': 'Parcel not found'});
           }
           const values = [
             req.body.destination
@@ -96,10 +103,36 @@ const ParcelControllers = {
           const response = await db.query(destination, values);
           return res.status(200).send(response.rows[0]);
         } catch(err) {
-          console.log(err.stack);
+          return res.status(400).send(err);
+        }
+      },
+      async adminEdit(req, res) {
+        const result = validateAdmin(req.body);
+        const { error } = validateAdmin(req.body);
+        if (error) {
+        res.status(400).send(error.details[0].message);
+    
+        return;
+        }
+        const findParcel = 'SELECT * FROM parcels WHERE id=$1';
+        const changes =`UPDATE parcels
+          SET location=$1, status = $2 returning *`;
+        try {
+          const { rows } = await db.query(findParcel, [req.params.id]);
+          if(!rows[0]) {
+            return res.status(400).send({'message': 'Parcel not found'});
+          }
+          const values = [
+            req.body.location,
+            req.body.status
+          ];
+          const response = await db.query(changes, values);
+          return res.status(200).send(response.rows[0]);
+        } catch(err) {
           return res.status(400).send(err);
         }
       }
+
 }
 const validateOrder = order => {
 
@@ -110,6 +143,15 @@ const validateOrder = order => {
       receiver_name: Joi.string().min(3).required(),
       receiver_email: Joi.string().email({ minDomainAtoms: 2 }).required(),
       receiver_address: Joi.string().min(3).required()
+    };
+  
+    return Joi.validate(order, schema);
+  };
+  const validateAdmin = order => {
+
+    const schema = {
+      location: Joi.string().min(3).required(),
+      status: Joi.string().min(3).required()
     };
   
     return Joi.validate(order, schema);
