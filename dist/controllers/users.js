@@ -35,7 +35,7 @@ var UserControllers = {
           rows = _ref.rows;
 
       var token = _helper2.default.generateToken(rows[0].id);
-      return res.status(201).send({ token: token });
+      return res.status(201).send({ token: token, message: 'user created' });
     } catch (error) {
       if (error.routine === '_bt_check_unique') {
         return res.status(400).send({ 'message': 'User with that EMAIL already exist' });
