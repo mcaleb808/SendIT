@@ -7,7 +7,7 @@ const Helper = {
   hashPassword(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8))
   },
- 
+
   comparePassword(hashPassword, password) {
     return bcrypt.compareSync(password, hashPassword);
   },
@@ -33,16 +33,32 @@ const Helper = {
       receiver_email: Joi.string().email({ minDomainAtoms: 2 }).required(),
       receiver_address: Joi.string().min(3).required()
     };
-  
+
+    return Joi.validate(order, schema, { abortEarly: false });
+  },
+  validateStatus(order) {
+
+    const schema = {
+      status: Joi.string().min(3).required()
+    };
+
+    return Joi.validate(order, schema);
+  },
+  validateLocation(order) {
+
+    const schema = {
+      location: Joi.string().min(3).required()
+    };
+
     return Joi.validate(order, schema);
   },
   validateAdmin(order) {
 
     const schema = {
-      location: Joi.string().min(3).required(),
-      status: Joi.string().min(3).required()
+      location: Joi.string().min(3),
+      status: Joi.string().min(3)
     };
-  
+
     return Joi.validate(order, schema);
   },
   validateUpdate(order) {
@@ -50,10 +66,10 @@ const Helper = {
     const schema = {
       destination: Joi.string().min(3).required()
     };
-  
+
     return Joi.validate(order, schema);
   },
-  validateUser (user){
+  validateUser(user) {
 
     const schema = {
       fullName: Joi.string().min(3).required(),
@@ -64,7 +80,7 @@ const Helper = {
     };
     return Joi.validate(user, schema);
   },
-  validateLogin (user){
+  validateLogin(user) {
 
     const schema = {
       password: Joi.string().min(3).required(),

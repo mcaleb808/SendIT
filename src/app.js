@@ -18,8 +18,8 @@ app.use(router);
 
 app.use((req, res, next) => {
   let error = new Error("Not found");
-  error.status = 404;
-  next(error);
+  error.status = 500;
+  done();
 });
 
 module.exports = app;
