@@ -222,7 +222,7 @@ describe('GET /api/v1/parcels/id', function () {
   });
   it('should return 400 - no parcels', function (done) {
     _chai2.default.request(_app2.default).get('/api/v1/parcels/1234').set(key, token).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      _chai2.default.expect(res.statusCode).to.be.equal(404);
       done();
     });
   });
@@ -243,7 +243,7 @@ describe('GET /api/v1/parcels/id/cancel', function () {
   });
   it('should return 400 - no parcels', function (done) {
     _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/cancel').set(key, token).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      _chai2.default.expect(res.statusCode).to.be.equal(404);
       done();
     });
   });

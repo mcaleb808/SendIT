@@ -44,7 +44,7 @@ var ParcelControllers = {
 
       return res.status(200).send({ rows: rows, rowCount: rowCount });
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).send({ error: error, message: 'bad request' });
     }
   },
   getAll: async function getAll(req, res) {
@@ -66,7 +66,7 @@ var ParcelControllers = {
           rows = _ref4.rows;
 
       if (!rows[0]) {
-        return res.status(400).send({ 'message': 'parcel not found' });
+        return res.status(404).send({ 'message': 'parcel not found' });
       }
       return res.status(200).send(rows[0]);
     } catch (error) {
@@ -81,7 +81,7 @@ var ParcelControllers = {
           rows = _ref5.rows;
 
       if (!rows[0]) {
-        return res.status(400).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ 'message': 'Parcel not found' });
       }
       if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
         return res.status(400).send({ 'message': 'the status of this parcel can not be changed' });
@@ -110,7 +110,7 @@ var ParcelControllers = {
           rows = _ref6.rows;
 
       if (!rows[0]) {
-        return res.status(400).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ 'message': 'Parcel not found' });
       }
       if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
         return res.status(400).send({ 'message': 'Destination of this parcel can not be changed' });
@@ -138,7 +138,7 @@ var ParcelControllers = {
           rows = _ref7.rows;
 
       if (!rows[0]) {
-        return res.status(400).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ 'message': 'Parcel not found' });
       }
       var values = [req.body.location, req.body.status];
       var response = await _db2.default.query(changes, values);

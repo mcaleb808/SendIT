@@ -37,7 +37,7 @@ const ParcelControllers = {
       const { rows, rowCount } = await db.query(findUserParcels, [req.user.id]);
       return res.status(200).send({ rows, rowCount });
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).send({ error, message: 'bad request' });
     }
   },
   async getAll(req, res) {
@@ -54,7 +54,7 @@ const ParcelControllers = {
     try {
       const { rows } = await db.query(text, [req.params.id, req.user.id]);
       if (!rows[0]) {
-        return res.status(400).send({ 'message': 'parcel not found' });
+        return res.status(404).send({ 'message': 'parcel not found' });
       }
       return res.status(200).send(rows[0]);
     } catch (error) {
@@ -68,7 +68,7 @@ const ParcelControllers = {
     try {
       const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
       if (!rows[0]) {
-        return res.status(400).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ 'message': 'Parcel not found' });
       }
       if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
         return res.status(400).send({ 'message': 'the status of this parcel can not be changed' });
@@ -96,7 +96,7 @@ const ParcelControllers = {
     try {
       const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
       if (!rows[0]) {
-        return res.status(400).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ 'message': 'Parcel not found' });
       }
       if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
         return res.status(400).send({ 'message': 'Destination of this parcel can not be changed' });
@@ -123,7 +123,7 @@ const ParcelControllers = {
     try {
       const { rows } = await db.query(findParcel, [req.params.id]);
       if (!rows[0]) {
-        return res.status(400).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ 'message': 'Parcel not found' });
       }
       const values = [
         req.body.location,
