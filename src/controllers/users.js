@@ -1,11 +1,10 @@
-import Joi from 'joi';
 import db from '../db';
-import Helper from './helper';
+import Helper from '../middleware/helper';
 
 const UserControllers = {
   async signUp(req, res) {
-    const result = validateUser(req.body);
-    const { error } = validateUser(req.body);
+    const result = Helper.validateUser(req.body);
+    const { error } = Helper.validateUser(req.body);
     if (error) {
       res.status(400).send(error.details[0].message);
 
@@ -27,8 +26,8 @@ const UserControllers = {
     try {
       const { rows } = await db.query(data, values);
       const token = Helper.generateToken(rows[0].id);
-      return res.status(201).send({ token });
-    } catch(error) {
+      return res.status(201).send({ token, message: 'user created' });
+    } catch (error) {
       if (error.routine === '_bt_check_unique') {
         return res.status(400).send({ 'message': 'User with that EMAIL already exist' })
       }
@@ -36,24 +35,24 @@ const UserControllers = {
     }
   },
   async signIn(req, res) {
-    if (!req.body.email || !req.body.password) {
-      return res.status(400).send({'message': 'Some values are missing'});
-    }
-    if (!Helper.isValidEmail(req.body.email)) {
-      return res.status(400).send({ 'message': 'Please enter a valid email address' });
+    const { error } = Helper.validateLogin(req.body);
+    if (error) {
+      res.status(400).send(error.details[0].message);
+
+      return;
     }
     const text = 'SELECT * FROM users WHERE email = $1';
     try {
       const { rows } = await db.query(text, [req.body.email]);
       if (!rows[0]) {
-        return res.status(400).send({'message': 'The credentials you provided is incorrect'});
+        return res.status(400).send({ 'message': 'The credentials you provided is incorrect' });
       }
-      if(!Helper.comparePassword(rows[0].password, req.body.password)) {
+      if (!Helper.comparePassword(rows[0].password, req.body.password)) {
         return res.status(400).send({ 'message': 'The credentials you provided is incorrect' });
       }
       const token = Helper.generateToken(rows[0].id);
-      return res.status(200).send({ token, data: rows[0] });
-    } catch(error) {
+      return res.status(200).send({ token, message: 'successfully logged in' });
+    } catch (error) {
       return res.status(400).send(error)
     }
   },
@@ -72,16 +71,5 @@ const UserControllers = {
   },
 };
 
-const validateUser = user => {
-
-  const schema = {
-    fullName: Joi.string().min(3).required(),
-    username: Joi.string().min(3).required(),
-    password: Joi.string().min(3).required(),
-    userType: Joi.string().min(3).required(),
-    email: Joi.string().email({ minDomainAtoms: 2 }).required()
-  };
-  return Joi.validate(user, schema);
-};
 
 export default UserControllers;

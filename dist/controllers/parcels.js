@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _joi = require('joi');
+var _helper = require('../middleware/helper');
 
-var _joi2 = _interopRequireDefault(_joi);
+var _helper2 = _interopRequireDefault(_helper);
 
 var _db = require('../db');
 
@@ -16,9 +16,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var ParcelControllers = {
   createParcel: async function createParcel(req, res) {
-    //const result = validateOrder(req.body);
-    var _validateOrder = validateOrder(req.body),
-        error = _validateOrder.error;
+    var _Helper$validateOrder = _helper2.default.validateOrder(req.body),
+        error = _Helper$validateOrder.error;
 
     if (error) {
       res.status(400).send(error.details[0].message);
@@ -45,7 +44,7 @@ var ParcelControllers = {
 
       return res.status(200).send({ rows: rows, rowCount: rowCount });
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).send({ error: error, message: 'bad request' });
     }
   },
   getAll: async function getAll(req, res) {
@@ -67,7 +66,7 @@ var ParcelControllers = {
           rows = _ref4.rows;
 
       if (!rows[0]) {
-        return res.status(400).send({ 'message': 'parcel not found' });
+        return res.status(404).send({ 'message': 'parcel not found' });
       }
       return res.status(200).send(rows[0]);
     } catch (error) {
@@ -82,7 +81,10 @@ var ParcelControllers = {
           rows = _ref5.rows;
 
       if (!rows[0]) {
-        return res.status(400).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ 'message': 'Parcel not found' });
+      }
+      if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
+        return res.status(400).send({ 'message': 'the status of this parcel can not be changed' });
       }
       var values = ['canceled'];
       var response = await _db2.default.query(cancel, values);
@@ -93,8 +95,8 @@ var ParcelControllers = {
     }
   },
   changeDestination: async function changeDestination(req, res) {
-    var _validateUpdate = validateUpdate(req.body),
-        error = _validateUpdate.error;
+    var _Helper$validateUpdat = _helper2.default.validateUpdate(req.body),
+        error = _Helper$validateUpdat.error;
 
     if (error) {
       res.status(400).send(error.details[0].message);
@@ -108,7 +110,10 @@ var ParcelControllers = {
           rows = _ref6.rows;
 
       if (!rows[0]) {
-        return res.status(400).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ 'message': 'Parcel not found' });
+      }
+      if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
+        return res.status(400).send({ 'message': 'Destination of this parcel can not be changed' });
       }
       var values = [req.body.destination];
       var response = await _db2.default.query(destination, values);
@@ -118,8 +123,8 @@ var ParcelControllers = {
     }
   },
   adminEdit: async function adminEdit(req, res) {
-    var _validateAdmin = validateAdmin(req.body),
-        error = _validateAdmin.error;
+    var _Helper$validateAdmin = _helper2.default.validateAdmin(req.body),
+        error = _Helper$validateAdmin.error;
 
     if (error) {
       res.status(400).send(error.details[0].message);
@@ -133,7 +138,7 @@ var ParcelControllers = {
           rows = _ref7.rows;
 
       if (!rows[0]) {
-        return res.status(400).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ 'message': 'Parcel not found' });
       }
       var values = [req.body.location, req.body.status];
       var response = await _db2.default.query(changes, values);
@@ -142,36 +147,6 @@ var ParcelControllers = {
       return res.status(400).send(err);
     }
   }
-};
-var validateOrder = function validateOrder(order) {
-
-  var schema = {
-    pickup: _joi2.default.string().min(3).required(),
-    destination: _joi2.default.string().min(3).required(),
-    weight: _joi2.default.number().required(),
-    receiver_name: _joi2.default.string().min(3).required(),
-    receiver_email: _joi2.default.string().email({ minDomainAtoms: 2 }).required(),
-    receiver_address: _joi2.default.string().min(3).required()
-  };
-
-  return _joi2.default.validate(order, schema);
-};
-var validateAdmin = function validateAdmin(order) {
-
-  var schema = {
-    location: _joi2.default.string().min(3).required(),
-    status: _joi2.default.string().min(3).required()
-  };
-
-  return _joi2.default.validate(order, schema);
-};
-var validateUpdate = function validateUpdate(order) {
-
-  var schema = {
-    destination: _joi2.default.string().min(3).required()
-  };
-
-  return _joi2.default.validate(order, schema);
 };
 
 exports.default = ParcelControllers;

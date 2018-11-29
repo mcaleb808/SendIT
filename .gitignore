@@ -1,1 +1,10 @@
-node_modules/  
+#node module
+node_modules
+#env configuration
+.env
+
+# nyc
+.nyc_output
+
+#coverage
+coverage

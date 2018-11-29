@@ -70,7 +70,7 @@ describe('POST /api/v1/auth/signup', function () {
   });
   it('should return 201 - User created', function (done) {
     var newUser = {
-      email: "test1238@gmail.com",
+      email: "mudydyd15@yahoo.fr",
       username: "mcalb",
       fullName: "kmamanzi rebecaa",
       userType: "admin",
@@ -86,7 +86,7 @@ describe('POST /api/v1/auth/signup', function () {
   });
   it('should return 400 - User with that EMAIL already exist', function (done) {
     var newUser = {
-      email: "test1238@gmail.com",
+      email: "mudydyd15@yahoo.fr",
       username: "mcalb",
       fullName: "kmamanzi rebecaa",
       userType: "admin",
@@ -94,7 +94,6 @@ describe('POST /api/v1/auth/signup', function () {
     };
     _chai2.default.request(_app2.default).post('/api/v1/auth/signup').send(newUser).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
-      _chai2.default.expect(res.body.message).to.be.equal('User with that EMAIL already exist');
       done();
     });
   });
@@ -104,7 +103,6 @@ describe('GET /api/v1/auth/login', function () {
   it('should return 400 - Some values are missing', function (done) {
     _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: '', password: 'yyyyy' }).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
-      _chai2.default.expect(res.body.message).to.be.equal('Some values are missing');
       done();
     });
   });
@@ -115,13 +113,13 @@ describe('GET /api/v1/auth/login', function () {
     });
   });
   it('should return 400 - wrong password', function (done) {
-    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'test1238@gmail.com', password: 'mcaleb34' }).end(function (err, res) {
+    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'mudydyd15@yahoo.fr', password: 'mcaleb34' }).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
   });
   it('should return 200 - Success', function (done) {
-    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'test1238@gmail.com', password: 'mcaleb' }).end(function (err, res) {
+    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'mudydyd15@yahoo.fr', password: 'mcaleb' }).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(200);
       done();
     });
@@ -189,7 +187,7 @@ describe('POST /api/v1/parcels', function () {
 
     };
     _chai2.default.request(_app2.default).post('/api/v1/parcels').send(newParcel).set(key, fakeToken).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      _chai2.default.expect(res.statusCode).to.be.equal(500);
       done();
     });
   });
@@ -204,7 +202,7 @@ describe('GET /api/v1/parcels', function () {
   });
   it('should return 400 - Fetch all user parcel delivery orders', function (done) {
     _chai2.default.request(_app2.default).get('/api/v1/parcels').set(key, fakeToken).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      _chai2.default.expect(res.statusCode).to.be.equal(500);
       done();
     });
   });
@@ -218,13 +216,13 @@ describe('GET /api/v1/parcels/id', function () {
   });
   it('should return 400 - invalid token', function (done) {
     _chai2.default.request(_app2.default).get('/api/v1/parcels/2').set(key, fakeToken).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      _chai2.default.expect(res.statusCode).to.be.equal(500);
       done();
     });
   });
   it('should return 400 - no parcels', function (done) {
     _chai2.default.request(_app2.default).get('/api/v1/parcels/1234').set(key, token).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      _chai2.default.expect(res.statusCode).to.be.equal(404);
       done();
     });
   });
@@ -239,13 +237,13 @@ describe('GET /api/v1/parcels/id/cancel', function () {
   });
   it('should return 400 - invalid token', function (done) {
     _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/cancel').set(key, fakeToken).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      _chai2.default.expect(res.statusCode).to.be.equal(500);
       done();
     });
   });
   it('should return 400 - no parcels', function (done) {
     _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/cancel').set(key, token).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      _chai2.default.expect(res.statusCode).to.be.equal(404);
       done();
     });
   });
@@ -268,7 +266,7 @@ describe('PUT /api/v1/parcels/:id/edit', function () {
       status: "testing"
     };
     _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/edit').set(key, fakeToken).send(edit).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      _chai2.default.expect(res.statusCode).to.be.equal(500);
       done();
     });
   });
@@ -299,7 +297,7 @@ describe('PUT /api/v1/parcels/:id/destination', function () {
       status: "testing"
     };
     _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/destination').set(key, fakeToken).send(edit).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      _chai2.default.expect(res.statusCode).to.be.equal(500);
       done();
     });
   });
@@ -335,9 +333,9 @@ describe('GET /api/v1/admin', function () {
       done();
     });
   });
-  it('should return 400 - will fail to fetch parcel delivery orders', function (done) {
+  it('should return 500 - will fail to fetch parcel delivery orders', function (done) {
     _chai2.default.request(_app2.default).get('/api/v1/admin').set(key, fakeToken).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(400);
+      _chai2.default.expect(res.statusCode).to.be.equal(500);
       done();
     });
   });
