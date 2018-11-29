@@ -4,15 +4,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _joi = require('joi');
-
-var _joi2 = _interopRequireDefault(_joi);
-
 var _db = require('../db');
 
 var _db2 = _interopRequireDefault(_db);
 
-var _helper = require('./helper');
+var _helper = require('../middleware/helper');
 
 var _helper2 = _interopRequireDefault(_helper);
 
@@ -20,10 +16,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var UserControllers = {
   signUp: async function signUp(req, res) {
-    var result = validateUser(req.body);
+    var result = _helper2.default.validateUser(req.body);
 
-    var _validateUser = validateUser(req.body),
-        error = _validateUser.error;
+    var _Helper$validateUser = _helper2.default.validateUser(req.body),
+        error = _Helper$validateUser.error;
 
     if (error) {
       res.status(400).send(error.details[0].message);
@@ -48,11 +44,13 @@ var UserControllers = {
     }
   },
   signIn: async function signIn(req, res) {
-    if (!req.body.email || !req.body.password) {
-      return res.status(400).send({ 'message': 'Some values are missing' });
-    }
-    if (!_helper2.default.isValidEmail(req.body.email)) {
-      return res.status(400).send({ 'message': 'Please enter a valid email address' });
+    var _Helper$validateLogin = _helper2.default.validateLogin(req.body),
+        error = _Helper$validateLogin.error;
+
+    if (error) {
+      res.status(400).send(error.details[0].message);
+
+      return;
     }
     var text = 'SELECT * FROM users WHERE email = $1';
     try {
@@ -66,7 +64,7 @@ var UserControllers = {
         return res.status(400).send({ 'message': 'The credentials you provided is incorrect' });
       }
       var token = _helper2.default.generateToken(rows[0].id);
-      return res.status(200).send({ token: token, data: rows[0] });
+      return res.status(200).send({ token: token, message: 'successfully logged in' });
     } catch (error) {
       return res.status(400).send(error);
     }
@@ -86,18 +84,6 @@ var UserControllers = {
       return res.status(400).send({ message: error, status: 400 });
     }
   }
-};
-
-var validateUser = function validateUser(user) {
-
-  var schema = {
-    fullName: _joi2.default.string().min(3).required(),
-    username: _joi2.default.string().min(3).required(),
-    password: _joi2.default.string().min(3).required(),
-    userType: _joi2.default.string().min(3).required(),
-    email: _joi2.default.string().email({ minDomainAtoms: 2 }).required()
-  };
-  return _joi2.default.validate(user, schema);
 };
 
 exports.default = UserControllers;

@@ -38,5 +38,7 @@ router.put('/api/v1/parcels/:id/destination', _Auth2.default.verifyToken, _parce
 router.delete('/api/v1/users', _Auth2.default.verifyToken, _users2.default.deleteUser);
 router.put('/api/v1/parcels/:id/edit', _Auth2.default.verifyToken, _parcels2.default.adminEdit);
 router.get('/api/v1/admin', _Auth2.default.verifyToken, _parcels2.default.getAll);
+router.put('/api/v1/parcels/:id/location', _Auth2.default.verifyToken, _parcels2.default.adminEdit);
+router.put('/api/v1/parcels/:id/status', _Auth2.default.verifyToken, _parcels2.default.adminEdit);
 
 exports.default = router;
