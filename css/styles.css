@@ -16,25 +16,10 @@ body{
     src: url('../font/montserrat.ttf');
 }
 
-[data-notifications] {
-  position: relative;
-}
-
-[data-notifications]:after {
-  content: attr(data-notifications);
-  position: absolute;
-  background: red;
-  border-radius: 50%;
-  display: inline-block;
-  padding: 0.3em;
-  color: #f2f2f2;
-  right: -15px;
-  top: -15px;
-}
 
 .form-style-2{
     max-width: 100%;
-    padding: 20px 12px 10px 20px;
+    padding: 20px 12px 100px 20px;
     font: 13px Arial, Helvetica, sans-serif;
 }
 .form-style-2-heading{
@@ -52,11 +37,12 @@ body{
     margin: 0px 0px 15px 0px;
 }
 .form-style-2 label > span{
-    width: 100px;
+    width: 150px;
     font-weight: bold;
     float: left;
     padding-top: 8px;
-    padding-right: 5px;
+    padding-right: 20px;
+    padding-left: 20px;
 }
 .form-style-2 span.required{
     color:red;
@@ -66,7 +52,7 @@ body{
     text-align: center;
 }
 .form-style-2 input.input-field{
-    width: 48%;
+    width: 60%;
     
 }
 
@@ -210,8 +196,8 @@ ul{
 header{
   background: #35424a;
   color: #ffffff;
-  padding-top: 30px;
-  min-height: 70px;
+  padding-top: 10px;
+  min-height: 45px;
   border-bottom: #81d4fa 3px solid;
 
 }
@@ -482,6 +468,7 @@ footer{
   outline: none;
   height: 40px;
   color: #fff;
+  font-weight: bold
   font-size: 16px;
 }
 
@@ -857,4 +844,28 @@ footer{
     }
 
  }
+}
+
+.notification {
+  background-color: #555;
+  color: white;
+  text-decoration: none;
+  padding: 15px 26px;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.notification:hover {
+  background: red;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
 }
