@@ -64,7 +64,6 @@ describe('POST /api/v1/auth/signup', function () {
       email: "mudydyd16@yahoo.fr",
       username: "mcalb",
       fullName: "kmamanzi rebecaa",
-      userType: "admin",
       password: "mcaleb"
     };
     _chai2.default.request(_app2.default).post('/api/v1/auth/signup').send(newUser).end(function (err, res) {
@@ -79,7 +78,6 @@ describe('POST /api/v1/auth/signup', function () {
       email: "mudydyd16@yahoo.fr",
       username: "mcalb",
       fullName: "kmamanzi rebecaa",
-      userType: "admin",
       password: "mcaleb"
     };
     _chai2.default.request(_app2.default).post('/api/v1/auth/signup').send(newUser).end(function (err, res) {
