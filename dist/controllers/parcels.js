@@ -30,7 +30,7 @@ var ParcelControllers = {
       var _ref = await _db2.default.query(createQuery, data),
           rows = _ref.rows;
 
-      return res.status(201).send(rows[0]);
+      return res.status(201).send({ message: 'parcel created', Parcels: rows[0] });
     } catch (error) {
       return res.status(400).send(error);
     }
@@ -42,7 +42,7 @@ var ParcelControllers = {
           rows = _ref2.rows,
           rowCount = _ref2.rowCount;
 
-      return res.status(200).send({ rows: rows, rowCount: rowCount });
+      return res.status(200).send({ Parcels: rows, rowCount: rowCount });
     } catch (error) {
       return res.status(400).send({ error: error, message: 'bad request' });
     }
@@ -54,7 +54,7 @@ var ParcelControllers = {
           rows = _ref3.rows,
           rowCount = _ref3.rowCount;
 
-      return res.status(200).send({ rows: rows, rowCount: rowCount });
+      return res.status(200).send({ Parcels: rows, rowCount: rowCount });
     } catch (error) {
       return res.status(400).send(error);
     }
@@ -68,14 +68,14 @@ var ParcelControllers = {
       if (!rows[0]) {
         return res.status(404).send({ 'message': 'parcel not found' });
       }
-      return res.status(200).send(rows[0]);
+      return res.status(200).send({ Parcels: rows[0] });
     } catch (error) {
       return res.status(400).send(error);
     }
   },
   cancelParcel: async function cancelParcel(req, res) {
     var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
-    var cancel = 'UPDATE parcels\n          SET status=$1 returning *';
+    var cancel = 'UPDATE parcels\n          SET status=$1  where id =$2 returning *';
     try {
       var _ref5 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
           rows = _ref5.rows;
@@ -86,11 +86,10 @@ var ParcelControllers = {
       if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
         return res.status(400).send({ 'message': 'the status of this parcel can not be changed' });
       }
-      var values = ['canceled'];
+      var values = ['canceled', req.params.id];
       var response = await _db2.default.query(cancel, values);
-      return res.status(200).send(response.rows[0]);
+      return res.status(200).send({ message: 'parcel canceled', Parcels: response.rows[0] });
     } catch (err) {
-      console.log(err.stack);
       return res.status(400).send(err);
     }
   },
@@ -104,7 +103,7 @@ var ParcelControllers = {
       return;
     }
     var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
-    var destination = 'UPDATE parcels\n          SET destination=$1 returning *';
+    var destination = 'UPDATE parcels\n          SET destination=$1 where id= $2 returning *';
     try {
       var _ref6 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
           rows = _ref6.rows;
@@ -115,34 +114,65 @@ var ParcelControllers = {
       if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
         return res.status(400).send({ 'message': 'Destination of this parcel can not be changed' });
       }
-      var values = [req.body.destination];
+      var values = [req.body.destination, req.params.id];
       var response = await _db2.default.query(destination, values);
-      return res.status(200).send(response.rows[0]);
+      return res.status(200).send({ message: 'destination changed', Parcels: response.rows[0] });
     } catch (err) {
       return res.status(400).send(err);
     }
   },
-  adminEdit: async function adminEdit(req, res) {
-    var _Helper$validateAdmin = _helper2.default.validateAdmin(req.body),
-        error = _Helper$validateAdmin.error;
+  changeStatus: async function changeStatus(req, res) {
+    var _Helper$validateStatu = _helper2.default.validateStatus(req.body),
+        error = _Helper$validateStatu.error;
 
     if (error) {
       res.status(400).send(error.details[0].message);
 
       return;
     }
-    var findParcel = 'SELECT * FROM parcels WHERE id=$1';
-    var changes = 'UPDATE parcels\n          SET location=$1, status = $2 returning *';
+    var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
+    var status = 'UPDATE parcels\n          SET status=$1 where id= $2 returning *';
     try {
-      var _ref7 = await _db2.default.query(findParcel, [req.params.id]),
+      var _ref7 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
           rows = _ref7.rows;
 
       if (!rows[0]) {
         return res.status(404).send({ 'message': 'Parcel not found' });
       }
-      var values = [req.body.location, req.body.status];
-      var response = await _db2.default.query(changes, values);
-      return res.status(200).send(response.rows[0]);
+      if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
+        return res.status(400).send({ 'message': 'Destination of this parcel can not be changed' });
+      }
+      var values = [req.body.status, req.params.id];
+      var response = await _db2.default.query(status, values);
+      return res.status(200).send({ message: 'Present of location changed', Parcel: response.rows[0] });
+    } catch (err) {
+      return res.status(400).send(err);
+    }
+  },
+  changeLocation: async function changeLocation(req, res) {
+    var _Helper$validateLocat = _helper2.default.validateLocation(req.body),
+        error = _Helper$validateLocat.error;
+
+    if (error) {
+      res.status(400).send(error.details[0].message);
+
+      return;
+    }
+    var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
+    var location = 'UPDATE parcels\n          SET location=$1 where id= $2 returning *';
+    try {
+      var _ref8 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
+          rows = _ref8.rows;
+
+      if (!rows[0]) {
+        return res.status(404).send({ 'message': 'Parcel not found' });
+      }
+      if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
+        return res.status(400).send({ 'message': 'Destination of this parcel can not be changed' });
+      }
+      var values = [req.body.location, req.params.id];
+      var response = await _db2.default.query(location, values);
+      return res.status(200).send({ message: 'parcel status changed', Parcels: response.rows[0] });
     } catch (err) {
       return res.status(400).send(err);
     }

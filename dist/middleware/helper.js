@@ -46,13 +46,29 @@ var Helper = {
       receiver_address: _joi2.default.string().min(3).required()
     };
 
+    return _joi2.default.validate(order, schema, { abortEarly: false });
+  },
+  validateStatus: function validateStatus(order) {
+
+    var schema = {
+      status: _joi2.default.string().min(3).required()
+    };
+
+    return _joi2.default.validate(order, schema);
+  },
+  validateLocation: function validateLocation(order) {
+
+    var schema = {
+      location: _joi2.default.string().min(3).required()
+    };
+
     return _joi2.default.validate(order, schema);
   },
   validateAdmin: function validateAdmin(order) {
 
     var schema = {
-      location: _joi2.default.string().min(3).required(),
-      status: _joi2.default.string().min(3).required()
+      location: _joi2.default.string().min(3),
+      status: _joi2.default.string().min(3)
     };
 
     return _joi2.default.validate(order, schema);
@@ -71,7 +87,7 @@ var Helper = {
       fullName: _joi2.default.string().min(3).required(),
       username: _joi2.default.string().min(3).required(),
       password: _joi2.default.string().min(3).required(),
-      userType: _joi2.default.string().min(3).required(),
+      userType: _joi2.default.string().min(3),
       email: _joi2.default.string().email({ minDomainAtoms: 2 }).required()
     };
     return _joi2.default.validate(user, schema);

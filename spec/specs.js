@@ -29,15 +29,6 @@ describe('root request', function () {
       });
     });
   });
-
-  describe('bad request', function () {
-    it('should return 404(Not found) status', function (done) {
-      _chai2.default.request(_app2.default).get('/bc').end(function (err, res) {
-        _chai2.default.expect(res.statusCode).to.be.equal(404);
-        done();
-      });
-    });
-  });
 });
 
 //login and sign up tests
@@ -70,26 +61,23 @@ describe('POST /api/v1/auth/signup', function () {
   });
   it('should return 201 - User created', function (done) {
     var newUser = {
-      email: "mudydyd15@yahoo.fr",
+      email: "mudydyd16@yahoo.fr",
       username: "mcalb",
       fullName: "kmamanzi rebecaa",
-      userType: "admin",
       password: "mcaleb"
     };
     _chai2.default.request(_app2.default).post('/api/v1/auth/signup').send(newUser).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(201);
-      console.log(res.body);
       token = res.body.token;
-      console.log(token);
+
       done();
     });
   });
   it('should return 400 - User with that EMAIL already exist', function (done) {
     var newUser = {
-      email: "mudydyd15@yahoo.fr",
+      email: "mudydyd16@yahoo.fr",
       username: "mcalb",
       fullName: "kmamanzi rebecaa",
-      userType: "admin",
       password: "mcaleb"
     };
     _chai2.default.request(_app2.default).post('/api/v1/auth/signup').send(newUser).end(function (err, res) {
@@ -113,13 +101,13 @@ describe('GET /api/v1/auth/login', function () {
     });
   });
   it('should return 400 - wrong password', function (done) {
-    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'mudydyd15@yahoo.fr', password: 'mcaleb34' }).end(function (err, res) {
+    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'mudydyd16@yahoo.fr', password: 'mcaleb34' }).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
   });
   it('should return 200 - Success', function (done) {
-    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'mudydyd15@yahoo.fr', password: 'mcaleb' }).end(function (err, res) {
+    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'mudydyd16@yahoo.fr', password: 'mcaleb' }).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(200);
       done();
     });
@@ -172,7 +160,6 @@ describe('POST /api/v1/parcels', function () {
     };
     _chai2.default.request(_app2.default).post('/api/v1/parcels').send(newParcel).set(key, token).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
-      console.log(res.body);
       done();
     });
   });
@@ -195,7 +182,7 @@ describe('POST /api/v1/parcels', function () {
 describe('GET /api/v1/parcels', function () {
   it('should return 200 - Fetch all parcel delivery orders', function (done) {
     _chai2.default.request(_app2.default).get('/api/v1/parcels').set(key, token).end(function (err, res) {
-      parcelId = res.body.rows[0].id;
+      parcelId = res.body.Parcels[0].id;
       _chai2.default.expect(res.statusCode).to.be.equal(200);
       done();
     });
@@ -228,59 +215,66 @@ describe('GET /api/v1/parcels/id', function () {
   });
 });
 
-describe('GET /api/v1/parcels/id/cancel', function () {
-  it('should return 200 - cancel a parcel', function (done) {
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/cancel').set(key, token).end(function (err, res) {
+describe('PUT /api/v1/parcels/:id/location', function () {
+  it('should return 200 - admin change location of a parcel', function (done) {
+    var edit = {
+      location: "test"
+    };
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/location').set(key, token).send(edit).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(200);
       done();
     });
   });
   it('should return 400 - invalid token', function (done) {
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/cancel').set(key, fakeToken).end(function (err, res) {
+    var edit = {
+      location: "test"
+    };
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/location').set(key, fakeToken).send(edit).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(500);
       done();
     });
   });
-  it('should return 400 - no parcels', function (done) {
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/cancel').set(key, token).end(function (err, res) {
+  it('should return 404 - no parcels', function (done) {
+    var edit = {
+      location: "test"
+    };
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/location').set(key, token).send(edit).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(404);
       done();
     });
   });
 });
 
-describe('PUT /api/v1/parcels/:id/edit', function () {
-  it('should return 200 - admin change location and status of a parcel', function (done) {
+describe('PUT /api/v1/parcels/:id/status', function () {
+  it('should return 200 - admin change location of a parcel', function (done) {
     var edit = {
-      location: "test",
-      status: "testing"
+      status: "test"
     };
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/edit').set(key, token).send(edit).end(function (err, res) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/status').set(key, token).send(edit).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(200);
       done();
     });
   });
   it('should return 400 - invalid token', function (done) {
     var edit = {
-      location: "test",
-      status: "testing"
+      location: "test"
     };
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/edit').set(key, fakeToken).send(edit).end(function (err, res) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/status').set(key, fakeToken).send(edit).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(500);
       done();
     });
   });
-  it('should return 400 - no parcels', function (done) {
+  it('should return 404 - no parcels', function (done) {
     var edit = {
-      location: "test",
-      status: 2
+      status: "test"
     };
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/edit').set(key, token).send(edit).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(400);
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/status').set(key, token).send(edit).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(404);
       done();
     });
   });
 });
+
 describe('PUT /api/v1/parcels/:id/destination', function () {
   it('should return 200 -  change destination of a parcel', function (done) {
     var edit = {
@@ -293,8 +287,7 @@ describe('PUT /api/v1/parcels/:id/destination', function () {
   });
   it('should return 400 - invalid token', function (done) {
     var edit = {
-      location: "test",
-      status: "testing"
+      destination: "test"
     };
     _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/destination').set(key, fakeToken).send(edit).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(500);
@@ -325,27 +318,33 @@ describe('PUT /api/v1/parcels', function () {
   });
 });
 
-describe('GET /api/v1/admin', function () {
-  it('should return 200 - Fetch all parcel delivery orders', function (done) {
-    _chai2.default.request(_app2.default).get('/api/v1/admin').set(key, token).end(function (err, res) {
-      parcelId = res.body.rows[0].id;
+describe('GET /api/v1/parcels/id/cancel', function () {
+  it('should return 200 - cancel a parcel', function (done) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/cancel').set(key, token).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(200);
       done();
     });
   });
-  it('should return 500 - will fail to fetch parcel delivery orders', function (done) {
-    _chai2.default.request(_app2.default).get('/api/v1/admin').set(key, fakeToken).end(function (err, res) {
+  it('should return 400 - invalid token', function (done) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/cancel').set(key, fakeToken).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(500);
       done();
     });
   });
+  it('should return 400 - no parcels', function (done) {
+    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/cancel').set(key, token).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(404);
+      done();
+    });
+  });
 });
+
 //delete user created in test
 
 describe('DELETE /api/v1/users/:userId', function () {
   it('should return 404 - User not found', function (done) {
-    _chai2.default.request(_app2.default).delete('/api/v1/users/12344').set(key, token).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(404);
+    _chai2.default.request(_app2.default).delete('/api/v1/user/xxx').set(key, token).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
   });

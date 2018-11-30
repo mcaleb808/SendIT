@@ -3,7 +3,6 @@ import Helper from '../middleware/helper';
 
 const UserControllers = {
   async signUp(req, res) {
-    const result = Helper.validateUser(req.body);
     const { error } = Helper.validateUser(req.body);
     if (error) {
       res.status(400).send(error.details[0].message);
@@ -19,7 +18,7 @@ const UserControllers = {
       req.body.email,
       req.body.username,
       req.body.fullName,
-      req.body.userType,
+      "user",
       hashPassword
     ];
 
@@ -65,7 +64,6 @@ const UserControllers = {
       }
       return res.status(204).send({ message: 'deleted', status: 204 });
     } catch (error) {
-      console.log(error.stack);
       return res.status(400).send({ message: error, status: 400 });
     }
   },

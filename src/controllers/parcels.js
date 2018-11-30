@@ -26,7 +26,7 @@ const ParcelControllers = {
     ];
     try {
       const { rows } = await db.query(createQuery, data);
-      return res.status(201).send(rows[0]);
+      return res.status(201).send({ message: 'parcel created', Parcels: rows[0] });
     } catch (error) {
       return res.status(400).send(error);
     }
@@ -35,7 +35,7 @@ const ParcelControllers = {
     const findUserParcels = 'SELECT * FROM parcels where sender_id = $1';
     try {
       const { rows, rowCount } = await db.query(findUserParcels, [req.user.id]);
-      return res.status(200).send({ rows, rowCount });
+      return res.status(200).send({ Parcels: rows, rowCount });
     } catch (error) {
       return res.status(400).send({ error, message: 'bad request' });
     }
@@ -44,7 +44,7 @@ const ParcelControllers = {
     const findUserParcels = 'SELECT * FROM parcels';
     try {
       const { rows, rowCount } = await db.query(findUserParcels);
-      return res.status(200).send({ rows, rowCount });
+      return res.status(200).send({ Parcels: rows, rowCount });
     } catch (error) {
       return res.status(400).send(error);
     }
@@ -56,7 +56,7 @@ const ParcelControllers = {
       if (!rows[0]) {
         return res.status(404).send({ 'message': 'parcel not found' });
       }
-      return res.status(200).send(rows[0]);
+      return res.status(200).send({ Parcels: rows[0] });
     } catch (error) {
       return res.status(400).send(error)
     }
@@ -64,7 +64,7 @@ const ParcelControllers = {
   async cancelParcel(req, res) {
     const findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
     const cancel = `UPDATE parcels
-          SET status=$1 returning *`;
+          SET status=$1  where id =$2 returning *`;
     try {
       const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
       if (!rows[0]) {
@@ -74,12 +74,13 @@ const ParcelControllers = {
         return res.status(400).send({ 'message': 'the status of this parcel can not be changed' });
       }
       const values = [
-        'canceled'
+        'canceled',
+        req.params.id
+
       ];
       const response = await db.query(cancel, values);
-      return res.status(200).send(response.rows[0]);
+      return res.status(200).send({ message: 'parcel canceled', Parcels: response.rows[0] });
     } catch (err) {
-      console.log(err.stack);
       return res.status(400).send(err);
     }
   },
@@ -92,7 +93,7 @@ const ParcelControllers = {
     }
     const findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
     const destination = `UPDATE parcels
-          SET destination=$1 returning *`;
+          SET destination=$1 where id= $2 returning *`;
     try {
       const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
       if (!rows[0]) {
@@ -102,39 +103,72 @@ const ParcelControllers = {
         return res.status(400).send({ 'message': 'Destination of this parcel can not be changed' });
       }
       const values = [
-        req.body.destination
+        req.body.destination,
+        req.params.id
       ];
       const response = await db.query(destination, values);
-      return res.status(200).send(response.rows[0]);
+      return res.status(200).send({ message: 'destination changed', Parcels: response.rows[0] });
     } catch (err) {
       return res.status(400).send(err);
     }
   },
-  async adminEdit(req, res) {
-    const { error } = Helper.validateAdmin(req.body);
+  async changeStatus(req, res) {
+    const { error } = Helper.validateStatus(req.body);
     if (error) {
       res.status(400).send(error.details[0].message);
 
       return;
     }
-    const findParcel = 'SELECT * FROM parcels WHERE id=$1';
-    const changes = `UPDATE parcels
-          SET location=$1, status = $2 returning *`;
+    const findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
+    const status = `UPDATE parcels
+          SET status=$1 where id= $2 returning *`;
     try {
-      const { rows } = await db.query(findParcel, [req.params.id]);
+      const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
       if (!rows[0]) {
         return res.status(404).send({ 'message': 'Parcel not found' });
       }
+      if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
+        return res.status(400).send({ 'message': 'Destination of this parcel can not be changed' });
+      }
+      const values = [
+        req.body.status,
+        req.params.id
+      ];
+      const response = await db.query(status, values);
+      return res.status(200).send({ message: 'Present of location changed', Parcel: response.rows[0] });
+    } catch (err) {
+      return res.status(400).send(err);
+    }
+  },
+  async changeLocation(req, res) {
+    const { error } = Helper.validateLocation(req.body);
+    if (error) {
+      res.status(400).send(error.details[0].message);
+
+      return;
+    }
+    const findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
+    const location = `UPDATE parcels
+          SET location=$1 where id= $2 returning *`;
+    try {
+      const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
+      if (!rows[0]) {
+        return res.status(404).send({ 'message': 'Parcel not found' });
+      }
+      if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
+        return res.status(400).send({ 'message': 'Destination of this parcel can not be changed' });
+      }
       const values = [
         req.body.location,
-        req.body.status
+        req.params.id
       ];
-      const response = await db.query(changes, values);
-      return res.status(200).send(response.rows[0]);
+      const response = await db.query(location, values);
+      return res.status(200).send({ message: 'parcel status changed', Parcels: response.rows[0] });
     } catch (err) {
       return res.status(400).send(err);
     }
   }
+
 
 }
 

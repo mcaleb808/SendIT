@@ -16,8 +16,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var UserControllers = {
   signUp: async function signUp(req, res) {
-    var result = _helper2.default.validateUser(req.body);
-
     var _Helper$validateUser = _helper2.default.validateUser(req.body),
         error = _Helper$validateUser.error;
 
@@ -28,7 +26,7 @@ var UserControllers = {
     }
     var hashPassword = _helper2.default.hashPassword(req.body.password);
     var data = 'INSERT INTO\n      users(email, username, fullname, usertype, password)\n      VALUES($1, $2, $3, $4, $5)\n      returning *';
-    var values = [req.body.email, req.body.username, req.body.fullName, req.body.userType, hashPassword];
+    var values = [req.body.email, req.body.username, req.body.fullName, "user", hashPassword];
 
     try {
       var _ref = await _db2.default.query(data, values),
@@ -80,7 +78,6 @@ var UserControllers = {
       }
       return res.status(204).send({ message: 'deleted', status: 204 });
     } catch (error) {
-      console.log(error.stack);
       return res.status(400).send({ message: error, status: 400 });
     }
   }
