@@ -27,10 +27,4 @@ app.get('/', function (req, res) {
 
 app.use(_routes2.default);
 
-app.use(function (req, res, next) {
-  var error = new Error("Not found");
-  error.status = 500;
-  done();
-});
-
 module.exports = app;
