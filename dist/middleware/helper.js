@@ -84,11 +84,11 @@ var Helper = {
   validateUser: function validateUser(user) {
 
     var schema = {
-      fullName: _joi2.default.string().min(3).required(),
       username: _joi2.default.string().min(3).required(),
-      password: _joi2.default.string().min(3).required(),
-      userType: _joi2.default.string().min(3),
-      email: _joi2.default.string().email({ minDomainAtoms: 2 }).required()
+      fullName: _joi2.default.string().min(3).required(),
+      email: _joi2.default.string().email({ minDomainAtoms: 2 }).required(),
+      password: _joi2.default.string().min(3).required()
+
     };
     return _joi2.default.validate(user, schema);
   },
