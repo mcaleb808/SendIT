@@ -35,7 +35,23 @@ var Auth = {
     } catch (error) {
       return res.status(500).send({
         success: false,
-        message: 'something went wong please try again' });
+        message: 'something went wong please try again'
+      });
+    }
+  },
+  checkUser: async function checkUser(req, res, next) {
+    try {
+      var check = 'SELECT * FROM users WHERE id = $1';
+
+      var _ref2 = await _db2.default.query(check, [req.user.id]),
+          rows = _ref2.rows;
+
+      if (rows[0].usertype !== 'admin') {
+        return res.status(403).send({ message: 'Forbidden', status: 403 });
+      }
+      next();
+    } catch (error) {
+      return res.status(400).send(error);
     }
   }
 };

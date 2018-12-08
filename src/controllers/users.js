@@ -5,7 +5,7 @@ const UserControllers = {
   async signUp(req, res) {
     const { error } = Helper.validateUser(req.body);
     if (error) {
-      res.status(400).send(error.details[0].message);
+      res.status(400).send({ message: error.details[0].message });
 
       return;
     }
@@ -18,7 +18,7 @@ const UserControllers = {
       req.body.email,
       req.body.username,
       req.body.fullName,
-      "user",
+      "admin",
       hashPassword
     ];
 
@@ -28,7 +28,7 @@ const UserControllers = {
       return res.status(201).send({ token, message: 'user created' });
     } catch (error) {
       if (error.routine === '_bt_check_unique') {
-        return res.status(400).send({ 'message': 'User with that EMAIL already exist' })
+        return res.status(400).send({ message: 'User with that EMAIL already exist' })
       }
       return res.status(400).send(error);
     }
@@ -44,10 +44,10 @@ const UserControllers = {
     try {
       const { rows } = await db.query(text, [req.body.email]);
       if (!rows[0]) {
-        return res.status(400).send({ 'message': 'The credentials you provided is incorrect' });
+        return res.status(400).send({ message: 'The credentials you provided is incorrect' });
       }
       if (!Helper.comparePassword(rows[0].password, req.body.password)) {
-        return res.status(400).send({ 'message': 'The credentials you provided is incorrect' });
+        return res.status(400).send({ message: 'The credentials you provided is incorrect' });
       }
       const token = Helper.generateToken(rows[0].id);
       return res.status(200).send({ token, message: 'successfully logged in' });

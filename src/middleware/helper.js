@@ -72,11 +72,11 @@ const Helper = {
   validateUser(user) {
 
     const schema = {
-      fullName: Joi.string().min(3).required(),
       username: Joi.string().min(3).required(),
-      password: Joi.string().min(3).required(),
-      userType: Joi.string().min(3),
-      email: Joi.string().email({ minDomainAtoms: 2 }).required()
+      fullName: Joi.string().min(3).required(),
+      email: Joi.string().email({ minDomainAtoms: 2 }).required(),
+      password: Joi.string().min(3).required()
+
     };
     return Joi.validate(user, schema);
   },
