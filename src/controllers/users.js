@@ -30,13 +30,13 @@ const UserControllers = {
       if (error.routine === '_bt_check_unique') {
         return res.status(400).send({ message: 'User with that EMAIL already exist' })
       }
-      return res.status(400).send(error);
+      return res.status(400).send({ message: error });
     }
   },
   async signIn(req, res) {
     const { error } = Helper.validateLogin(req.body);
     if (error) {
-      res.status(400).send(error.details[0].message);
+      res.status(400).send({ message: error.details[0].message });
 
       return;
     }
@@ -50,9 +50,9 @@ const UserControllers = {
         return res.status(400).send({ message: 'The credentials you provided is incorrect' });
       }
       const token = Helper.generateToken(rows[0].id);
-      return res.status(200).send({ token, message: 'successfully logged in' });
+      return res.status(200).send({ token, message: 'successfully logged in', users: rows[0] });
     } catch (error) {
-      return res.status(400).send(error)
+      return res.status(400).send({ message: error })
     }
   },
   async deleteUser(req, res) {

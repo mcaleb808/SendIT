@@ -95,8 +95,8 @@ var Helper = {
   validateLogin: function validateLogin(user) {
 
     var schema = {
-      password: _joi2.default.string().min(3).required(),
-      email: _joi2.default.string().email({ minDomainAtoms: 2 }).required()
+      email: _joi2.default.string().email({ minDomainAtoms: 2 }).required(),
+      password: _joi2.default.string().min(3).required()
     };
     return _joi2.default.validate(user, schema);
   }
