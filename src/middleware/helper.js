@@ -83,8 +83,8 @@ const Helper = {
   validateLogin(user) {
 
     const schema = {
-      password: Joi.string().min(3).required(),
-      email: Joi.string().email({ minDomainAtoms: 2 }).required()
+      email: Joi.string().email({ minDomainAtoms: 2 }).required(),
+      password: Joi.string().min(3).required()
     };
     return Joi.validate(user, schema);
   }
