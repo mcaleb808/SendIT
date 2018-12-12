@@ -30,7 +30,7 @@ var ParcelControllers = {
       var _ref = await _db2.default.query(createQuery, data),
           rows = _ref.rows;
 
-      return res.status(201).send({ message: 'parcel created', Parcels: rows[0] });
+      return res.status(201).send({ message: 'parcel created', Parcels: rows });
     } catch (error) {
       return res.status(400).send(error);
     }

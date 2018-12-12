@@ -15,7 +15,7 @@ window.onload = () => {
                 if (token) {
                     await localStorage.setItem('token', token);
                     if (users.usertype === 'admin') {
-                        window.location.href = '../admin/index.html';
+                        window.location.href = '../user/parcels.html';
                     } else {
                         window.location.href = '../user/parcels.html';
                     }

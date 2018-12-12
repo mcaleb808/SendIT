@@ -26,7 +26,7 @@ const ParcelControllers = {
     ];
     try {
       const { rows } = await db.query(createQuery, data);
-      return res.status(201).send({ message: 'parcel created', Parcels: rows[0] });
+      return res.status(201).send({ message: 'parcel created', Parcels: rows });
     } catch (error) {
       return res.status(400).send(error);
     }

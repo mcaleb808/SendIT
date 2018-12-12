@@ -4,6 +4,10 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
+var _cors = require('cors');
+
+var _cors2 = _interopRequireDefault(_cors);
+
 var _routes = require('./routes/routes');
 
 var _routes2 = _interopRequireDefault(_routes);
@@ -12,14 +16,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var app = (0, _express2.default)();
 
+
 app.use(_express2.default.json());
-
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-
-  next();
-});
+app.use((0, _cors2.default)());
 
 app.get('/', function (req, res) {
   res.sendfile('src/index.html');
