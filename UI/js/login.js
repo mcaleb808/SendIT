@@ -14,6 +14,9 @@ window.onload = () => {
                 const { token, users, message } = results;
                 if (token) {
                     await localStorage.setItem('token', token);
+                    await localStorage.setItem('username', users.username);
+                    await localStorage.setItem('fullname', users.fullname);
+                    await localStorage.setItem('email', users.email);
                     if (users.usertype === 'admin') {
                         window.location.href = '../user/parcels.html';
                     } else {

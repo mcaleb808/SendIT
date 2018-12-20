@@ -22,13 +22,14 @@ window.onload = async () => {
                         tr.innerHTML = `
                 <tr>
                   <td>${parcel.Parcels[index].id}</td>
+                  <td>${parcel.Parcels[index].pickup}</td>
                   <td>${parcel.Parcels[index].destination}</td>
                   <td>${parcel.Parcels[index].location}</td>
                   <td>${parcel.Parcels[index].weight}</td>
                   <td>${parcel.Parcels[index].weight * 500}</td>
                   <td>${parcel.Parcels[index].receiver_email}</td>
                   <td>${parcel.Parcels[index].status}</td>
-                  <td><a href="editParcel.html"><button type="button" id="" onclick="">EDIT</button></a></td>
+                  <td><a href="editParcel.html?id=${parcel.Parcels[index].id}"><button type="button" id="edit">EDIT</button></a></td>
                   <td><button type="button" id="cancelBtn" style="background-color:#f57f17;" onclick="cancel('${parcel.Parcels[index].id}')">CANCEL</button></td>
 
             </tr>
@@ -39,13 +40,14 @@ window.onload = async () => {
                         tr.innerHTML = `
                     <tr>
                       <td>${parcel.Parcels[index].id}</td>
+                      <td>${parcel.Parcels[index].pickup}</td>
                       <td>${parcel.Parcels[index].destination}</td>
                       <td>${parcel.Parcels[index].location}</td>
                       <td>${parcel.Parcels[index].weight}</td>
                       <td>${parcel.Parcels[index].weight * 500}</td>
                       <td>${parcel.Parcels[index].receiver_email}</td>
                       <td>${parcel.Parcels[index].status}</td>
-                      <td><a href="editParcel.html"><button type="button" id="" onclick="">EDIT</button></a></td>
+                      <td><button type="button" id="disabled" style="background-color:gray;" disabled">EDIT</button></td>
                       <td><button type="button" id="cancelBtn" style="background-color:gray;" disabled">CANCEL</button></td>
     
                 </tr>
@@ -70,7 +72,7 @@ window.onload = async () => {
                 res.json().then(async (results) => {
                     const { message } = results;
                     window.location.href = 'parcels.html';
-                    document.getElementById('output').innerHTML = message;
+                    document.getElementById('msg').innerHTML = message;
                 }).catch(err => err);
             });
 

@@ -273,7 +273,7 @@ describe('PUT /api/v1/parcels/:id/destination', () => {
       destination: "test"
     };
     chai.request(app).put(`/api/v1/parcels/${parcelId}/destination`).set(key, token).send(edit).end((err, res) => {
-      chai.expect(res.statusCode).to.be.equal(200);
+      chai.expect(res.statusCode).to.be.equal(202);
       done();
     });
   });
@@ -304,7 +304,7 @@ describe('PUT /api/v1/parcels', () => {
     };
     chai.request(app).put(`/api/v1/parcels/${parcelId}/destination`).send(newParcel).set(key, token).end((err, res) => {
 
-      chai.expect(res.statusCode).to.be.equal(200);
+      chai.expect(res.statusCode).to.be.equal(202);
       done();
     });
   });

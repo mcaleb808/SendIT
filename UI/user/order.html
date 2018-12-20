@@ -37,36 +37,30 @@
         <label><span>&nbsp;</span>
           <h2>My Parcel Details</h2>
         </label>
+        <label>
+          <div class="msg_error" id="msg"></div>
+        </label>
         <label for="field1"><span>Pick Up location<span class="required">*</span></span><input type="text" id="pickUp"
             class="input-field" name="fname" value="" required /></label>
-        <label for="field1"><span>Destination<span class="required">*</span></span><input type="text" id="Destination"
+        <label for="field1"><span>Destination<span class="required">*</span></span><input type="text" id="destination"
             class="input-field" name="user" value="" required /></label>
-        <label for="field1"><span>Weight:<span class="required">(Kg)*</span></span><input type="text" id="Weight" class="input-field"
+        <label for="field1"><span>Weight:<span class="required">(Kg)*</span></span><input type="text" id="weight" class="input-field"
             name="fname" value="" onchange="myFunction(this.value)" required /></label>
-        <label for="field1"><span>Price:<span class="required">(Rwf)</span></span><input type="text" id="Price" class="input-field"
-            name="user" value="" disabled /></label>
         <label><span>&nbsp;</span>
           <h2>Receiver information</h2>
         </label>
-        <label for="field1"><span>Fullname<span class="required">*</span></span><input type="text" id="FullName" class="input-field"
+        <label for="field1"><span>Fullname<span class="required">*</span></span><input type="text" id="fullname" class="input-field"
             name="fname" value="" required /></label>
-        <label for="field1"><span>Address <span class="required">*</span></span><input type="text" id="Address" class="input-field"
+        <label for="field1"><span>Address <span class="required">*</span></span><input type="text" id="address" class="input-field"
             name="user" value="" required /></label>
         <label for="field1"><span>E-mail <span class="required">*</span></span><input type="email" id="email" class="input-field"
             name="user" value="" required /></label>
-        <label for="field1"><span><span></span></span><button type="submit" id="CreateBtn" onclick="">Create order</button></label>
+        <label for="field1"><span><span></span></span><button type="button" id="CreateBtn">Create order</button></label>
       </div>
 
     </form>
     <script type="text/javascript" src="../js/tab.js"></script>
   </div>
-  <script type="text/javascript" src="/./js/index.js"></script>
-  <script>
-    function myFunction(val) {
-      document.getElementById('weight').value = val * 500;
-    }
-  </script>
-
 </body>
 <footer>Caleb SendIt APP Copyright &copy; 2018</footer>
 

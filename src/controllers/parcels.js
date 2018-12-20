@@ -5,7 +5,7 @@ const ParcelControllers = {
   async createParcel(req, res) {
     const { error } = Helper.validateOrder(req.body);
     if (error) {
-      res.status(400).send(error.details[0].message);
+      res.status(400).send({ message: error.details[0].message });
 
       return;
     }
@@ -26,7 +26,7 @@ const ParcelControllers = {
     ];
     try {
       const { rows } = await db.query(createQuery, data);
-      return res.status(201).send({ message: 'parcel created', Parcels: rows });
+      return res.status(201).send({ message: 'parcel created', Parcels: rows, status: 201 });
     } catch (error) {
       return res.status(400).send(error);
     }
@@ -68,10 +68,10 @@ const ParcelControllers = {
     try {
       const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
       if (!rows[0]) {
-        return res.status(404).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ message: 'Parcel not found' });
       }
       if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
-        return res.status(400).send({ 'message': 'the status of this parcel can not be changed' });
+        return res.status(400).send({ message: 'the status of this parcel can not be changed' });
       }
       const values = [
         'canceled',
@@ -87,7 +87,7 @@ const ParcelControllers = {
   async changeDestination(req, res) {
     const { error } = Helper.validateUpdate(req.body);
     if (error) {
-      res.status(400).send(error.details[0].message);
+      res.status(400).send({ message: error.details[0].message });
 
       return;
     }
@@ -97,17 +97,17 @@ const ParcelControllers = {
     try {
       const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
       if (!rows[0]) {
-        return res.status(404).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ message: 'Parcel not found' });
       }
       if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
-        return res.status(400).send({ 'message': 'Destination of this parcel can not be changed' });
+        return res.status(400).send({ message: 'Destination of this parcel can not be changed' });
       }
       const values = [
         req.body.destination,
         req.params.id
       ];
       const response = await db.query(destination, values);
-      return res.status(200).send({ message: 'destination changed', Parcels: response.rows[0] });
+      return res.status(202).send({ message: 'destination changed', Parcels: response.rows[0], status: 202 });
     } catch (err) {
       return res.status(400).send(err);
     }
@@ -143,7 +143,7 @@ const ParcelControllers = {
   async changeLocation(req, res) {
     const { error } = Helper.validateLocation(req.body);
     if (error) {
-      res.status(400).send(error.details[0].message);
+      res.status(400).send({ message: error.details[0].message });
 
       return;
     }
@@ -153,10 +153,10 @@ const ParcelControllers = {
     try {
       const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
       if (!rows[0]) {
-        return res.status(404).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ message: 'Parcel not found' });
       }
       if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
-        return res.status(400).send({ 'message': 'Destination of this parcel can not be changed' });
+        return res.status(400).send({ message: 'Destination of this parcel can not be changed' });
       }
       const values = [
         req.body.location,

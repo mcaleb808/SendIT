@@ -281,7 +281,7 @@ describe('PUT /api/v1/parcels/:id/destination', function () {
       destination: "test"
     };
     _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/destination').set(key, token).send(edit).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(200);
+      _chai2.default.expect(res.statusCode).to.be.equal(202);
       done();
     });
   });
@@ -312,7 +312,7 @@ describe('PUT /api/v1/parcels', function () {
     };
     _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/destination').send(newParcel).set(key, token).end(function (err, res) {
 
-      _chai2.default.expect(res.statusCode).to.be.equal(200);
+      _chai2.default.expect(res.statusCode).to.be.equal(202);
       done();
     });
   });
