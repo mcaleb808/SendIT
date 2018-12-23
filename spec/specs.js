@@ -215,66 +215,6 @@ describe('GET /api/v1/parcels/id', function () {
   });
 });
 
-describe('PUT /api/v1/parcels/:id/location', function () {
-  it('should return 200 - admin change location of a parcel', function (done) {
-    var edit = {
-      location: "test"
-    };
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/location').set(key, token).send(edit).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(200);
-      done();
-    });
-  });
-  it('should return 400 - invalid token', function (done) {
-    var edit = {
-      location: "test"
-    };
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/location').set(key, fakeToken).send(edit).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(500);
-      done();
-    });
-  });
-  it('should return 404 - no parcels', function (done) {
-    var edit = {
-      location: "test"
-    };
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/location').set(key, token).send(edit).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(404);
-      done();
-    });
-  });
-});
-
-describe('PUT /api/v1/parcels/:id/status', function () {
-  it('should return 200 - admin change location of a parcel', function (done) {
-    var edit = {
-      status: "test"
-    };
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/status').set(key, token).send(edit).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(200);
-      done();
-    });
-  });
-  it('should return 400 - invalid token', function (done) {
-    var edit = {
-      location: "test"
-    };
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/' + parcelId + '/status').set(key, fakeToken).send(edit).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(500);
-      done();
-    });
-  });
-  it('should return 404 - no parcels', function (done) {
-    var edit = {
-      status: "test"
-    };
-    _chai2.default.request(_app2.default).put('/api/v1/parcels/1234/status').set(key, token).send(edit).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(404);
-      done();
-    });
-  });
-});
-
 describe('PUT /api/v1/parcels/:id/destination', function () {
   it('should return 200 -  change destination of a parcel', function (done) {
     var edit = {
