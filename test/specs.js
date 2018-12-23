@@ -207,66 +207,6 @@ describe('GET /api/v1/parcels/id', () => {
   });
 });
 
-describe('PUT /api/v1/parcels/:id/location', () => {
-  it('should return 200 - admin change location of a parcel', (done) => {
-    const edit = {
-      location: "test"
-    };
-    chai.request(app).put(`/api/v1/parcels/${parcelId}/location`).set(key, token).send(edit).end((err, res) => {
-      chai.expect(res.statusCode).to.be.equal(200);
-      done();
-    });
-  });
-  it('should return 400 - invalid token', (done) => {
-    const edit = {
-      location: "test"
-    };
-    chai.request(app).put(`/api/v1/parcels/${parcelId}/location`).set(key, fakeToken).send(edit).end((err, res) => {
-      chai.expect(res.statusCode).to.be.equal(500);
-      done();
-    });
-  });
-  it('should return 404 - no parcels', (done) => {
-    const edit = {
-      location: "test"
-    };
-    chai.request(app).put('/api/v1/parcels/1234/location').set(key, token).send(edit).end((err, res) => {
-      chai.expect(res.statusCode).to.be.equal(404);
-      done();
-    });
-  });
-});
-
-describe('PUT /api/v1/parcels/:id/status', () => {
-  it('should return 200 - admin change location of a parcel', (done) => {
-    const edit = {
-      status: "test"
-    };
-    chai.request(app).put(`/api/v1/parcels/${parcelId}/status`).set(key, token).send(edit).end((err, res) => {
-      chai.expect(res.statusCode).to.be.equal(200);
-      done();
-    });
-  });
-  it('should return 400 - invalid token', (done) => {
-    const edit = {
-      location: "test"
-    };
-    chai.request(app).put(`/api/v1/parcels/${parcelId}/status`).set(key, fakeToken).send(edit).end((err, res) => {
-      chai.expect(res.statusCode).to.be.equal(500);
-      done();
-    });
-  });
-  it('should return 404 - no parcels', (done) => {
-    const edit = {
-      status: "test"
-    };
-    chai.request(app).put('/api/v1/parcels/1234/status').set(key, token).send(edit).end((err, res) => {
-      chai.expect(res.statusCode).to.be.equal(404);
-      done();
-    });
-  });
-});
-
 describe('PUT /api/v1/parcels/:id/destination', () => {
   it('should return 200 -  change destination of a parcel', (done) => {
     const edit = {
