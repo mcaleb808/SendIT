@@ -20,7 +20,7 @@ var ParcelControllers = {
         error = _Helper$validateOrder.error;
 
     if (error) {
-      res.status(400).send({ message: error.details[0].message });
+      res.status(400).send({ message: { message: error.details[0].message } });
 
       return;
     }
@@ -66,7 +66,21 @@ var ParcelControllers = {
           rows = _ref4.rows;
 
       if (!rows[0]) {
-        return res.status(404).send({ 'message': 'parcel not found' });
+        return res.status(404).send({ message: 'parcel not found' });
+      }
+      return res.status(200).send({ Parcels: rows[0] });
+    } catch (error) {
+      return res.status(400).send(error);
+    }
+  },
+  getOneParcelAdmin: async function getOneParcelAdmin(req, res) {
+    var text = 'SELECT * FROM parcels WHERE id = $1';
+    try {
+      var _ref5 = await _db2.default.query(text, [req.params.id]),
+          rows = _ref5.rows;
+
+      if (!rows[0]) {
+        return res.status(404).send({ message: 'parcel not found' });
       }
       return res.status(200).send({ Parcels: rows[0] });
     } catch (error) {
@@ -77,8 +91,8 @@ var ParcelControllers = {
     var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
     var cancel = 'UPDATE parcels\n          SET status=$1  where id =$2 returning *';
     try {
-      var _ref5 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
-          rows = _ref5.rows;
+      var _ref6 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
+          rows = _ref6.rows;
 
       if (!rows[0]) {
         return res.status(404).send({ message: 'Parcel not found' });
@@ -98,15 +112,15 @@ var ParcelControllers = {
         error = _Helper$validateUpdat.error;
 
     if (error) {
-      res.status(400).send({ message: error.details[0].message });
+      res.status(400).send({ message: { message: error.details[0].message } });
 
       return;
     }
     var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
     var destination = 'UPDATE parcels\n          SET destination=$1 where id= $2 returning *';
     try {
-      var _ref6 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
-          rows = _ref6.rows;
+      var _ref7 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
+          rows = _ref7.rows;
 
       if (!rows[0]) {
         return res.status(404).send({ message: 'Parcel not found' });
@@ -122,29 +136,29 @@ var ParcelControllers = {
     }
   },
   adminEdit: async function adminEdit(req, res) {
-    var _Helper$validateStatu = _helper2.default.validateStatus(req.body),
-        error = _Helper$validateStatu.error;
+    var _Helper$validateAdmin = _helper2.default.validateAdmin(req.body),
+        error = _Helper$validateAdmin.error;
 
     if (error) {
-      res.status(400).send(error.details[0].message);
+      res.status(400).send({ message: error.details[0].message });
 
       return;
     }
     var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
     var status = 'UPDATE parcels\n          SET status=$1, location =$2 where id= $3 returning *';
     try {
-      var _ref7 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
-          rows = _ref7.rows;
+      var _ref8 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
+          rows = _ref8.rows;
 
       if (!rows[0]) {
-        return res.status(404).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ message: 'Parcel not found' });
       }
-      if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
+      if (rows[0].status == 'delivered' || rows[0].status == 'canceled') {
         return res.status(400).send({ message: 'Status or Present Location of this parcel can not be changed' });
       }
       var values = [req.body.status, req.body.location, req.params.id];
       var response = await _db2.default.query(status, values);
-      return res.status(200).send({ message: 'Parcel Edited', Parcel: response.rows[0] });
+      return res.status(200).send({ message: 'Parcel Edited', Parcel: response.rows[0], status: 200 });
     } catch (err) {
       return res.status(400).send(err);
     }
