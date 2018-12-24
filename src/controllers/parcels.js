@@ -5,7 +5,7 @@ const ParcelControllers = {
   async createParcel(req, res) {
     const { error } = Helper.validateOrder(req.body);
     if (error) {
-      res.status(400).send({ message: error.details[0].message });
+      res.status(400).send({ message: { message: error.details[0].message } });
 
       return;
     }
@@ -54,7 +54,19 @@ const ParcelControllers = {
     try {
       const { rows } = await db.query(text, [req.params.id, req.user.id]);
       if (!rows[0]) {
-        return res.status(404).send({ 'message': 'parcel not found' });
+        return res.status(404).send({ message: 'parcel not found' });
+      }
+      return res.status(200).send({ Parcels: rows[0] });
+    } catch (error) {
+      return res.status(400).send(error)
+    }
+  },
+  async getOneParcelAdmin(req, res) {
+    const text = 'SELECT * FROM parcels WHERE id = $1';
+    try {
+      const { rows } = await db.query(text, [req.params.id]);
+      if (!rows[0]) {
+        return res.status(404).send({ message: 'parcel not found' });
       }
       return res.status(200).send({ Parcels: rows[0] });
     } catch (error) {
@@ -87,7 +99,7 @@ const ParcelControllers = {
   async changeDestination(req, res) {
     const { error } = Helper.validateUpdate(req.body);
     if (error) {
-      res.status(400).send({ message: error.details[0].message });
+      res.status(400).send({ message: { message: error.details[0].message } });
 
       return;
     }
@@ -113,9 +125,9 @@ const ParcelControllers = {
     }
   },
   async adminEdit(req, res) {
-    const { error } = Helper.validateStatus(req.body);
+    const { error } = Helper.validateAdmin(req.body);
     if (error) {
-      res.status(400).send(error.details[0].message);
+      res.status(400).send({ message: error.details[0].message });
 
       return;
     }
@@ -125,9 +137,9 @@ const ParcelControllers = {
     try {
       const { rows } = await db.query(findParcel, [req.params.id, req.user.id]);
       if (!rows[0]) {
-        return res.status(404).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ message: 'Parcel not found' });
       }
-      if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
+      if (rows[0].status == 'delivered' || rows[0].status == 'canceled') {
         return res.status(400).send({ message: 'Status or Present Location of this parcel can not be changed' });
       }
       const values = [
@@ -136,7 +148,7 @@ const ParcelControllers = {
         req.params.id
       ];
       const response = await db.query(status, values);
-      return res.status(200).send({ message: 'Parcel Edited', Parcel: response.rows[0] });
+      return res.status(200).send({ message: 'Parcel Edited', Parcel: response.rows[0], status: 200 });
     } catch (err) {
       return res.status(400).send(err);
     }

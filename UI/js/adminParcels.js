@@ -17,7 +17,7 @@ window.onload = async () => {
                 for (let index = 0; index < parcel.Parcels.length; index++) {
                     const tr = document.createElement('tr');
                     UserParcel.appendChild(tr);
-                    if (parcel.Parcels[index].status === "generated") {
+                    if (parcel.Parcels[index].status === "generated" || parcel.Parcels[index].status === "in-transit") {
 
                         tr.innerHTML = `
                 <tr>
@@ -29,7 +29,7 @@ window.onload = async () => {
                   <td>${parcel.Parcels[index].weight * 500}</td>
                   <td>${parcel.Parcels[index].receiver_email}</td>
                   <td>${parcel.Parcels[index].status}</td>
-                  <td><a href="editParcel.html?id=${parcel.Parcels[index].id}"><button type="button" id="edit">MANAGE</button></a></td>
+                  <td><a href="manage.html?id=${parcel.Parcels[index].id}"><button type="button" id="edit">MANAGE</button></a></td>
             </tr>
           `;
 

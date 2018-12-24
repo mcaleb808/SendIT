@@ -36,22 +36,6 @@ const Helper = {
 
     return Joi.validate(order, schema, { abortEarly: false });
   },
-  validateStatus(order) {
-
-    const schema = {
-      status: Joi.string().min(3).required()
-    };
-
-    return Joi.validate(order, schema);
-  },
-  validateLocation(order) {
-
-    const schema = {
-      location: Joi.string().min(3).required()
-    };
-
-    return Joi.validate(order, schema);
-  },
   validateAdmin(order) {
 
     const schema = {
