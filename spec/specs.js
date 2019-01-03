@@ -101,13 +101,13 @@ describe('GET /api/v1/auth/login', function () {
     });
   });
   it('should return 400 - wrong password', function (done) {
-    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'mudydyd16@yahoo.fr', password: 'mcaleb34' }).end(function (err, res) {
+    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'mudydyd12@yahoo.fr', password: 'mcaleb34' }).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(400);
       done();
     });
   });
   it('should return 200 - Success', function (done) {
-    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'mudydyd16@yahoo.fr', password: 'mcaleb' }).end(function (err, res) {
+    _chai2.default.request(_app2.default).post('/api/v1/auth/login').send({ email: 'mudydyd12@yahoo.fr', password: 'mcaleb' }).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(200);
       done();
     });
