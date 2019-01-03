@@ -61,7 +61,7 @@ describe('POST /api/v1/auth/signup', function () {
   });
   it('should return 201 - User created', function (done) {
     var newUser = {
-      email: "mudydyd16@yahoo.fr",
+      email: "mudydyd12@yahoo.fr",
       username: "mcalb",
       fullName: "kmamanzi rebecaa",
       password: "mcaleb"
@@ -75,7 +75,7 @@ describe('POST /api/v1/auth/signup', function () {
   });
   it('should return 400 - User with that EMAIL already exist', function (done) {
     var newUser = {
-      email: "mudydyd16@yahoo.fr",
+      email: "mudydyd12@yahoo.fr",
       username: "mcalb",
       fullName: "kmamanzi rebecaa",
       password: "mcaleb"
@@ -190,6 +190,14 @@ describe('GET /api/v1/parcels', function () {
   it('should return 400 - Fetch all user parcel delivery orders', function (done) {
     _chai2.default.request(_app2.default).get('/api/v1/parcels').set(key, fakeToken).end(function (err, res) {
       _chai2.default.expect(res.statusCode).to.be.equal(500);
+      done();
+    });
+  });
+});
+describe('GET /api/v1/adminparcels', function () {
+  it('should return 200 - Fetch all parcel delivery orders', function (done) {
+    _chai2.default.request(_app2.default).get('/api/v1/admin/parcels').set(key, token).end(function (err, res) {
+      _chai2.default.expect(res.statusCode).to.be.equal(403);
       done();
     });
   });
