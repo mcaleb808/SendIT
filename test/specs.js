@@ -53,7 +53,7 @@ describe('POST /api/v1/auth/signup', () => {
   });
   it('should return 201 - User created', (done) => {
     const newUser = {
-      email: "mudydyd16@yahoo.fr",
+      email: "mudydyd12@yahoo.fr",
       username: "mcalb",
       fullName: "kmamanzi rebecaa",
       password: "mcaleb"
@@ -67,7 +67,7 @@ describe('POST /api/v1/auth/signup', () => {
   });
   it('should return 400 - User with that EMAIL already exist', (done) => {
     const newUser = {
-      email: "mudydyd16@yahoo.fr",
+      email: "mudydyd12@yahoo.fr",
       username: "mcalb",
       fullName: "kmamanzi rebecaa",
       password: "mcaleb"
@@ -93,13 +93,13 @@ describe('GET /api/v1/auth/login', () => {
     });
   });
   it('should return 400 - wrong password', (done) => {
-    chai.request(app).post('/api/v1/auth/login').send({ email: 'mudydyd16@yahoo.fr', password: 'mcaleb34' }).end((err, res) => {
+    chai.request(app).post('/api/v1/auth/login').send({ email: 'mudydyd12@yahoo.fr', password: 'mcaleb34' }).end((err, res) => {
       chai.expect(res.statusCode).to.be.equal(400);
       done();
     });
   });
   it('should return 200 - Success', (done) => {
-    chai.request(app).post('/api/v1/auth/login').send({ email: 'mudydyd16@yahoo.fr', password: 'mcaleb' }).end((err, res) => {
+    chai.request(app).post('/api/v1/auth/login').send({ email: 'mudydyd12@yahoo.fr', password: 'mcaleb' }).end((err, res) => {
       chai.expect(res.statusCode).to.be.equal(200);
       done();
     });
@@ -182,6 +182,14 @@ describe('GET /api/v1/parcels', () => {
   it('should return 400 - Fetch all user parcel delivery orders', (done) => {
     chai.request(app).get('/api/v1/parcels').set(key, fakeToken).end((err, res) => {
       chai.expect(res.statusCode).to.be.equal(500);
+      done();
+    });
+  });
+});
+describe('GET /api/v1/adminparcels', () => {
+  it('should return 200 - Fetch all parcel delivery orders', (done) => {
+    chai.request(app).get('/api/v1/admin/parcels').set(key, token).end((err, res) => {
+      chai.expect(res.statusCode).to.be.equal(403);
       done();
     });
   });
