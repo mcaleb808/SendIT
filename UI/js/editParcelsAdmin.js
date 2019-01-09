@@ -25,6 +25,7 @@ window.onload = () => {
                 document.getElementById('destination').value = Parcels.destination;
                 document.getElementById('location').value = Parcels.location;
                 document.getElementById('email').value = Parcels.receiver_email;
+
             }).catch(err => err);
         });
     })();

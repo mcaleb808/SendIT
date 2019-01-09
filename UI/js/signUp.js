@@ -6,7 +6,7 @@ window.onload = function () {
     const signUp = document.getElementById('signUpBtn');
 
     async function signup() {
-        const rawResponse = await fetch('http://localhost:3000/api/v1/auth/signup', {
+        const rawResponse = await fetch('https://sendit-dbapi.herokuapp.com/api/v1/auth/signup', {
             method: 'POST',
             headers: {
                 Accept: 'application/JSON',

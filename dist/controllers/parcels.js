@@ -20,12 +20,12 @@ var ParcelControllers = {
         error = _Helper$validateOrder.error;
 
     if (error) {
-      res.status(400).send({ message: { message: error.details[0].message } });
+      res.status(400).send({ message: error.details[0].message });
 
       return;
     }
     var createQuery = 'INSERT INTO\n        parcels(pickup, destination, location, weight, \n            receiver_name, receiver_address,receiver_email, status, sender_id )\n        VALUES($1, $2, $1, $3, $4, $5, $6, $7, $8)\n        returning *';
-    var data = [req.body.pickup, req.body.destination, req.body.weight, req.body.receiver_name, req.body.receiver_address, req.body.receiver_email, "generated", req.user.id];
+    var data = [req.body.pickup, req.body.destination, req.body.weight, req.body.receiver_name, req.body.receiver_address, req.body.receiver_email, 'generated', req.user.id];
     try {
       var _ref = await _db2.default.query(createQuery, data),
           rows = _ref.rows;
@@ -112,7 +112,7 @@ var ParcelControllers = {
         error = _Helper$validateUpdat.error;
 
     if (error) {
-      res.status(400).send({ message: { message: error.details[0].message } });
+      res.status(400).send({ message: error.details[0].message });
 
       return;
     }

@@ -5,7 +5,7 @@ const ParcelControllers = {
   async createParcel(req, res) {
     const { error } = Helper.validateOrder(req.body);
     if (error) {
-      res.status(400).send({ message: { message: error.details[0].message } });
+      res.status(400).send({ message: error.details[0].message });
 
       return;
     }
@@ -21,8 +21,8 @@ const ParcelControllers = {
       req.body.receiver_name,
       req.body.receiver_address,
       req.body.receiver_email,
-      "generated",
-      req.user.id
+      'generated',
+      req.user.id,
     ];
     try {
       const { rows } = await db.query(createQuery, data);
@@ -58,7 +58,7 @@ const ParcelControllers = {
       }
       return res.status(200).send({ Parcels: rows[0] });
     } catch (error) {
-      return res.status(400).send(error)
+      return res.status(400).send(error);
     }
   },
   async getOneParcelAdmin(req, res) {
@@ -70,7 +70,7 @@ const ParcelControllers = {
       }
       return res.status(200).send({ Parcels: rows[0] });
     } catch (error) {
-      return res.status(400).send(error)
+      return res.status(400).send(error);
     }
   },
   async cancelParcel(req, res) {
@@ -87,7 +87,7 @@ const ParcelControllers = {
       }
       const values = [
         'canceled',
-        req.params.id
+        req.params.id,
 
       ];
       const response = await db.query(cancel, values);
@@ -99,7 +99,7 @@ const ParcelControllers = {
   async changeDestination(req, res) {
     const { error } = Helper.validateUpdate(req.body);
     if (error) {
-      res.status(400).send({ message: { message: error.details[0].message } });
+      res.status(400).send({ message: error.details[0].message });
 
       return;
     }
@@ -116,7 +116,7 @@ const ParcelControllers = {
       }
       const values = [
         req.body.destination,
-        req.params.id
+        req.params.id,
       ];
       const response = await db.query(destination, values);
       return res.status(202).send({ message: 'destination changed', Parcels: response.rows[0], status: 202 });
@@ -145,7 +145,7 @@ const ParcelControllers = {
       const values = [
         req.body.status,
         req.body.location,
-        req.params.id
+        req.params.id,
       ];
       const response = await db.query(status, values);
       return res.status(200).send({ message: 'Parcel Edited', Parcel: response.rows[0], status: 200 });
@@ -155,6 +155,6 @@ const ParcelControllers = {
   },
 
 
-}
+};
 
 export default ParcelControllers;
