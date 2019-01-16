@@ -26,7 +26,7 @@ var UserControllers = {
     }
     var hashPassword = _helper2.default.hashPassword(req.body.password);
     var data = 'INSERT INTO\n      users(email, username, fullname, usertype, password)\n      VALUES($1, $2, $3, $4, $5)\n      returning *';
-    var values = [req.body.email, req.body.username, req.body.fullName, "admin", hashPassword];
+    var values = [req.body.email, req.body.username, req.body.fullName, "user", hashPassword];
 
     try {
       var _ref = await _db2.default.query(data, values),
