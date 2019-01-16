@@ -136,29 +136,29 @@ var ParcelControllers = {
     }
   },
   adminEdit: async function adminEdit(req, res) {
-    var _Helper$validateStatu = _helper2.default.validateStatus(req.body),
-        error = _Helper$validateStatu.error;
+    var _Helper$validateAdmin = _helper2.default.validateAdmin(req.body),
+        error = _Helper$validateAdmin.error;
 
     if (error) {
-      res.status(400).send(error.details[0].message);
+      res.status(400).send({ message: error.details[0].message });
 
       return;
     }
-    var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
+    var findParcel = 'SELECT * FROM parcels WHERE id=$1';
     var status = 'UPDATE parcels\n          SET status=$1, location =$2 where id= $3 returning *';
     try {
-      var _ref8 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),
+      var _ref8 = await _db2.default.query(findParcel, req.params.id),
           rows = _ref8.rows;
 
       if (!rows[0]) {
-        return res.status(404).send({ 'message': 'Parcel not found' });
+        return res.status(404).send({ message: 'Parcel not found' });
       }
-      if (rows[0].status == 'delivered' || rows[0].status == 'in-transit' || rows[0].status == 'canceled') {
+      if (rows[0].status == 'delivered' || rows[0].status == 'canceled') {
         return res.status(400).send({ message: 'Status or Present Location of this parcel can not be changed' });
       }
       var values = [req.body.status, req.body.location, req.params.id];
       var response = await _db2.default.query(status, values);
-      return res.status(200).send({ message: 'Parcel Edited', Parcel: response.rows[0] });
+      return res.status(200).send({ message: 'Parcel Edited', Parcel: response.rows[0], status: 200 });
     } catch (err) {
       return res.status(400).send(err);
     }
