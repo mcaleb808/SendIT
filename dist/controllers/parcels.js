@@ -144,7 +144,7 @@ var ParcelControllers = {
 
       return;
     }
-    var findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
+    var findParcel = 'SELECT * FROM parcels WHERE id=$1';
     var status = 'UPDATE parcels\n          SET status=$1, location =$2 where id= $3 returning *';
     try {
       var _ref8 = await _db2.default.query(findParcel, [req.params.id, req.user.id]),

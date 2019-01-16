@@ -131,7 +131,7 @@ const ParcelControllers = {
 
       return;
     }
-    const findParcel = 'SELECT * FROM parcels WHERE id=$1 AND sender_id = $2';
+    const findParcel = 'SELECT * FROM parcels WHERE id=$1';
     const status = `UPDATE parcels
           SET status=$1, location =$2 where id= $3 returning *`;
     try {
