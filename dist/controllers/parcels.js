@@ -147,7 +147,7 @@ var ParcelControllers = {
     var findParcel = 'SELECT * FROM parcels WHERE id=$1';
     var status = 'UPDATE parcels\n          SET status=$1, location =$2 where id= $3 returning *';
     try {
-      var _ref8 = await _db2.default.query(findParcel, req.params.id),
+      var _ref8 = await _db2.default.query(findParcel, [req.params.id]),
           rows = _ref8.rows;
 
       if (!rows[0]) {

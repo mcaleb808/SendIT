@@ -135,7 +135,7 @@ const ParcelControllers = {
     const status = `UPDATE parcels
           SET status=$1, location =$2 where id= $3 returning *`;
     try {
-      const { rows } = await db.query(findParcel, req.params.id);
+      const { rows } = await db.query(findParcel, [req.params.id]);
       if (!rows[0]) {
         return res.status(404).send({ message: 'Parcel not found' });
       }
