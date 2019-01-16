@@ -18,7 +18,7 @@ const UserControllers = {
       req.body.email,
       req.body.username,
       req.body.fullName,
-      "user",
+      "admin",
       hashPassword
     ];
 

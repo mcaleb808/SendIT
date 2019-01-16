@@ -12,7 +12,7 @@ window.onload = () => {
         if (!parcelId) {
             window.location.href = '../admin/index.html';
         }
-        fetch(`http://localhost:3000/api/v1/admin/parcels/${parcelId}`, {
+        fetch(`https://sendit-dbapi.herokuapp.com/api/v1/admin/parcels/${parcelId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'Application/JSON',
@@ -35,7 +35,7 @@ window.onload = () => {
         const location = document.getElementById('location').value;
         const option = document.getElementById("status");
         const status = option.options[option.selectedIndex].value;
-        fetch(`http://localhost:3000/api/v1/parcels/${parcelId}/edit`, {
+        fetch(`https://sendit-dbapi.herokuapp.com/api/v1/parcels/${parcelId}/edit`, {
             method: 'PUT',
             body: JSON.stringify({
                 location,

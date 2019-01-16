@@ -5,7 +5,7 @@ window.onload = async () => {
     }
     const UserParcel = document.getElementById('parcels');
     (this.parcels = () => {
-        fetch('http://localhost:3000/api/v1/admin/parcels', {
+        fetch('https://sendit-dbapi.herokuapp.com/api/v1/admin/parcels', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

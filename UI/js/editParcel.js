@@ -13,7 +13,7 @@ window.onload = () => {
         if (!parcelId) {
             window.location.href = '../user/parcels.html';
         }
-        fetch(`http://localhost:3000/api/v1/parcels/${parcelId}`, {
+        fetch(`https://sendit-dbapi.herokuapp.com/api/v1/parcels/${parcelId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'Application/JSON',
@@ -36,7 +36,7 @@ window.onload = () => {
     this.updateDestination = async () => {
         const token = await localStorage.getItem('token');
         const destination = document.getElementById('destination').value;
-        fetch(`http://localhost:3000/api/v1/parcels/${parcelId}/destination`, {
+        fetch(`https://sendit-dbapi.herokuapp.com/api/v1/parcels/${parcelId}/destination`, {
             method: 'PUT',
             body: JSON.stringify({
                 destination

@@ -5,7 +5,7 @@ window.onload = async () => {
     }
     const UserParcel = document.getElementById('parcels');
     (this.parcels = () => {
-        fetch('http://localhost:3000/api/v1/parcels', {
+        fetch('https://sendit-dbapi.herokuapp.com/api/v1/parcels', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ window.onload = async () => {
     this.cancel = (parcelId) => {
         let check = confirm("Press OK to confirm!");
         if (check == true) {
-            fetch(`http://localhost:3000/api/v1/parcels/${parcelId}/cancel`, {
+            fetch(`https://sendit-dbapi.herokuapp.com/api/v1/parcels/${parcelId}/cancel`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'Application/JSON',

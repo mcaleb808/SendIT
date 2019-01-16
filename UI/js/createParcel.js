@@ -13,7 +13,7 @@ window.onload = async () => {
 
     const createParcel = async () => {
 
-        fetch('http://localhost:3000/api/v1/parcels', {
+        fetch('https://sendit-dbapi.herokuapp.com/api/v1/parcels', {
             method: 'POST',
             body: JSON.stringify({
                 pickup: pickup.value,

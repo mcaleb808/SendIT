@@ -197,7 +197,7 @@ describe('GET /api/v1/parcels', function () {
 describe('GET /api/v1/adminparcels', function () {
   it('should return 200 - Fetch all parcel delivery orders', function (done) {
     _chai2.default.request(_app2.default).get('/api/v1/admin/parcels').set(key, token).end(function (err, res) {
-      _chai2.default.expect(res.statusCode).to.be.equal(403);
+      _chai2.default.expect(res.statusCode).to.be.equal(200);
       done();
     });
   });

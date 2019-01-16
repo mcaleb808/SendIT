@@ -189,7 +189,7 @@ describe('GET /api/v1/parcels', () => {
 describe('GET /api/v1/adminparcels', () => {
   it('should return 200 - Fetch all parcel delivery orders', (done) => {
     chai.request(app).get('/api/v1/admin/parcels').set(key, token).end((err, res) => {
-      chai.expect(res.statusCode).to.be.equal(403);
+      chai.expect(res.statusCode).to.be.equal(200);
       done();
     });
   });
