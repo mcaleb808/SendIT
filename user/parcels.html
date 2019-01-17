@@ -8,6 +8,8 @@
     Parcels
   </title>
   <link rel="stylesheet" href="../css/styles.css">
+  <script src="../js/viewParcels.js"></script>
+
 </head>
 
 <body>
@@ -33,8 +35,6 @@
   <div class="form-style-2">
     <div class="form-style-2-heading">Recent parcels delivery orders</div>
     <a href="order.html"><button type="button" id="" onclick="">Create a new parcel delivery order</button></a>
-    <span>&nbsp;</span><a href="activity.html"><button type="button" style="background-color:#3CB371;margin:5px" />Parcel
-      Orders</button></a>
     <div><label></label></div>
     <div class="tbl-header">
       <table cellpadding="0" cellspacing="0" border="0">
@@ -43,8 +43,10 @@
             <th>ORDER No</th>
             <th>PICK UP LOCATION</th>
             <th>DESTINATION</th>
-            <th>Present location</th>
+            <th>PRESENT LOCATION</th>
+            <th>WEIGHT</th>
             <th>PRICE(Rwf)</th>
+            <th>RECEIVER EMAIL</th>
             <th>STATUS</th>
             <th>ACTION</th>
             <th></th>
@@ -53,99 +55,13 @@
       </table>
     </div>
     <div class="tbl-content">
-      <table cellpadding="0" cellspacing="0" border="0">
+      <table cellpadding="0" cellspacing="0" border="0" id="parcels">
         <tbody>
-          <tr>
-            <td>1111</td>
-            <td>aaaa</td>
-            <td>aaaa</td>
-            <td>bbbb</td>
-            <td>ccchc</td>
-            <td>ddddd</td>
-            <td><a href="editParcel.html"><button type="button" id="" onclick="">EDIT</button></a></td>
-            <td><button type="button" id="" style="background-color:#f57f17;" onclick="cancel()">CANCEL</button></td>
-          </tr>
-          <tr>
-            <td>2222</td>
-            <td>fffff</td>
-            <td>aaaa</td>
-            <td>ffff</td>
-            <td>-bbbbb</td>
-            <td>3333</td>
-            <td><a href="details.html"><button type="button" id="" onclick="">EDIT</button></a></td>
-            <td><button type="button" id="" style="background-color:#f57f17;" onclick="cancel()">CANCEL</button></td>
-          </tr>
-          <tr>
-            <td>2222</td>
-            <td>fffff</td>
-            <td>aaaa</td>
-            <td>ffff</td>
-            <td>-bbbbb</td>
-            <td>3333</td>
-            <td><a href="details.html"><button type="button" id="" onclick="">EDIT</button></a></td>
-            <td><button type="button" id="" style="background-color:#f57f17;" onclick="cancel()">CANCEL</button></td>
-          </tr>
-          <tr>
-            <td>2222</td>
-            <td>fffff</td>
-            <td>aaaa</td>
-            <td>ffff</td>
-            <td>-bbbbb</td>
-            <td>3333</td>
-            <td><a href="details.html"><button type="button" id="" onclick="">EDIT</button></a></td>
-            <td><button type="button" id="" style="background-color:#f57f17;" onclick="">CANCEL</button></td>
-          </tr>
-          <tr>
-            <td>2222</td>
-            <td>fffff</td>
-            <td>aaaa</td>
-            <td>ffff</td>
-            <td>-bbbbb</td>
-            <td>3333</td>
-            <td><a href="details.html"><button type="button" id="" onclick="">EDIT</button></a></td>
-            <td><button type="button" id="" style="background-color:#f57f17;" onclick="">CANCEL</button></td>
-          </tr>
-          <tr>
-            <td>2222</td>
-            <td>fffff</td>
-            <td>aaaa</td>
-            <td>ffff</td>
-            <td>-bbbbb</td>
-            <td>3333</td>
-            <td><a href="details.html"><button type="button" id="" onclick="">EDIT</button></a></td>
-            <td><button type="button" id="" style="background-color:#f57f17;" onclick="">CANCEL</button></td>
-          </tr>
-          <tr>
-            <td>2222</td>
-            <td>fffff</td>
-            <td>aaaa</td>
-            <td>ffff</td>
-            <td>-bbbbb</td>
-            <td>3333</td>
-            <td><a href="details.html"><button type="button" id="" onclick="">EDIT</button></a></td>
-            <td><button type="button" id="" style="background-color:#f57f17;" onclick="">CANCEL</button></td>
-          </tr>
-          <tr>
-            <td>2222</td>
-            <td>fffff</td>
-            <td>aaaa</td>
-            <td>ffff</td>
-            <td>-bbbbb</td>
-            <td>3333</td>
-            <td><a href="details.html"><button type="button" id="" onclick="">EDIT</button></a></td>
-            <td><button type="button" id="" style="background-color:#f57f17;" onclick="">CANCEL</button></td>
-          </tr>
 
         </tbody>
       </table>
     </div>
   </div>
-  <script type="text/javascript" src="./js/index.js"></script>
-  <script>
-    function cancel() {
-      confirm("Press OK to confirm!");
-    }
-  </script>
 </body>
 
 <footer>Caleb SendIt APP Copyright &copy; 2018</footer>

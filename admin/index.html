@@ -1,131 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <title>
-      Parcels
-    </title>
-    <link rel="stylesheet" href="../css/styles.css">
-  </head>
-  <body>
-    <header id="myHeader">
-      <div class="container">
-        <div id="branding">
-          <h1><span class="highlight">SEND</span>IT</h1>
-        </div>
-        <nav>
-          <ul>
-            <li class="current">
-              <a href="profile.html">Profile</a>
-            </li>
-            <li><a href="../index.html">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <title>
+    Parcels
+  </title>
+  <script src="../js/adminParcels.js"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+  <header id="myHeader">
+    <div class="container">
+      <div id="branding">
+        <h1><span class="highlight">SEND</span>IT</h1>
+      </div>
+      <nav>
+        <ul>
+          <li class="current">
+            <a href="profile.html">Profile</a>
+          </li>
+          <li><a href="../index.html">
               <button>LOG OUT</button>
             </a></li>
-            </ul>
-        </nav>
-      </div>
-    </header>
- <div class="form-style-2">
-      <div class="form-style-2-heading">Manage parcels delivery orders</div>
-      <div><label></label></div>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="form-style-2">
+    <div class="form-style-2-heading">Manage parcels delivery orders</div>
+    <div><label></label></div>
     <div class="tbl-header">
-        <table cellpadding="0" cellspacing="0" border="0">
-          <thead>
-            <tr>
-              <th>ORDER No</th>
-              <th>PICK UP LOCATION</th>
-              <th>DESTINATION</th>
-              <th>Present Location</th>
-              <th>PRICE(Rwf)</th>
-              <th>STATUS</th>
-              <th>ACTION</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <div class="tbl-content">
-        <table cellpadding="0" cellspacing="0" border="0">
-          <tbody>
-            <tr>
-              <td>1111</td>
-              <td>aaaa</td>
-              <td>bbbb</td>
-              <td>ccccc</td>
-              <td>ddddd</td>
-              <td>ddddd</td>
-              <td><a href="manage.html"><button type="button" id="" onclick="">Manage</button></a></td>
-            </tr>
-            <tr>
-              <td>2222</td>
-              <td>fffff</td>
-              <td>ffff</td>
-              <td>-bbbbb</td>
-              <td>ddddd</td>
-              <td>3333</td>
-              <td><a href="manage.html"><button type="button" id="" onclick="">Manage</button></a></td>
-            </tr>
-            <tr>
-              <td>2222</td>
-              <td>fffff</td>
-              <td>ffff</td>
-              <td>-bbbbb</td>
-              <td>ddddd</td>
-              <td>3333</td>
-              <td><a href="manage.html"><button type="button" id="" onclick="">Manage</button></a></td>
-            </tr>
-            <tr>
-              <td>2222</td>
-              <td>fffff</td>
-              <td>ffff</td>
-              <td>-bbbbb</td>
-              <td>ddddd</td>
-              <td>3333</td>
-              <td><a href="manage.html"><button type="button" id="" onclick="">Manage</button></a></td>
-            </tr>
-            <tr>
-              <td>2222</td>
-              <td>fffff</td>
-              <td>ffff</td>
-              <td>-bbbbb</td>
-              <td>ddddd</td>
-              <td>3333</td>
-              <td><a href="manage.html"><button type="button" id="" onclick="">Manage</button></a></td>
-            </tr>
-            <tr>
-              <td>2222</td>
-              <td>fffff</td>
-              <td>ffff</td>
-              <td>ddddd</td>
-              <td>-bbbbb</td>
-              <td>3333</td>
-              <td><a href="manage.html"><button type="button" id="" onclick="">Manage</button></a></td>
-            </tr>
-            <tr>
-              <td>2222</td>
-              <td>fffff</td>
-              <td>ffff</td>
-              <td>ddddd</td>
-              <td>-bbbbb</td>
-              <td>3333</td>
-              <td><a href="manage.html"><button type="button" id="" onclick="">Manage</button></a></td>
-            </tr>
-            <tr>
-              <td>2222</td>
-              <td>fffff</td>
-              <td>ffff</td>
-              <td>ddddd</td>
-              <td>-bbbbb</td>
-              <td>3333</td>
-              <td><a href="manage.html"><button type="button" id="" onclick="">Manage</button></a></td>
-            </tr>
+      <table cellpadding="0" cellspacing="0" border="0">
+        <thead>
+          <tr>
+            <th>ORDER No</th>
+            <th>PICK UP LOCATION</th>
+            <th>DESTINATION</th>
+            <th>PRESENT LOCATION</th>
+            <th>WEIGHT</th>
+            <th>PRICE(Rwf)</th>
+            <th>RECEIVER EMAIL</th>
+            <th>STATUS</th>
+            <th>ACTION</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="tbl-content">
+      <table cellpadding="0" cellspacing="0" border="0" id="parcels">
+        <tbody>
 
-          </tbody>
-        </table>
-      </div>
-      </div>
-    <script type="text/javascript" src="./js/index.js"></script>
-  </body>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script type="text/javascript" src="./js/index.js"></script>
+</body>
 
-  <footer>Caleb SendIt APP  Copyright &copy; 2018</footer>
+<footer>Caleb SendIt APP Copyright &copy; 2018</footer>
+
 </html>

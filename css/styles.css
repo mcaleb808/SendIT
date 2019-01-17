@@ -13,7 +13,6 @@ body{
 
 @font-face {
     font-family: 'montserrat';
-    src: url('../font/montserrat.ttf');
 }
 
 
@@ -490,9 +489,32 @@ footer{
   border: none;
 }
 
+/*signup button here*/
+.loginbox input[type="button"]{
+  border: 1px solid #fff;
+  outline: none;
+  height: 40px;
+  background: linear-gradient(
+      rgba(53, 66, 74, 0.2),
+      rgba(53, 66, 74, 0.2)
+    ),no-repeat;
+  color: #fff;
+  font-size: 16px;
+}
+
+.loginbox input[type="button"]:hover{
+  background: #81d4fa;
+  cursor: pointer;
+  border: none;
+}
+
 .loginbox a{
   text-decoration: none;
   color: #81d4fa;
+}
+.msg_error {
+  color: #D8000C;
+  background-color: #FFD2D2;
 }
 
 

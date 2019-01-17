@@ -1,57 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <title>
-      Parcels
-    </title>
-    <link rel="stylesheet" href="../css/styles.css">
-  </head>
-  <body>
-    <header id="myHeader">
-      <div class="container">
-        <div id="branding">
-        <a href="parcels.html"><h1><span class="highlight">SEND</span>IT</h1></a>
 
-        </div>
-        <nav>
-          <ul>
-            <li class="current">
-              <a href="profile.html">Profile</a>
-            </li>
-            <li><a href="../index.html">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <title>
+    Parcels
+  </title>
+  <script src="../js/editParcel.js"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+  <header id="myHeader">
+    <div class="container">
+      <div id="branding">
+        <a href="parcels.html">
+          <h1><span class="highlight">SEND</span>IT</h1>
+        </a>
+
+      </div>
+      <nav>
+        <ul>
+          <li class="current">
+            <a href="profile.html">Profile</a>
+          </li>
+          <li><a href="../index.html">
               <button>LOG OUT</button>
             </a></li>
-            </ul>
-        </nav>
-      </div>
-    </header>
-              <div class="form-style-2">
-    <div class="form-style-2-heading">Parcel delivery order no[order no] details</div>
-      <form action="parcels.html" name="parcel" id='parcel'>
-        <label><span>&nbsp;</span><h2>Edit or Cancel delivery order</h2></label>
-        <label for="field1"><span>Pick Up location:</span><input type="text" class="input-field" name="fname" value="pick up location here" disabled required/></label>
-        <label for="field1"><span>Destination</span><input type="text" class="input-field" name="user" value="Destination can be changed" required/></label>
-        <label for="field1"><span>Parcel contents:</span><input type="text" class="input-field" name="fname" value="Parcel contents here" required disabled/></label>
-        <label for="field1"><span>Weight:<span class="required">(Kg)</span></span><input type="text" class="input-field" name="fname" value="Parcel weight here" disabled required/></label>
-        <label for="field1"><span>Price:<span class="required">(Rwf)</span></span><input type="text" class="input-field" name="user" value="price here" disabled/></label>
-        <label for="field1"><span>Receiver Name</span><input type="text" class="input-field" name="user" value="name can be changed" required/></label>
-        <label for="field1"><span>Receiver Email</span><input type="text" class="input-field" name="user" value="Email can be changed" required/></label>
-        <div style="overflow:auto;">
-         <div style="float:center;">
-            <button type="button" id="edit" onclick="">Edit order</button>
-            <button type="button" id="cancel" onclick="">Cancel Order</button>
-          </div>
-
-      </form>
-
-
+        </ul>
+      </nav>
     </div>
+  </header>
+  <div class="form-style-2">
+    <div class="form-style-2-heading" id="header"></div>
+    <form>
+      <label><span>&nbsp;</span>
+        <h2>Edit Destination of this Parcel delivery order</h2>
+      </label>
+      <div class="msg_error" id="msg"></div>
+      <label for="field1"><span>Pick Up location</span><input type="text" class="input-field" id="pickup" value=""
+          disabled /></label>
+      <label for="field1"><span>Destination</span><input type="text" class="input-field" id="destination" value=""
+          required /></label>
+      <label for="field1"><span>Present location:</span><input type="text" class="input-field" id="present" value=""
+          disabled /></label>
+      <label for="field1"><span>Weight<span class="required">(Kg)</span></span><input type="number" class="input-field"
+          id="weight" value="" disabled /></label>
+      <label for="field1"><span>Price<span class="required">(Rwf)</span></span><input type="number" class="input-field"
+          id="price" value="" disabled /></label>
+      <label for="field1"><span>Receiver Email</span><input type="text" class="input-field" id="email" value=""
+          disabled /></label>
+      <div style="overflow:auto;">
+        <div style="float:center;">
+          <button type="button" id="editBtn">Edit order</button>
+          <button type="button" id="backBtn">Back</button>
         </div>
-      </div>
-    <script type="text/javascript" src="./js/index.js"></script>
-  </body>
 
-  <footer>Caleb SendIt APP  Copyright &copy; 2018</footer>
+    </form>
+
+
+  </div>
+  </div>
+  </div>
+</body>
+
+<footer>Caleb SendIt APP Copyright &copy; 2018</footer>
+
 </html>
